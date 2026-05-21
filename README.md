@@ -11,7 +11,6 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 [![CI](https://github.com/jgabrielflores/marcenaria-api/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/marcenaria-api/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/jgabrielflores/marcenaria-api/branch/main/graph/badge.svg)](https://codecov.io/gh/jgabrielflores/marcenaria-api)
 ![Tests](https://img.shields.io/badge/testes-133%20passando-2ea44f)
-![Coverage](https://img.shields.io/badge/cobertura-~91%25-2ea44f)
 
 <br>
 
