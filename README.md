@@ -8,8 +8,8 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 
 <br>
 
-[![CI](https://github.com/jgabrielflores/marcenaria-api/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/marcenaria-api/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/jgabrielflores/marcenaria-api/branch/main/graph/badge.svg)](https://codecov.io/gh/jgabrielflores/marcenaria-api)
+[![CI](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/jgabrielflores/ramos-planejados/branch/main/graph/badge.svg)](https://codecov.io/gh/jgabrielflores/ramos-planejados)
 ![Tests](https://img.shields.io/badge/testes-133%20passando-2ea44f)
 
 <br>
@@ -224,7 +224,7 @@ flowchart LR
 ## Estrutura do repositório
 
 ```
-marcenaria-api/
+ramos-planejados/
 ├── src/                        # API REST — FastAPI
 │   ├── main.py                 # App factory: routers, CORS, rate limiter, logging
 │   ├── config.py               # Settings tipados (pydantic-settings)
@@ -304,8 +304,8 @@ stateDiagram-v2
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/jgabrielflores/marcenaria-api.git
-cd marcenaria-api
+git clone https://github.com/jgabrielflores/ramos-planejados.git
+cd ramos-planejados
 
 # Copiar o arquivo de ambiente e preencher os valores
 cp .env.example .env

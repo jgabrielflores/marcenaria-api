@@ -1,4 +1,4 @@
-# PLAN.md — marcenaria-api Technical Implementation Plan
+# PLAN.md — ramos-planejados Technical Implementation Plan
 
 | | |
 |---|---|
@@ -70,7 +70,7 @@ One user may have many orders. Each order belongs to exactly one user.
 ## 2. Folder Structure
 
 ```
-marcenaria-api/
+ramos-planejados/
 │
 ├── src/
 │   ├── main.py               # FastAPI app factory; mounts routers

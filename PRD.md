@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Product** | Marcenaria Order Management System |
-| **Repo** | `marcenaria-api` (monorepo: `src/` backend · `frontend/` Next.js) |
+| **Repo** | `ramos-planejados` (monorepo: `src/` backend · `frontend/` Next.js) |
 | **Version** | 2.0 |
 | **Status** | Active |
 | **Owner** | Gabriel |
@@ -24,7 +24,7 @@
 
 A focused web platform that lets a custom-furniture workshop (*marcenaria*) capture quote requests online, track every order through a clear lifecycle, and give customers self-service visibility into the status of their order.
 
-The product lives in a single monorepo (`marcenaria-api`):
+The product lives in a single monorepo (`ramos-planejados`):
 - **`src/`** — REST API (FastAPI + PostgreSQL). Backend complete.
 - **`frontend/`** — Web interface (Next.js + TypeScript + Tailwind CSS + shadcn/ui). In development.
 

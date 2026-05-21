@@ -67,10 +67,10 @@ flowchart TD
 
 ## Monorepo
 
-O repositório `marcenaria-api` reúne **dois deployáveis independentes** que evoluem e são publicados separadamente:
+O repositório `ramos-planejados` reúne **dois deployáveis independentes** que evoluem e são publicados separadamente:
 
 ```
-marcenaria-api/
+ramos-planejados/
 ├── src/        → API REST       → deploy: AWS ECS/Fargate + RDS
 └── frontend/   → Interface web  → deploy: Vercel
 ```

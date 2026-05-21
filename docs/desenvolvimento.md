@@ -31,8 +31,8 @@ O backend roda inteiramente em contêineres — **não é preciso instalar Pytho
 ## Configuração inicial
 
 ```bash
-git clone https://github.com/jgabrielflores/marcenaria-api.git
-cd marcenaria-api
+git clone https://github.com/jgabrielflores/ramos-planejados.git
+cd ramos-planejados
 cp .env.example .env
 ```
 
@@ -166,7 +166,7 @@ Depois de gerar uma migração com `--autogenerate`, **revise o arquivo** em `mi
 ## Estrutura de pastas
 
 ```
-marcenaria-api/
+ramos-planejados/
 ├── src/                      # API REST — FastAPI
 │   ├── main.py               # App factory
 │   ├── config.py             # Settings (pydantic-settings)
