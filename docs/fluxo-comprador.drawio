@@ -1,0 +1,216 @@
+<mxfile host="app.diagrams.net" version="21.0.0">
+  <diagram name="Fluxo do Comprador" id="fluxo-comprador">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Base: DOCUMENTACAO.md secoes 4 (Autenticacao) e 5 (Fluxo do Comprador) -->
+
+        <mxCell id="title" value="Jornada do Comprador — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="620" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── INÍCIO ───────── -->
+        <mxCell id="start" value="" style="ellipse;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="547" y="66" width="26" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="P1" value="Acessa o site&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Landing Page&amp;nbsp;&amp;nbsp;/&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="110" width="280" height="52" as="geometry" />
+        </mxCell>
+
+        <mxCell id="D1" value="Já possui&lt;br&gt;conta?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="465" y="200" width="190" height="88" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── RAMO: CADASTRO + VERIFICAÇÃO (esquerda) ───────── -->
+        <mxCell id="R1" value="&lt;b&gt;Cadastro&lt;/b&gt;&amp;nbsp;&amp;nbsp;/register&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Nome · E-mail · Senha (8 a 128 caracteres)&lt;br&gt;Validação: e-mail válido e único&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="220" width="300" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="R2" value="Conta criada com &lt;b&gt;email_verified = false&lt;/b&gt;&lt;br&gt;E-mail de verificação enviado&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;link JWT válido por 24 horas&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="334" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="R3" value="Cliente abre o link de verificação&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;GET /auth/verify?token=&amp;lt;JWT&amp;gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="442" width="300" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="DR" value="Link válido e&lt;br&gt;dentro de 24 h?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="80" y="540" width="220" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="Rok" value="Conta verificada&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;redireciona para /login?verified=1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="672" width="300" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Rfail" value="Link inválido ou expirado&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;redireciona para /login?verified=0&lt;br&gt;cliente solicita reenvio (máx. 5/min por IP)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="772" width="300" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="noteSmtp" value="Em desenvolvimento sem SMTP configurado, o link de verificação é impresso no log do backend." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff8dc;strokeColor=#d6b656;size=14;align=left;verticalAlign=middle;fontSize=10;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="876" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── LOGIN (centro) ───────── -->
+        <mxCell id="P2" value="&lt;b&gt;Login&lt;/b&gt;&amp;nbsp;&amp;nbsp;/login&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;E-mail + senha&amp;nbsp;&amp;nbsp;·&amp;nbsp;&amp;nbsp;limite de 10 tentativas/min por IP&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="676" width="280" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="D2" value="Resultado da&lt;br&gt;autenticação?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="450" y="788" width="220" height="104" as="geometry" />
+        </mxCell>
+
+        <!-- Erros de login (direita) -->
+        <mxCell id="E401" value="&lt;b&gt;Credenciais inválidas&lt;/b&gt;&amp;nbsp;(HTTP 401)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;mensagem genérica — não revela se o e-mail existe&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="772" y="676" width="340" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="E403" value="&lt;b&gt;E-mail não verificado&lt;/b&gt;&amp;nbsp;(HTTP 403)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;código EMAIL_NOT_VERIFIED&lt;br&gt;a tela oferece reenvio da verificação (máx. 5/min)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="772" y="788" width="340" height="76" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── ÁREA DO CLIENTE (centro) ───────── -->
+        <mxCell id="P3" value="&lt;b&gt;Área do cliente&lt;/b&gt;&amp;nbsp;&amp;nbsp;/conta/pedidos&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Lista paginada — 10 pedidos por página&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="950" width="280" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="P4" value="&lt;b&gt;Novo pedido&lt;/b&gt;&amp;nbsp;&amp;nbsp;/conta/pedidos/novo&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Seções: Contato · Endereço (CEP via ViaCEP) · Projeto&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1048" width="280" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="P5" value="Sistema registra o pedido&lt;br&gt;&lt;b&gt;Status inicial: AGUARDANDO_ANALISE&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1152" width="280" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="P6" value="Tela de confirmação&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Contatos da equipe · botão Ver pedido&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1248" width="280" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="P7" value="Acompanha o pedido&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/conta/pedidos/[id] — detalhe + histórico de status&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1344" width="280" height="56" as="geometry" />
+        </mxCell>
+
+        <mxCell id="D3" value="Status atual&lt;br&gt;do pedido?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="465" y="1438" width="190" height="88" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ENDok" value="&lt;b&gt;Projeto entregue&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#d7e8e3&apos;&gt;status CONCLUÍDO&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#67ab9f;strokeColor=#23605a;fontColor=#ffffff;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="772" y="1452" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ENDcancel" value="&lt;b&gt;Pedido encerrado&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;status CANCELADO&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="148" y="1452" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── ARESTAS ───────── -->
+        <mxCell id="e_s_p1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="start" target="P1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_p1_d1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P1" target="D1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_d1_r1" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="D1" target="R1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d1_p2" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="D1" target="P2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_r1_r2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="R1" target="R2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_r2_r3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="R2" target="R3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_r3_dr" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="R3" target="DR">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dr_ok" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="DR" target="Rok">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dr_fail" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="DR" target="Rfail">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="586" />
+              <mxPoint x="20" y="808" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_ok_p2" value="conta ativa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Rok" target="P2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_fail_r2" value="solicita reenvio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="Rfail" target="R2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="372" y="808" />
+              <mxPoint x="372" y="369" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_smtp" value="" style="edgeStyle=none;html=1;dashed=1;strokeColor=#bbbbbb;endArrow=none;" edge="1" parent="1" source="noteSmtp" target="Rfail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_p2_d2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P2" target="D2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d2_p3" value="Sucesso (200) — JWT emitido" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="D2" target="P3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d2_401" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.25;entryX=0;entryY=0.5;strokeColor=#b85450;dashed=1;" edge="1" parent="1" source="D2" target="E401">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d2_403" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.7;entryX=0;entryY=0.5;strokeColor=#b85450;dashed=1;" edge="1" parent="1" source="D2" target="E403">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_401_p2" value="tentar novamente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.3;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="E401" target="P2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="942" y="640" />
+              <mxPoint x="730" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_403_p2" value="após verificar o e-mail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.7;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="E403" target="P2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="744" y="717" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_p3_p4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P3" target="P4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_p4_p5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P4" target="P5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_p5_p6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P5" target="P6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_p6_p7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P6" target="P7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_p7_d3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P7" target="D3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d3_loop" value="em andamento" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="D3" target="P7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="1482" />
+              <mxPoint x="730" y="1372" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_d3_ok" value="Concluído" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#23605a;fontSize=10;" edge="1" parent="1" source="D3" target="ENDok">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="1542" />
+              <mxPoint x="872" y="1542" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_d3_cancel" value="Cancelado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="D3" target="ENDcancel">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="1542" />
+              <mxPoint x="248" y="1542" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

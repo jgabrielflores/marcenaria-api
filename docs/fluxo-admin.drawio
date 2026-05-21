@@ -1,0 +1,286 @@
+<mxfile host="app.diagrams.net" version="21.0.0">
+  <diagram name="Fluxo do Administrador" id="fluxo-admin">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1340" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Base: DOCUMENTACAO.md secoes 6 (Fluxo Administrativo), 7 (Status) e 9 (Permissoes) -->
+
+        <mxCell id="title" value="Jornada do Administrador — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="640" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── ACESSO ───────── -->
+        <mxCell id="start" value="" style="ellipse;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="607" y="64" width="26" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Plogin" value="&lt;b&gt;Login&lt;/b&gt;&amp;nbsp;&amp;nbsp;/login&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;E-mail + senha&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="480" y="108" width="280" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Drole" value="Autenticado&lt;br&gt;com role = ADMIN?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="525" y="196" width="190" height="92" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ENDnotadmin" value="&lt;b&gt;Acesso negado ao /admin&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;CUSTOMER → redireciona para /conta/pedidos&lt;br&gt;não autenticado → redireciona para /login&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="110" y="208" width="290" height="68" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── DASHBOARD ───────── -->
+        <mxCell id="Pdash" value="&lt;b&gt;Dashboard&lt;/b&gt;&amp;nbsp;&amp;nbsp;/admin&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Resumo financeiro (mês) · Alerta de atrasos&lt;br&gt;Pipeline por status · 5 pedidos recentes&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="455" y="346" width="330" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Dwork" value="Há pedidos&lt;br&gt;a processar?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="525" y="466" width="190" height="92" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Pmonitor" value="Continua monitorando&lt;br&gt;o dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;verticalAlign=middle;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="483" width="240" height="58" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── LISTA / DETALHE ───────── -->
+        <mxCell id="Plist" value="&lt;b&gt;Lista de pedidos&lt;/b&gt;&amp;nbsp;&amp;nbsp;/admin/pedidos&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;20 por página · filtro por status&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="480" y="616" width="280" height="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Pwalkin" value="&lt;b&gt;Pedido walk-in&lt;/b&gt;&amp;nbsp;(opcional)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/admin/pedidos/novo — cria pedido para&lt;br&gt;cliente sem conta (client_name / client_email)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="612" width="290" height="72" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Popen" value="Abre o detalhe do pedido&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/admin/pedidos/[id]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="480" y="724" width="280" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Daction" value="Qual ação&lt;br&gt;administrativa?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="505" y="818" width="230" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── RAMO A — EDITAR DADOS (esquerda) ───────── -->
+        <mxCell id="Daguard" value="Pedido em&lt;br&gt;AGUARDANDO_ANALISE?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="90" y="972" width="240" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="Pedit" value="Edita dados do cliente e do projeto&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;WhatsApp, endereço, cidade, UF,&lt;br&gt;ambientes, tipos de móveis, observações&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="90" y="1124" width="240" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="noteRO" value="Demais status: dados do cliente e do projeto ficam somente leitura — nenhuma edição é possível." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff8dc;strokeColor=#d6b656;size=14;align=left;verticalAlign=middle;fontSize=10;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="90" y="1246" width="240" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="Psave" value="&lt;b&gt;Salvar alterações&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;dados persistidos&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="100" y="1492" width="220" height="58" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── RAMO B — ALTERAR STATUS (centro) ───────── -->
+        <mxCell id="Pstatus" value="Seleciona o novo status no dropdown&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;avançar / retroceder uma etapa&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="480" y="982" width="280" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Dfields" value="O novo status exige&lt;br&gt;campos obrigatórios?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1086" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Pfields" value="Preenche os campos exigidos&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;APROVADO → valor do projeto + custo estimado + previsão&lt;br&gt;INSTALACAO_AGENDADA → data de instalação&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1244" width="320" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Dvalid" value="Datas válidas?&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;sem datas no passado · instalação ≥ previsão&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1372" width="240" height="104" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ERRvalid" value="&lt;b&gt;Erro de validação&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;salvamento bloqueado pelo frontend / backend&lt;br&gt;mensagem de erro exibida em português&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="880" y="1378" width="300" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Ppersist" value="&lt;b&gt;Status atualizado&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;nova entrada registrada no histórico (append-only)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1492" width="280" height="58" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── RAMO C — CANCELAR (direita) ───────── -->
+        <mxCell id="Dconfirm" value="Confirma o&lt;br&gt;cancelamento?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="905" y="980" width="210" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="Pcancel" value="&lt;b&gt;Status → CANCELADO&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;estado terminal · histórico registrado&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="890" y="1140" width="240" height="62" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── CONVERGÊNCIA ───────── -->
+        <mxCell id="Dmore" value="Processar mais&lt;br&gt;pedidos?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="525" y="1620" width="190" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="END" value="&lt;b&gt;Encerra a sessão&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;fontColor=#ffffff;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="540" y="1748" width="160" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- ───────── ARESTAS ───────── -->
+        <mxCell id="ea_s_login" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="start" target="Plogin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_login_role" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Plogin" target="Drole">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_role_no" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="Drole" target="ENDnotadmin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_role_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Drole" target="Pdash">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_dash_work" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Pdash" target="Dwork">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_work_no" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dwork" target="Pmonitor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_monitor_dash" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.5;strokeColor=#9673a6;dashed=1;" edge="1" parent="1" source="Pmonitor" target="Pdash">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="383" />
+              <mxPoint x="820" y="383" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_work_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dwork" target="Plist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_list_walkin" value="alternativa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="Plist" target="Pwalkin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_walkin_list" value="novo pedido criado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.25;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="Pwalkin" target="Plist">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1045" y="592" />
+              <mxPoint x="820" y="592" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_list_open" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Plist" target="Popen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_open_action" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Popen" target="Daction">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Ramo A -->
+        <mxCell id="ea_action_aguard" value="Editar dados&lt;br&gt;do cliente / projeto" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Daction" target="Daguard">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="873" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_aguard_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Daguard" target="Pedit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_aguard_no" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Daguard" target="noteRO">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="40" y="1020" />
+              <mxPoint x="40" y="1285" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_edit_save" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Pedit" target="Psave">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="1460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_save_more" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#333333;" edge="1" parent="1" source="Psave" target="Dmore">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="1666" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_ro_more" value="sem alteração" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#333333;dashed=1;fontSize=9;" edge="1" parent="1" source="noteRO" target="Dmore">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="1676" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Ramo B -->
+        <mxCell id="ea_action_status" value="Alterar status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Daction" target="Pstatus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_status_fields" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Pstatus" target="Dfields">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_fields_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dfields" target="Pfields">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_fields_no" value="Não — demais status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="Dfields" target="Dvalid">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="1136" />
+              <mxPoint x="420" y="1424" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_fields_valid" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Pfields" target="Dvalid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_valid_no" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#b85450;dashed=1;fontSize=10;" edge="1" parent="1" source="Dvalid" target="ERRvalid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_err_status" value="corrigir e tentar novamente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.5;strokeColor=#9673a6;dashed=1;fontSize=9;" edge="1" parent="1" source="ERRvalid" target="Pstatus">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="1011" />
+              <mxPoint x="800" y="1011" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_valid_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dvalid" target="Ppersist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_persist_more" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="Ppersist" target="Dmore">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Ramo C -->
+        <mxCell id="ea_action_cancel" value="Cancelar pedido" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="Daction" target="Dconfirm">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="873" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_confirm_no" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.25;strokeColor=#333333;dashed=1;fontSize=10;" edge="1" parent="1" source="Dconfirm" target="Popen">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="751" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_confirm_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="Dconfirm" target="Pcancel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_cancel_more" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;strokeColor=#333333;" edge="1" parent="1" source="Pcancel" target="Dmore">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="1666" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Convergência final -->
+        <mxCell id="ea_more_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dmore" target="Plist">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="1666" />
+              <mxPoint x="430" y="647" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_more_no" value="Não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dmore" target="END">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

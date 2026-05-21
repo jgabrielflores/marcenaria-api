@@ -1,0 +1,152 @@
+<mxfile host="65bd71144e">
+    <diagram name="Fluxo de Status" id="fluxo-status">
+        <mxGraphModel dx="178" dy="80" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1440" pageHeight="700" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Máquina de Estados de um Pedido — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="22" width="640" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="subtitle" value="Transições aceitas pelo backend: avançar uma etapa · retroceder uma etapa · cancelar a partir de qualquer status não-terminal." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="52" width="900" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="start" value="" style="ellipse;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;" parent="1" vertex="1">
+                    <mxGeometry x="26" y="179" width="26" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="s1" value="&lt;b&gt;Aguardando Análise&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;triagem inicial&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="68" y="160" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="s2" value="&lt;b&gt;Em Orçamento&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;elaborando proposta&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="282" y="160" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3" value="&lt;b&gt;Aprovado&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;orçamento definido&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="496" y="160" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="s4" value="&lt;b&gt;Em Produção&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;móveis em fabricação&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="710" y="160" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="s5" value="&lt;b&gt;Instalação Agendada&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;data definida&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b9e0ff;strokeColor=#0099cc;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="924" y="160" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="s6" value="&lt;b&gt;Concluído&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#d7e8e3&#39;&gt;terminal — entregue&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#67ab9f;strokeColor=#23605a;fontColor=#ffffff;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="1200" y="160" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="s7" value="&lt;b&gt;Cancelado&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;terminal — sem reversão&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="496" y="404" width="158" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="fA" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;" parent="1" source="start" target="s1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fB" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;" parent="1" source="s1" target="s2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fC" value="exige: valor + custo + previsão" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=9;fontColor=#444444;" parent="1" source="s2" target="s3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fD" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;" parent="1" source="s3" target="s4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fE" value="exige: data de instalação" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=9;fontColor=#444444;" parent="1" source="s4" target="s5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fF" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;" parent="1" source="s5" target="s6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bA" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=0;entryX=0.75;entryY=0;strokeColor=#9a9a9a;" parent="1" source="s2" target="s1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="321" y="132"/>
+                            <mxPoint x="187" y="132"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bB" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=0;entryX=0.75;entryY=0;strokeColor=#9a9a9a;" parent="1" source="s3" target="s2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="535" y="132"/>
+                            <mxPoint x="401" y="132"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bC" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=0;entryX=0.75;entryY=0;strokeColor=#9a9a9a;" parent="1" source="s4" target="s3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="749" y="132"/>
+                            <mxPoint x="615" y="132"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bD" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=0;entryX=0.75;entryY=0;strokeColor=#9a9a9a;" parent="1" source="s5" target="s4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="963" y="132"/>
+                            <mxPoint x="829" y="132"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="sc" value="conclusão direta (sem etapa de instalação)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=0;strokeColor=#666666;dashed=1;fontSize=9;fontColor=#444444;" parent="1" source="s4" target="s6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="789" y="100"/>
+                            <mxPoint x="1279" y="100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cA" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.35;strokeColor=#b85450;dashed=1;" parent="1" source="s1" target="s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cB" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.3;entryY=0;strokeColor=#b85450;dashed=1;" parent="1" source="s2" target="s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cC" value="cancelar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b85450;dashed=1;fontSize=9;fontColor=#b85450;" parent="1" source="s3" target="s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cD" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.35;strokeColor=#b85450;dashed=1;" parent="1" source="s4" target="s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cE" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.7;strokeColor=#b85450;dashed=1;" parent="1" source="s5" target="s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#bbbbbb;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="68" y="510" width="600" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="legT" value="&lt;b&gt;Legenda&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="520" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legL1" value="──▶&amp;nbsp;&amp;nbsp;Avançar uma etapa" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="546" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legL2" value="──▶&amp;nbsp;&amp;nbsp;Retroceder uma etapa (permitido)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#9a9a9a;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="572" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legL3" value="- - ▶&amp;nbsp;&amp;nbsp;Conclusão direta (Em Produção → Concluído)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="598" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legL4" value="- - ▶&amp;nbsp;&amp;nbsp;Cancelamento (a partir de qualquer status não-terminal)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="624" width="360" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legSwInit" value="" style="ellipse;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="547" width="16" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="legSwInitT" value="Estado inicial (criação do pedido)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="444" y="546" width="220" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legSwOk" value="" style="rounded=1;html=1;fillColor=#67ab9f;strokeColor=#23605a;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="573" width="16" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="legSwOkT" value="Estado terminal — Concluído" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="444" y="572" width="220" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legSwX" value="" style="rounded=1;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="599" width="16" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="legSwXT" value="Estado terminal — Cancelado (não reversível)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="444" y="598" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="noteRules" value="&lt;b&gt;Validações de data (backend)&lt;/b&gt;&lt;br&gt;&lt;br&gt;• previsão de entrega e data de instalação não podem ser no passado;&lt;br&gt;• data de instalação não pode ser anterior à previsão de entrega;&lt;br&gt;• uma data já salva pode ser reenviada sem alteração." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff8dc;strokeColor=#d6b656;size=16;align=left;verticalAlign=top;fontSize=10;spacing=8;" parent="1" vertex="1">
+                    <mxGeometry x="724" y="510" width="468" height="150" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -1,0 +1,136 @@
+<mxfile host="65bd71144e">
+    <diagram name="Ciclo de Vida do Pedido" id="fluxo-pedido">
+        <mxGraphModel dx="2880" dy="822" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1320" pageHeight="1160" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Ciclo de Vida de um Pedido — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="32" y="18" width="660" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="laneC" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f4f8ff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="-10" y="100" width="404" height="1020" as="geometry"/>
+                </mxCell>
+                <mxCell id="laneS" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5fbf4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="448" y="100" width="424" height="1020" as="geometry"/>
+                </mxCell>
+                <mxCell id="laneA" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#faf6fc;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="892" y="100" width="404" height="1020" as="geometry"/>
+                </mxCell>
+                <mxCell id="hC" value="CLIENTE" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="-10" y="100" width="404" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hS" value="SISTEMA (Backend)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="448" y="100" width="424" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hA" value="ADMINISTRADOR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="892" y="100" width="404" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="start" value="" style="ellipse;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;" parent="1" vertex="1">
+                    <mxGeometry x="179" y="166" width="26" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="C1" value="Cria o pedido&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;/conta/pedidos/novo — contato, endereço e projeto&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="32" y="222" width="320" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="C2" value="Acompanha cada atualização&lt;br&gt;de status no portal&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;/conta/pedidos/[id] — detalhe + histórico&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="32" y="712" width="320" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="C3" value="&lt;b&gt;Recebe o projeto concluído&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;status final CONCLUÍDO&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#67ab9f;strokeColor=#23605a;fontColor=#ffffff;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="32" y="1000" width="320" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="S1" value="Valida os dados e cria o pedido&lt;br&gt;&lt;b&gt;order_number gerado · AGUARDANDO_ANALISE&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;registra a 1ª entrada do histórico (from_status = null)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="216" width="360" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="S2" value="Valida a transição solicitada&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;passo válido · campos obrigatórios · datas&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="520" width="360" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="Dval" value="Transição&lt;br&gt;válida?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="565" y="616" width="190" height="84" as="geometry"/>
+                </mxCell>
+                <mxCell id="S3" value="Atualiza o status e registra nova&lt;br&gt;entrada no histórico (append-only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="724" width="360" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="Dterm" value="Status atingiu&lt;br&gt;estado terminal?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="565" y="826" width="190" height="84" as="geometry"/>
+                </mxCell>
+                <mxCell id="Sterm" value="&lt;b&gt;Pedido finalizado&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;CONCLUÍDO ou CANCELADO — sem reversão&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="1000" width="360" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="A1" value="Vê o pedido no dashboard e&lt;br&gt;analisa os dados no painel admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="932" y="320" width="320" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="A2" value="Define a próxima transição de status&lt;br&gt;e preenche os campos exigidos&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;valor, custo, previsão de entrega, data de instalação&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="932" y="440" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Acancel" value="Cancela o pedido&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;possível em qualquer status não-terminal&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="932" y="836" width="320" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_start_c1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" parent="1" source="start" target="C1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_c1_s1" value="envia o formulário" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=9;" parent="1" source="C1" target="S1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_s1_a1" value="aparece no dashboard" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=9;" parent="1" source="S1" target="A1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1092" y="253"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ep_a1_a2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" parent="1" source="A1" target="A2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_a2_s2" value="solicita a transição" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#333333;fontSize=9;" parent="1" source="A2" target="S2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="892" y="480"/>
+                            <mxPoint x="892" y="552"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ep_s2_dval" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" parent="1" source="S2" target="Dval" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_dval_no" value="Não — erro de validação&lt;br&gt;admin corrige e reenvia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#b85450;dashed=1;fontSize=9;" parent="1" source="Dval" target="A2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1092" y="658"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ep_dval_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" parent="1" source="Dval" target="S3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_s3_c2" value="cliente vê a atualização" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#333333;fontSize=9;" parent="1" source="S3" target="C2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_s3_dterm" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" parent="1" source="S3" target="Dterm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_dterm_no" value="Não — próxima etapa&lt;br&gt;(repete até CONCLUÍDO)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#9673a6;dashed=1;fontSize=9;" parent="1" source="Dterm" target="A2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1272" y="868"/>
+                            <mxPoint x="1272" y="540"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ep_dterm_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" parent="1" source="Dterm" target="Sterm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_sterm_c3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#333333;" parent="1" source="Sterm" target="C3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_a2_cancel" value="cancelamento" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b85450;dashed=1;fontSize=9;" parent="1" source="A2" target="Acancel" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ep_cancel_dterm" value="registra CANCELADO" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#b85450;dashed=1;fontSize=9;" parent="1" source="Acancel" target="Dterm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="noteSeq" value="&lt;b&gt;Sequência de status (avanço normal)&lt;/b&gt;&lt;br&gt;&lt;br&gt;AGUARDANDO_ANALISE → EM_ORCAMENTO → APROVADO →&lt;br&gt;EM_PRODUCAO → INSTALACAO_AGENDADA → CONCLUIDO&lt;br&gt;&lt;br&gt;• retroceder uma etapa é permitido;&lt;br&gt;• EM_PRODUCAO pode ir direto para CONCLUIDO;&lt;br&gt;• CANCELADO a partir de qualquer status não-terminal;&lt;br&gt;• campos do cliente/projeto só editáveis em AGUARDANDO_ANALISE." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff8dc;strokeColor=#d6b656;size=16;align=left;verticalAlign=top;fontSize=10;spacing=8;" parent="1" vertex="1">
+                    <mxGeometry x="932" y="956" width="320" height="150" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
