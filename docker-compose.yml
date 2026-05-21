@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: marcenaria
+      POSTGRES_PASSWORD: marcenaria
+      POSTGRES_DB: marcenaria_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marcenaria -d marcenaria_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://marcenaria:marcenaria@db:5432/marcenaria_dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./migrations:/app/migrations
+      - ./alembic.ini:/app/alembic.ini
+      - ./tests:/app/tests
+      - ./pyproject.toml:/app/pyproject.toml
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
