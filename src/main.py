@@ -50,7 +50,9 @@ app.add_middleware(
 )
 
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_handler)
+# slowapi's handler signature (Request, RateLimitExceeded) is narrower than Starlette's
+# (Request, Exception); this is the documented slowapi pattern.
+app.add_exception_handler(RateLimitExceeded, _rate_limit_handler)  # type: ignore[arg-type]
 
 app.include_router(auth_router)
 app.include_router(orders_router)

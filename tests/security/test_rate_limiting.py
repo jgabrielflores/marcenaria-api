@@ -2,6 +2,7 @@
 Rate-limiting verification.
 Source: OWASP Testing Guide v4.2 — OTG-AUTHN-003 (account lockout / brute-force)
 """
+
 import pytest
 
 
@@ -15,25 +16,33 @@ def test_excessive_login_attempts_are_rate_limited(client):
     """
     statuses = []
     for _ in range(15):
-        resp = client.post("/auth/login", json={
-            "email": "brute@test.com",
-            "password": "wrongpassword",
-        })
+        resp = client.post(
+            "/auth/login",
+            json={
+                "email": "brute@test.com",
+                "password": "wrongpassword",
+            },
+        )
         statuses.append(resp.status_code)
         if resp.status_code == 429:
             break
 
-    assert 429 in statuses, f"Rate limit was not triggered after {len(statuses)} attempts: {statuses}"
+    assert 429 in statuses, (
+        f"Rate limit was not triggered after {len(statuses)} attempts: {statuses}"
+    )
 
 
 @pytest.mark.security
 def test_rate_limit_response_uses_detail_shape(client):
     """The 429 response must follow the standard {"detail": "..."} error shape."""
     for _ in range(15):
-        resp = client.post("/auth/login", json={
-            "email": "brute2@test.com",
-            "password": "wrongpassword",
-        })
+        resp = client.post(
+            "/auth/login",
+            json={
+                "email": "brute2@test.com",
+                "password": "wrongpassword",
+            },
+        )
         if resp.status_code == 429:
             body = resp.json()
             assert "detail" in body

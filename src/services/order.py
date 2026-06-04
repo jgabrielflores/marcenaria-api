@@ -1,8 +1,9 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 
-from fastapi import HTTPException, status as http_status
+from fastapi import HTTPException
+from fastapi import status as http_status
 from sqlalchemy import func
 from sqlalchemy.orm import Session, selectinload
 
@@ -141,12 +142,7 @@ def list_orders(
     elif status is not None:
         q = q.filter(Order.status == status)
     total = q.count()
-    items = (
-        q.order_by(Order.created_at.desc())
-        .offset((page - 1) * limit)
-        .limit(limit)
-        .all()
-    )
+    items = q.order_by(Order.created_at.desc()).offset((page - 1) * limit).limit(limit).all()
     return items, total
 
 
@@ -168,7 +164,7 @@ def update_order_admin(
 
     # A newly set scheduling date cannot be in the past (an existing past
     # date may be re-sent unchanged by the edit form — that is allowed).
-    today = datetime.now(timezone.utc).date()
+    today = datetime.now(UTC).date()
     for date_field in ("due_date", "install_date"):
         if date_field in fields:
             value = fields[date_field]
@@ -221,11 +217,11 @@ def update_order_admin(
 def dashboard_summary(
     db: Session, year: int | None = None, month: int | None = None
 ) -> DashboardSummary:
-    counts = {s: 0 for s in OrderStatus}
+    counts = dict.fromkeys(OrderStatus, 0)
     for row_status, count in db.query(Order.status, func.count(Order.id)).group_by(Order.status):
         counts[row_status] = count
 
-    today = datetime.now(timezone.utc).date()
+    today = datetime.now(UTC).date()
     if year is not None and month is not None:
         month_start = today.replace(year=year, month=month, day=1)
     else:

@@ -2,6 +2,7 @@
 Access-control attack simulations.
 Source: OWASP Testing Guide v4.2 — OTG-AUTHZ-001 (IDOR), OTG-AUTHZ-002 (privilege escalation)
 """
+
 import pytest
 
 from tests.conftest import ORDER_PAYLOAD

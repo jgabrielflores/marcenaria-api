@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from fastapi import HTTPException, status
 from jose import JWTError, jwt
@@ -45,9 +45,7 @@ def authenticate_user(db: Session, email: str, password: str) -> User:
     if not pwd_context.verify(password, user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid credentials")
     if not user.email_verified:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="EMAIL_NOT_VERIFIED"
-        )
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="EMAIL_NOT_VERIFIED")
     return user
 
 
@@ -56,7 +54,7 @@ def create_access_token(user: User) -> str:
     payload = {
         "sub": str(user.id),
         "role": user.role.value,
-        "exp": datetime.now(timezone.utc) + timedelta(minutes=settings.access_token_expire_minutes),
+        "exp": datetime.now(UTC) + timedelta(minutes=settings.access_token_expire_minutes),
     }
     return jwt.encode(payload, settings.secret_key.get_secret_value(), algorithm=settings.algorithm)
 
@@ -66,7 +64,7 @@ def create_verification_token(user: User) -> str:
     payload = {
         "sub": str(user.id),
         "purpose": _VERIFY_PURPOSE,
-        "exp": datetime.now(timezone.utc) + timedelta(hours=24),
+        "exp": datetime.now(UTC) + timedelta(hours=24),
     }
     return jwt.encode(payload, settings.secret_key.get_secret_value(), algorithm=settings.algorithm)
 
@@ -78,7 +76,7 @@ def verify_email(db: Session, token: str) -> User:
             token, settings.secret_key.get_secret_value(), algorithms=[settings.algorithm]
         )
     except JWTError:
-        raise _INVALID_VERIFICATION
+        raise _INVALID_VERIFICATION from None
 
     if payload.get("purpose") != _VERIFY_PURPOSE:
         raise _INVALID_VERIFICATION
@@ -86,7 +84,7 @@ def verify_email(db: Session, token: str) -> User:
     try:
         user_id = uuid.UUID(payload.get("sub", ""))
     except ValueError:
-        raise _INVALID_VERIFICATION
+        raise _INVALID_VERIFICATION from None
 
     user = db.get(User, user_id)
     if user is None:

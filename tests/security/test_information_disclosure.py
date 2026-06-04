@@ -2,6 +2,7 @@
 Information-disclosure attack simulations.
 Source: OWASP Testing Guide v4.2 — OTG-INFO, OWASP ASVS v4 §2.2 (authentication error uniformity)
 """
+
 import pytest
 
 from src.models.user import User
@@ -15,20 +16,29 @@ def test_wrong_email_and_wrong_password_return_identical_error(client):
     Differing messages allow an attacker to enumerate valid e-mail addresses.
     (OWASP ASVS v4 §2.2.2)
     """
-    client.post("/auth/register", json={
-        "name": "Known",
-        "email": "known@test.com",
-        "password": "password123",
-    })
+    client.post(
+        "/auth/register",
+        json={
+            "name": "Known",
+            "email": "known@test.com",
+            "password": "password123",
+        },
+    )
 
-    resp_unknown = client.post("/auth/login", json={
-        "email": "unknown@test.com",
-        "password": "anypassword",
-    })
-    resp_wrong_pw = client.post("/auth/login", json={
-        "email": "known@test.com",
-        "password": "wrongpassword",
-    })
+    resp_unknown = client.post(
+        "/auth/login",
+        json={
+            "email": "unknown@test.com",
+            "password": "anypassword",
+        },
+    )
+    resp_wrong_pw = client.post(
+        "/auth/login",
+        json={
+            "email": "known@test.com",
+            "password": "wrongpassword",
+        },
+    )
 
     assert resp_unknown.status_code == 401
     assert resp_wrong_pw.status_code == 401
@@ -38,11 +48,14 @@ def test_wrong_email_and_wrong_password_return_identical_error(client):
 
 @pytest.mark.security
 def test_register_response_never_exposes_password_hash(client):
-    resp = client.post("/auth/register", json={
-        "name": "Alice",
-        "email": "alice@test.com",
-        "password": "password123",
-    })
+    resp = client.post(
+        "/auth/register",
+        json={
+            "name": "Alice",
+            "email": "alice@test.com",
+            "password": "password123",
+        },
+    )
     assert resp.status_code == 201
     body = resp.json()
     assert "password_hash" not in body
@@ -51,19 +64,25 @@ def test_register_response_never_exposes_password_hash(client):
 
 @pytest.mark.security
 def test_login_response_never_exposes_password_hash(client, db):
-    client.post("/auth/register", json={
-        "name": "Alice",
-        "email": "alice@test.com",
-        "password": "password123",
-    })
+    client.post(
+        "/auth/register",
+        json={
+            "name": "Alice",
+            "email": "alice@test.com",
+            "password": "password123",
+        },
+    )
     user = db.query(User).filter(User.email == "alice@test.com").first()
     user.email_verified = True
     db.flush()
 
-    resp = client.post("/auth/login", json={
-        "email": "alice@test.com",
-        "password": "password123",
-    })
+    resp = client.post(
+        "/auth/login",
+        json={
+            "email": "alice@test.com",
+            "password": "password123",
+        },
+    )
     assert resp.status_code == 200
     body = resp.json()
     assert "password_hash" not in body

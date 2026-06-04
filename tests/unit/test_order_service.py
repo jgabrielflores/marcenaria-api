@@ -1,5 +1,5 @@
 import uuid
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 
 import pytest
 from fastapi import HTTPException
@@ -51,8 +51,8 @@ def _make_order(user_id: uuid.UUID, status: OrderStatus = OrderStatus.AGUARDANDO
     order.due_date = None
     order.install_date = None
     order.admin_notes = None
-    order.created_at = datetime.now(timezone.utc)
-    order.updated_at = datetime.now(timezone.utc)
+    order.created_at = datetime.now(UTC)
+    order.updated_at = datetime.now(UTC)
     return order
 
 
@@ -69,6 +69,7 @@ def _body() -> OrderCreate:
 
 
 # ── is_valid_transition ───────────────────────────────────────────────────────
+
 
 @pytest.mark.unit
 def test_valid_transition_forward_step_is_allowed():
@@ -117,6 +118,7 @@ def test_valid_transition_cannot_leave_cancelled():
 
 
 # ── create_order ──────────────────────────────────────────────────────────────
+
 
 @pytest.mark.unit
 def test_create_order_starts_in_aguardando_analise(mock_db):
@@ -171,6 +173,7 @@ def test_create_order_keeps_client_name_for_admin(mock_db):
 
 # ── list_orders ───────────────────────────────────────────────────────────────
 
+
 @pytest.mark.unit
 def test_list_orders_customer_sees_only_own_orders(mock_db):
     user = _make_user(Role.CUSTOMER)
@@ -203,6 +206,7 @@ def test_list_orders_admin_sees_all_orders(mock_db):
 
 
 # ── get_order ─────────────────────────────────────────────────────────────────
+
 
 @pytest.mark.unit
 def test_get_order_owner_can_read_own_order(mock_db):
@@ -237,6 +241,7 @@ def test_get_order_customer_cannot_read_another_users_order(mock_db):
 
 # ── update_order_admin ────────────────────────────────────────────────────────
 
+
 @pytest.mark.unit
 def test_update_order_admin_advances_status_and_records_history(mock_db):
     admin = _make_user(Role.ADMIN)
@@ -261,9 +266,7 @@ def test_update_order_admin_invalid_transition_raises_409(mock_db):
     mock_db.get.return_value = order
 
     with pytest.raises(HTTPException) as exc:
-        update_order_admin(
-            mock_db, admin, order.id, OrderUpdateAdmin(status=OrderStatus.CONCLUIDO)
-        )
+        update_order_admin(mock_db, admin, order.id, OrderUpdateAdmin(status=OrderStatus.CONCLUIDO))
 
     assert exc.value.status_code == 409
 
@@ -275,9 +278,7 @@ def test_update_order_admin_aprovado_without_required_fields_raises_400(mock_db)
     mock_db.get.return_value = order
 
     with pytest.raises(HTTPException) as exc:
-        update_order_admin(
-            mock_db, admin, order.id, OrderUpdateAdmin(status=OrderStatus.APROVADO)
-        )
+        update_order_admin(mock_db, admin, order.id, OrderUpdateAdmin(status=OrderStatus.APROVADO))
 
     assert exc.value.status_code == 400
 
@@ -306,9 +307,7 @@ def test_update_order_admin_rejects_due_date_in_the_past(mock_db):
     mock_db.get.return_value = order
 
     with pytest.raises(HTTPException) as exc:
-        update_order_admin(
-            mock_db, admin, order.id, OrderUpdateAdmin(due_date=date(2020, 1, 1))
-        )
+        update_order_admin(mock_db, admin, order.id, OrderUpdateAdmin(due_date=date(2020, 1, 1)))
 
     assert exc.value.status_code == 400
 
@@ -334,7 +333,10 @@ def test_update_order_admin_not_found_raises_404(mock_db):
 
     with pytest.raises(HTTPException) as exc:
         update_order_admin(
-            mock_db, _make_user(Role.ADMIN), uuid.uuid4(), OrderUpdateAdmin(status=OrderStatus.EM_ORCAMENTO)
+            mock_db,
+            _make_user(Role.ADMIN),
+            uuid.uuid4(),
+            OrderUpdateAdmin(status=OrderStatus.EM_ORCAMENTO),
         )
 
     assert exc.value.status_code == 404
@@ -354,6 +356,7 @@ def test_update_order_admin_can_cancel_from_non_terminal(mock_db):
 
 
 # ── serialize_order (redaction) ───────────────────────────────────────────────
+
 
 @pytest.mark.unit
 def test_serialize_order_hides_financials_from_customer():
@@ -419,7 +422,7 @@ def test_serialize_order_includes_history_entries():
         from_status=None, to_status=OrderStatus.AGUARDANDO_ANALISE, note="Pedido criado"
     )
     entry.id = uuid.uuid4()
-    entry.created_at = datetime.now(timezone.utc)
+    entry.created_at = datetime.now(UTC)
     order.history.append(entry)
 
     view = serialize_order(order, viewer_is_admin=True)
