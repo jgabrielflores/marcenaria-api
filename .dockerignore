@@ -1,0 +1,45 @@
+# Keep the build context small and the image clean.
+# The backend image only needs src/, migrations/, alembic.ini, pyproject.toml,
+# and entrypoint.sh (all copied explicitly in the Dockerfile).
+
+# Python virtual envs and caches
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Frontend is a separate Railway service — never ship it inside the backend image
+frontend/
+
+# Tests are not needed in the production image
+tests/
+
+# Version control and CI
+.git/
+.github/
+
+# Secrets and local env files (defense in depth — never bake these in)
+.env
+.env.*
+*.pem
+*.key
+
+# Editor / OS / tooling noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.agents/
+.claude/
+
+# Docs and planning artifacts (not needed at runtime)
+docs/
+*.md

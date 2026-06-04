@@ -20,10 +20,20 @@ RUN pip install --no-cache-dir "."
 COPY src/ ./src/
 COPY migrations/ ./migrations/
 COPY alembic.ini ./
+COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 RUN chown -R app:app /app
 
 USER app
 
+# EXPOSE is documentation only. The real listening port is decided at runtime
+# via $PORT (see entrypoint.sh) — the platform may assign a different port.
 EXPOSE 8000
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Container-level health check: hits /health on the runtime port.
+# Uses Python (always present) instead of curl, which slim images omit.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD python -c "import os,urllib.request; urllib.request.urlopen('http://localhost:' + os.environ.get('PORT','8000') + '/health')" || exit 1
+
+# Delegate startup to the entrypoint: migrate -> seed -> serve on $PORT.
+CMD ["./entrypoint.sh"]

@@ -1,0 +1,15 @@
+# Line-ending normalization.
+#
+# Shell scripts and the Dockerfile are executed inside Linux containers.
+# They MUST use LF line endings even when the repo is checked out on Windows,
+# otherwise the container fails with errors like "/usr/bin/env: 'sh\r': No such file".
+*.sh        text eol=lf
+entrypoint.sh text eol=lf
+Dockerfile  text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+
+# Windows-only scripts keep CRLF
+*.ps1       text eol=crlf
+*.cmd       text eol=crlf
+*.bat       text eol=crlf
