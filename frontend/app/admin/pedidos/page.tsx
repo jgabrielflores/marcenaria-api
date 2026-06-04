@@ -84,7 +84,12 @@ export default function AdminPedidosPage() {
         <Link
           href="/admin/pedidos/novo"
           className="btn-ink"
-          style={{ ...inkButtonStyle, padding: "0.7rem 1.5rem", fontSize: "0.72rem", whiteSpace: "nowrap" }}
+          style={{
+            ...inkButtonStyle,
+            padding: "0.7rem 1.5rem",
+            fontSize: "0.72rem",
+            whiteSpace: "nowrap",
+          }}
         >
           Novo pedido <ArrowRight size={12} />
         </Link>

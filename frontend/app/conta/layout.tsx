@@ -29,7 +29,12 @@ export default function ContaLayout({ children }: { children: React.ReactNode })
         >
           <Link
             href="/"
-            style={{ display: "flex", alignItems: "center", gap: "0.875rem", textDecoration: "none" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.875rem",
+              textDecoration: "none",
+            }}
           >
             <Image
               src="/imagens/logoPNG.png"
