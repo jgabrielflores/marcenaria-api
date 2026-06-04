@@ -2,10 +2,11 @@
 JWT authentication attack simulations.
 Source: OWASP Testing Guide v4.2 — OTG-AUTHN-006
 """
+
 import base64
 import json
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from jose import jwt
@@ -20,7 +21,7 @@ def _token_with_delta(user_id: uuid.UUID, role: Role, delta: timedelta) -> str:
     payload = {
         "sub": str(user_id),
         "role": role.value,
-        "exp": datetime.now(timezone.utc) + delta,
+        "exp": datetime.now(UTC) + delta,
     }
     return jwt.encode(payload, settings.secret_key.get_secret_value(), algorithm=settings.algorithm)
 
@@ -60,7 +61,7 @@ def test_token_signed_with_wrong_key_returns_401(client, db):
     payload = {
         "sub": str(user.id),
         "role": Role.CUSTOMER.value,
-        "exp": datetime.now(timezone.utc) + timedelta(hours=1),
+        "exp": datetime.now(UTC) + timedelta(hours=1),
     }
     token = jwt.encode(payload, "wrong-secret-key-32-characters--!", algorithm="HS256")
 
@@ -73,16 +74,24 @@ def test_token_signed_with_wrong_key_returns_401(client, db):
 def test_alg_none_attack_is_rejected(client, db):
     """Attacker crafts a token with alg:none to bypass signature validation."""
     user = _make_user(db)
-    header = base64.urlsafe_b64encode(
-        json.dumps({"alg": "none", "typ": "JWT"}).encode()
-    ).rstrip(b"=").decode()
-    payload_b64 = base64.urlsafe_b64encode(
-        json.dumps({
-            "sub": str(user.id),
-            "role": "ADMIN",
-            "exp": int((datetime.now(timezone.utc) + timedelta(hours=1)).timestamp()),
-        }).encode()
-    ).rstrip(b"=").decode()
+    header = (
+        base64.urlsafe_b64encode(json.dumps({"alg": "none", "typ": "JWT"}).encode())
+        .rstrip(b"=")
+        .decode()
+    )
+    payload_b64 = (
+        base64.urlsafe_b64encode(
+            json.dumps(
+                {
+                    "sub": str(user.id),
+                    "role": "ADMIN",
+                    "exp": int((datetime.now(UTC) + timedelta(hours=1)).timestamp()),
+                }
+            ).encode()
+        )
+        .rstrip(b"=")
+        .decode()
+    )
     token = f"{header}.{payload_b64}."
 
     resp = client.get("/api/v1/orders", headers={"Authorization": f"Bearer {token}"})
@@ -119,9 +128,11 @@ def test_nonexistent_user_id_in_valid_token_returns_401(client):
     payload = {
         "sub": str(uuid.uuid4()),
         "role": Role.CUSTOMER.value,
-        "exp": datetime.now(timezone.utc) + timedelta(hours=1),
+        "exp": datetime.now(UTC) + timedelta(hours=1),
     }
-    token = jwt.encode(payload, settings.secret_key.get_secret_value(), algorithm=settings.algorithm)
+    token = jwt.encode(
+        payload, settings.secret_key.get_secret_value(), algorithm=settings.algorithm
+    )
 
     resp = client.get("/api/v1/orders", headers={"Authorization": f"Bearer {token}"})
 

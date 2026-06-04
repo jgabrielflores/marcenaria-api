@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -11,16 +11,18 @@ from src.services.auth import (
     authenticate_user,
     create_access_token,
     create_verification_token,
-    pwd_context as _pwd,
     register_user,
     verify_email,
+)
+from src.services.auth import (
+    pwd_context as _pwd,
 )
 
 
 def _fake_refresh(obj: User) -> None:
     obj.id = uuid.uuid4()
-    obj.created_at = datetime.now(timezone.utc)
-    obj.updated_at = datetime.now(timezone.utc)
+    obj.created_at = datetime.now(UTC)
+    obj.updated_at = datetime.now(UTC)
 
 
 @pytest.mark.unit
@@ -28,7 +30,9 @@ def test_register_user_returns_user_domain_object(mock_db):
     mock_db.query.return_value.filter.return_value.first.return_value = None
     mock_db.refresh.side_effect = _fake_refresh
 
-    result = register_user(mock_db, RegisterRequest(name="Alice", email="alice@example.com", password="password123"))
+    result = register_user(
+        mock_db, RegisterRequest(name="Alice", email="alice@example.com", password="password123")
+    )
 
     assert result.email == "alice@example.com"
     assert result.role == Role.CUSTOMER
@@ -38,10 +42,15 @@ def test_register_user_returns_user_domain_object(mock_db):
 
 @pytest.mark.unit
 def test_register_user_with_duplicate_email_raises_409(mock_db):
-    mock_db.query.return_value.filter.return_value.first.return_value = User(email="alice@example.com")
+    mock_db.query.return_value.filter.return_value.first.return_value = User(
+        email="alice@example.com"
+    )
 
     with pytest.raises(HTTPException) as exc:
-        register_user(mock_db, RegisterRequest(name="Alice", email="alice@example.com", password="password123"))
+        register_user(
+            mock_db,
+            RegisterRequest(name="Alice", email="alice@example.com", password="password123"),
+        )
 
     assert exc.value.status_code == 409
 

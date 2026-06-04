@@ -23,9 +23,7 @@ def test_send_verification_email_logs_link_when_provider_not_configured():
                 send_verification_email("customer@test.com", "the-token")
 
     mock_urlopen.assert_not_called()
-    logged = " ".join(
-        str(arg) for call in mock_logger.info.call_args_list for arg in call.args
-    )
+    logged = " ".join(str(arg) for call in mock_logger.info.call_args_list for arg in call.args)
     assert "the-token" in logged
 
 

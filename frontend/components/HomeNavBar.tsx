@@ -7,23 +7,32 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const C = {
-  bg:     "oklch(1.000 0.000 0)",
-  text:   "oklch(0.10 0.006 0)",
-  sub:    "oklch(0.40 0.004 0)",
-  ink:    "oklch(0.12 0.006 0)",
-  inkFg:  "oklch(1.000 0.000 0)",
+  bg: "oklch(1.000 0.000 0)",
+  text: "oklch(0.10 0.006 0)",
+  sub: "oklch(0.40 0.004 0)",
+  ink: "oklch(0.12 0.006 0)",
+  inkFg: "oklch(1.000 0.000 0)",
   border: "oklch(0.88 0.003 0)",
 } as const;
 
 const NAV_LINKS = [
-  { label: "Home",     href: "#top",       section: "top" },
-  { label: "Sobre",    href: "#filosofia", section: "filosofia" },
-  { label: "Contatos", href: "#contato",   section: "contato" },
-  { label: "Entrar",   href: "/login",     section: "" },
+  { label: "Home", href: "#top", section: "top" },
+  { label: "Sobre", href: "#filosofia", section: "filosofia" },
+  { label: "Contatos", href: "#contato", section: "contato" },
+  { label: "Entrar", href: "/login", section: "" },
 ] as const;
 
 const InstagramIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
     <circle cx="12" cy="12" r="4" />
     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -44,7 +53,7 @@ export function HomeNavBar() {
           if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 },
     );
     ids.forEach((id) => {
       const el = document.getElementById(id);
@@ -96,7 +105,6 @@ export function HomeNavBar() {
 
         {/* ── Bloco direito: nav + CTA + instagram + hamburger ── */}
         <div style={{ display: "flex", alignItems: "center" }}>
-
           {/* Desktop nav */}
           <nav className="home-nav-desktop">
             {NAV_LINKS.map(({ label, href, section }) => {
@@ -193,13 +201,15 @@ export function HomeNavBar() {
             gap: "1.1rem",
           }}
         >
-          {([
-            { label: "Home",               href: "#top",       isBtn: false, isLink: false },
-            { label: "Sobre",              href: "#filosofia", isBtn: false, isLink: false },
-            { label: "Contatos",           href: "#contato",   isBtn: false, isLink: false },
-            { label: "Entrar",             href: "/login",     isBtn: false, isLink: true  },
-            { label: "Solicite seu Projeto", href: "#contato",  isBtn: true,  isLink: false },
-          ] as const).map(({ label, href, isBtn, isLink }) => {
+          {(
+            [
+              { label: "Home", href: "#top", isBtn: false, isLink: false },
+              { label: "Sobre", href: "#filosofia", isBtn: false, isLink: false },
+              { label: "Contatos", href: "#contato", isBtn: false, isLink: false },
+              { label: "Entrar", href: "/login", isBtn: false, isLink: true },
+              { label: "Solicite seu Projeto", href: "#contato", isBtn: true, isLink: false },
+            ] as const
+          ).map(({ label, href, isBtn, isLink }) => {
             const itemStyle: CSSProperties = {
               display: "block",
               textAlign: "right",

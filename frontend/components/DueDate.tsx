@@ -12,18 +12,8 @@ export function isOverdue(dueDate: string | null, status: OrderStatus): boolean 
   return new Date(parsed) < today;
 }
 
-export function DueDate({
-  dueDate,
-  status,
-}: {
-  dueDate: string | null;
-  status: OrderStatus;
-}) {
+export function DueDate({ dueDate, status }: { dueDate: string | null; status: OrderStatus }) {
   if (!dueDate) return <span>—</span>;
   if (!isOverdue(dueDate, status)) return <span>{formatDate(dueDate)}</span>;
-  return (
-    <span style={{ color: C.danger, fontWeight: 600 }}>
-      {formatDate(dueDate)} · Atrasado
-    </span>
-  );
+  return <span style={{ color: C.danger, fontWeight: 600 }}>{formatDate(dueDate)} · Atrasado</span>;
 }

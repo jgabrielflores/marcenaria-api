@@ -1,12 +1,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Phone,
-  MapPin,
-  ArrowRight,
-  MessageCircle,
-} from "lucide-react";
+import { Phone, MapPin, ArrowRight, MessageCircle } from "lucide-react";
 import { HomeNavBar } from "@/components/HomeNavBar";
 import { Lightbox } from "@/components/Lightbox";
 
@@ -22,13 +17,13 @@ import { Lightbox } from "@/components/Lightbox";
    ───────────────────────────────────────────────────────────────────────────── */
 
 const C = {
-  bg:        "oklch(1.000 0.000 0)",
-  text:      "oklch(0.10 0.006 0)",
-  textSub:   "oklch(0.40 0.004 0)",
+  bg: "oklch(1.000 0.000 0)",
+  text: "oklch(0.10 0.006 0)",
+  textSub: "oklch(0.40 0.004 0)",
   textLight: "oklch(0.62 0.002 0)",
-  ink:       "oklch(0.12 0.006 0)",
-  inkFg:     "oklch(1.000 0.000 0)",
-  border:    "oklch(0.88 0.003 0)",
+  ink: "oklch(0.12 0.006 0)",
+  inkFg: "oklch(1.000 0.000 0)",
+  border: "oklch(0.88 0.003 0)",
 } as const;
 
 /* Shared styles for section labels */
@@ -246,18 +241,18 @@ function Philosophy() {
           </h2>
 
           <p style={{ fontSize: "0.975rem", lineHeight: 1.8, color: C.textSub }}>
-            A Ramos Planejados nasceu com o propósito de transformar ambientes através de
-            móveis planejados que unem funcionalidade, sofisticação e personalidade.
+            A Ramos Planejados nasceu com o propósito de transformar ambientes através de móveis
+            planejados que unem funcionalidade, sofisticação e personalidade.
           </p>
           <p style={{ fontSize: "0.975rem", lineHeight: 1.8, color: C.textSub }}>
-            Acreditamos que cada espaço deve refletir o estilo e as necessidades de quem
-            vive nele. Por isso, desenvolvemos projetos sob medida, pensados para otimizar
-            ambientes e proporcionar conforto, organização e praticidade no dia a dia.
+            Acreditamos que cada espaço deve refletir o estilo e as necessidades de quem vive nele.
+            Por isso, desenvolvemos projetos sob medida, pensados para otimizar ambientes e
+            proporcionar conforto, organização e praticidade no dia a dia.
           </p>
           <p style={{ fontSize: "0.975rem", lineHeight: 1.8, color: C.textSub }}>
-            Trabalhamos com dedicação em cada detalhe, criando soluções para cozinhas,
-            dormitórios, closets, salas, banheiros, espaços corporativos e muito mais.
-            Nosso compromisso é entregar ambientes modernos, aconchegantes e feitos para durar.
+            Trabalhamos com dedicação em cada detalhe, criando soluções para cozinhas, dormitórios,
+            closets, salas, banheiros, espaços corporativos e muito mais. Nosso compromisso é
+            entregar ambientes modernos, aconchegantes e feitos para durar.
           </p>
 
           <a
@@ -280,7 +275,10 @@ function Philosophy() {
         </div>
 
         {/* Image column */}
-        <Lightbox src="/imagens/projetos/armarioChurrasqueira2.png" alt="Cozinha planejada Ramos Planejados">
+        <Lightbox
+          src="/imagens/projetos/armarioChurrasqueira2.png"
+          alt="Cozinha planejada Ramos Planejados"
+        >
           <div
             style={{
               position: "relative",
@@ -313,13 +311,11 @@ const differentials = [
   },
   {
     title: "Personalização",
-    description:
-      "Cada detalhe pensado para refletir seu espaço, sua rotina e seu estilo de vida.",
+    description: "Cada detalhe pensado para refletir seu espaço, sua rotina e seu estilo de vida.",
   },
   {
     title: "Qualidade",
-    description:
-      "Materiais selecionados, acabamento refinado e atenção em cada etapa da produção.",
+    description: "Materiais selecionados, acabamento refinado e atenção em cada etapa da produção.",
   },
 ] as const;
 
@@ -338,9 +334,15 @@ function GoldStar() {
 
 function Differentials() {
   return (
-    <section style={{ background: C.bg, padding: "5rem 2rem", borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
+    <section
+      style={{
+        background: C.bg,
+        padding: "5rem 2rem",
+        borderTop: `1px solid ${C.border}`,
+        borderBottom: `1px solid ${C.border}`,
+      }}
+    >
       <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
-
         {/* Title */}
         <h2
           className="font-heading"
@@ -354,9 +356,7 @@ function Differentials() {
             marginBottom: "1rem",
           }}
         >
-          O Diferencial da{" "}
-          <span style={{ color: "oklch(0.72 0.14 82)" }}>Ramos</span>{" "}
-          Planejados
+          O Diferencial da <span style={{ color: "oklch(0.72 0.14 82)" }}>Ramos</span> Planejados
         </h2>
 
         {/* Decorative line */}
@@ -406,7 +406,6 @@ function Differentials() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
@@ -420,7 +419,9 @@ function Gallery() {
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Header */}
         <div style={{ marginBottom: "3.5rem" }}>
-          <span style={{ ...labelStyle, marginBottom: "0.75rem", display: "block" }}>Portfólio</span>
+          <span style={{ ...labelStyle, marginBottom: "0.75rem", display: "block" }}>
+            Portfólio
+          </span>
           <h2
             className="font-heading"
             style={{
@@ -570,26 +571,22 @@ const steps = [
   {
     n: "01",
     title: "Sua ideia",
-    description:
-      "Cada projeto começa entendendo seu espaço, sua rotina e seu estilo.",
+    description: "Cada projeto começa entendendo seu espaço, sua rotina e seu estilo.",
   },
   {
     n: "02",
     title: "Desenvolvimento",
-    description:
-      "Planejamos cada detalhe para unir funcionalidade, conforto e sofisticação.",
+    description: "Planejamos cada detalhe para unir funcionalidade, conforto e sofisticação.",
   },
   {
     n: "03",
     title: "Produção",
-    description:
-      "Móveis produzidos sob medida, com acabamento refinado e atenção em cada etapa.",
+    description: "Móveis produzidos sob medida, com acabamento refinado e atenção em cada etapa.",
   },
   {
     n: "04",
     title: "Instalação",
-    description:
-      "Entrega e montagem realizadas com cuidado para um resultado impecável.",
+    description: "Entrega e montagem realizadas com cuidado para um resultado impecável.",
   },
 ] as const;
 
@@ -674,9 +671,17 @@ function HowItWorks() {
             gap: "1.5rem",
           }}
         >
-          <p style={{ fontSize: "0.95rem", color: C.textSub, maxWidth: "460px", lineHeight: 1.75, margin: 0 }}>
-            Prefere conversar antes? Entre em contato diretamente pelo WhatsApp ou telefone,
-            estamos à disposição.
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: C.textSub,
+              maxWidth: "460px",
+              lineHeight: 1.75,
+              margin: 0,
+            }}
+          >
+            Prefere conversar antes? Entre em contato diretamente pelo WhatsApp ou telefone, estamos
+            à disposição.
           </p>
           <a
             href="#contato"
@@ -733,7 +738,11 @@ function Contact() {
                 marginBottom: "1rem",
               }}
             >
-              <MapPin size={16} style={{ color: C.ink, flexShrink: 0, marginTop: "2px" }} strokeWidth={1.5} />
+              <MapPin
+                size={16}
+                style={{ color: C.ink, flexShrink: 0, marginTop: "2px" }}
+                strokeWidth={1.5}
+              />
               <div>
                 <p
                   style={{
@@ -833,9 +842,11 @@ function Contact() {
               <br />
               seu móvel?
             </h2>
-            <p style={{ fontSize: "0.95rem", lineHeight: 1.8, color: C.textSub, maxWidth: "400px" }}>
-              Descreva o que você imagina. Nossa equipe entra em contato em até 48 horas
-              para discutir materiais, medidas e prazos.
+            <p
+              style={{ fontSize: "0.95rem", lineHeight: 1.8, color: C.textSub, maxWidth: "400px" }}
+            >
+              Descreva o que você imagina. Nossa equipe entra em contato em até 48 horas para
+              discutir materiais, medidas e prazos.
             </p>
           </div>
 
@@ -903,9 +914,7 @@ function Footer() {
           <p style={{ fontSize: "0.82rem", color: C.textSub, margin: 0 }}>
             Segunda à Sexta: 09h às 20h
           </p>
-          <p style={{ fontSize: "0.82rem", color: C.textSub, margin: 0 }}>
-            Sábado: 09h às 16h
-          </p>
+          <p style={{ fontSize: "0.82rem", color: C.textSub, margin: 0 }}>Sábado: 09h às 16h</p>
         </div>
 
         {/* Contact */}
@@ -943,7 +952,16 @@ function Footer() {
               transition: "color 0.18s ease",
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
               <circle cx="12" cy="12" r="4" />
               <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -970,10 +988,16 @@ function Footer() {
           © 2026 Ramos Planejados. Todos os direitos reservados.
         </p>
         <div style={{ display: "flex", gap: "1.5rem" }}>
-          <Link href="/login" style={{ fontSize: "0.76rem", color: C.textLight, textDecoration: "none" }}>
+          <Link
+            href="/login"
+            style={{ fontSize: "0.76rem", color: C.textLight, textDecoration: "none" }}
+          >
             Entrar
           </Link>
-          <Link href="/register" style={{ fontSize: "0.76rem", color: C.textLight, textDecoration: "none" }}>
+          <Link
+            href="/register"
+            style={{ fontSize: "0.76rem", color: C.textLight, textDecoration: "none" }}
+          >
             Criar conta
           </Link>
         </div>

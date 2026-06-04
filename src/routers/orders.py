@@ -35,8 +35,7 @@ def list_all(
     items, total = order_service.list_orders(db, current_user, page, limit, status)
     return PaginatedOrders(
         items=[
-            order_service.serialize_order(o, viewer_is_admin=current_user.is_admin)
-            for o in items
+            order_service.serialize_order(o, viewer_is_admin=current_user.is_admin) for o in items
         ],
         total=total,
         page=page,

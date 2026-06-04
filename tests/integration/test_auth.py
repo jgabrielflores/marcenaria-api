@@ -20,11 +20,14 @@ def test_health_returns_ok(client):
 
 @pytest.mark.integration
 def test_register_creates_customer_account(client):
-    resp = client.post("/auth/register", json={
-        "name": "Bob",
-        "email": "bob@test.com",
-        "password": "password123",
-    })
+    resp = client.post(
+        "/auth/register",
+        json={
+            "name": "Bob",
+            "email": "bob@test.com",
+            "password": "password123",
+        },
+    )
     assert resp.status_code == 201
     body = resp.json()
     assert body["email"] == "bob@test.com"
@@ -44,9 +47,7 @@ def test_register_with_duplicate_email_returns_409(client):
 @pytest.mark.integration
 def test_login_before_email_verification_returns_403(client):
     _register(client)
-    resp = client.post(
-        "/auth/login", json={"email": "bob@test.com", "password": "password123"}
-    )
+    resp = client.post("/auth/login", json={"email": "bob@test.com", "password": "password123"})
     assert resp.status_code == 403
     assert resp.json()["detail"] == "EMAIL_NOT_VERIFIED"
 
@@ -58,9 +59,7 @@ def test_login_with_correct_credentials_returns_token(client, db):
     user.email_verified = True
     db.flush()
 
-    resp = client.post(
-        "/auth/login", json={"email": "bob@test.com", "password": "password123"}
-    )
+    resp = client.post("/auth/login", json={"email": "bob@test.com", "password": "password123"})
     assert resp.status_code == 200
     body = resp.json()
     assert "access_token" in body
@@ -80,9 +79,7 @@ def test_verify_email_then_login_succeeds(client, db):
     db.refresh(user)
     assert user.email_verified is True
 
-    login = client.post(
-        "/auth/login", json={"email": "bob@test.com", "password": "password123"}
-    )
+    login = client.post("/auth/login", json={"email": "bob@test.com", "password": "password123"})
     assert login.status_code == 200
 
 
@@ -108,25 +105,34 @@ def test_resend_verification_for_unknown_email_still_returns_200(client):
 
 @pytest.mark.integration
 def test_login_with_wrong_password_returns_401(client):
-    client.post("/auth/register", json={
-        "name": "Bob",
-        "email": "bob@test.com",
-        "password": "password123",
-    })
-    resp = client.post("/auth/login", json={
-        "email": "bob@test.com",
-        "password": "wrongpassword",
-    })
+    client.post(
+        "/auth/register",
+        json={
+            "name": "Bob",
+            "email": "bob@test.com",
+            "password": "password123",
+        },
+    )
+    resp = client.post(
+        "/auth/login",
+        json={
+            "email": "bob@test.com",
+            "password": "wrongpassword",
+        },
+    )
     assert resp.status_code == 401
     assert resp.json()["detail"] == "invalid credentials"
 
 
 @pytest.mark.integration
 def test_login_with_unknown_email_returns_401(client):
-    resp = client.post("/auth/login", json={
-        "email": "nobody@test.com",
-        "password": "anypassword",
-    })
+    resp = client.post(
+        "/auth/login",
+        json={
+            "email": "nobody@test.com",
+            "password": "anypassword",
+        },
+    )
     assert resp.status_code == 401
     assert resp.json()["detail"] == "invalid credentials"
 

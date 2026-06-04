@@ -15,6 +15,7 @@ def _advance(client, order_id, status, headers, **extra):
 
 # ── POST /api/v1/orders ───────────────────────────────────────────────────────
 
+
 @pytest.mark.integration
 def test_create_order_returns_201_with_initial_status(client, customer_headers):
     resp = client.post("/api/v1/orders", json=ORDER_PAYLOAD, headers=customer_headers)
@@ -50,6 +51,7 @@ def test_create_order_without_auth_returns_4xx(client):
 
 
 # ── GET /api/v1/orders ────────────────────────────────────────────────────────
+
 
 @pytest.mark.integration
 def test_customer_list_orders_returns_only_own_orders(client, customer_headers, admin_headers):
@@ -105,6 +107,7 @@ def test_admin_can_filter_orders_by_status(client, customer_headers, admin_heade
 
 # ── GET /api/v1/orders/{id} ───────────────────────────────────────────────────
 
+
 @pytest.mark.integration
 def test_get_order_owner_receives_order(client, customer_headers):
     created = client.post("/api/v1/orders", json=ORDER_PAYLOAD, headers=customer_headers).json()
@@ -131,6 +134,7 @@ def test_customer_cannot_read_another_users_order(client, customer_headers, admi
 
 
 # ── PATCH /api/v1/orders/{id} ─────────────────────────────────────────────────
+
 
 @pytest.mark.integration
 def test_admin_advances_order_status(client, customer_headers, admin_headers):
@@ -228,9 +232,7 @@ def test_update_status_skipping_step_returns_409(client, customer_headers, admin
 
 @pytest.mark.integration
 def test_update_status_order_not_found_returns_404(client, admin_headers):
-    resp = _advance(
-        client, "00000000-0000-0000-0000-000000000000", "EM_ORCAMENTO", admin_headers
-    )
+    resp = _advance(client, "00000000-0000-0000-0000-000000000000", "EM_ORCAMENTO", admin_headers)
     assert resp.status_code == 404
 
 

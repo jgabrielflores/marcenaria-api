@@ -38,7 +38,10 @@ export function Lightbox({
           }}
         >
           <button
-            onClick={(e) => { e.stopPropagation(); setOpen(false); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(false);
+            }}
             aria-label="Fechar"
             style={{
               position: "absolute",

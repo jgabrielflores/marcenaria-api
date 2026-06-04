@@ -1,10 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
-async function request<T>(
-  path: string,
-  options: RequestInit = {},
-  token?: string,
-): Promise<T> {
+async function request<T>(path: string, options: RequestInit = {}, token?: string): Promise<T> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),
@@ -56,10 +52,7 @@ export function register(body: {
   return request("/auth/register", { method: "POST", body: JSON.stringify(body) });
 }
 
-export function login(body: {
-  email: string;
-  password: string;
-}): Promise<TokenResponse> {
+export function login(body: { email: string; password: string }): Promise<TokenResponse> {
   return request("/auth/login", { method: "POST", body: JSON.stringify(body) });
 }
 
@@ -198,11 +191,7 @@ export function updateOrderAdmin(
   id: string,
   body: OrderUpdateBody,
 ): Promise<OrderRead> {
-  return request(
-    `/api/v1/orders/${id}`,
-    { method: "PATCH", body: JSON.stringify(body) },
-    token,
-  );
+  return request(`/api/v1/orders/${id}`, { method: "PATCH", body: JSON.stringify(body) }, token);
 }
 
 // ── Admin dashboard ───────────────────────────────────────────────────────────

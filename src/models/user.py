@@ -27,12 +27,8 @@ class User(Base):
         Enum(Role, name="user_role", create_type=True),
         server_default=text(f"'{Role.CUSTOMER.value}'"),
     )
-    email_verified: Mapped[bool] = mapped_column(
-        Boolean, server_default=text("false")
-    )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    email_verified: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

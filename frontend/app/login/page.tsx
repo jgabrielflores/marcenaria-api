@@ -12,13 +12,13 @@ import { saveSession, isAdmin, getToken } from "@/lib/auth";
 
 /* ── Palette (same as home page) ─────────────────────────────────────── */
 const C = {
-  bg:        "oklch(1.000 0.000 0)",
-  text:      "oklch(0.10 0.006 0)",
-  textSub:   "oklch(0.40 0.004 0)",
+  bg: "oklch(1.000 0.000 0)",
+  text: "oklch(0.10 0.006 0)",
+  textSub: "oklch(0.40 0.004 0)",
   textLight: "oklch(0.62 0.002 0)",
-  ink:       "oklch(0.12 0.006 0)",
-  inkFg:     "oklch(1.000 0.000 0)",
-  border:    "oklch(0.88 0.003 0)",
+  ink: "oklch(0.12 0.006 0)",
+  inkFg: "oklch(1.000 0.000 0)",
+  border: "oklch(0.88 0.003 0)",
 } as const;
 
 const labelStyle: CSSProperties = {
@@ -158,7 +158,9 @@ export default function LoginPage() {
             >
               Tremembé · São Paulo
             </p>
-            <p style={{ fontSize: "0.72rem", color: "oklch(1.000 0.000 0 / 0.55)", lineHeight: 1.5 }}>
+            <p
+              style={{ fontSize: "0.72rem", color: "oklch(1.000 0.000 0 / 0.55)", lineHeight: 1.5 }}
+            >
               Atendemos em toda a região do estado de SP
             </p>
           </div>
@@ -215,7 +217,9 @@ export default function LoginPage() {
           >
             Bem-vindo de volta
           </h1>
-          <p style={{ fontSize: "0.9rem", color: C.textSub, marginBottom: "2rem", lineHeight: 1.6 }}>
+          <p
+            style={{ fontSize: "0.9rem", color: C.textSub, marginBottom: "2rem", lineHeight: 1.6 }}
+          >
             Entre para acompanhar seus pedidos.
           </p>
 
@@ -260,7 +264,14 @@ export default function LoginPage() {
               <p style={{ fontSize: "0.875rem", color: C.text, fontWeight: 500 }}>
                 Confirme seu e-mail para entrar
               </p>
-              <p style={{ fontSize: "0.82rem", color: C.textSub, marginTop: "0.35rem", lineHeight: 1.6 }}>
+              <p
+                style={{
+                  fontSize: "0.82rem",
+                  color: C.textSub,
+                  marginTop: "0.35rem",
+                  lineHeight: 1.6,
+                }}
+              >
                 Sua conta ainda não foi confirmada. Verifique a caixa de entrada de{" "}
                 <strong style={{ color: C.text }}>{state.unverifiedEmail}</strong>.
               </p>
@@ -290,9 +301,14 @@ export default function LoginPage() {
             </div>
           ) : null}
 
-          <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          <form
+            action={formAction}
+            style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+          >
             <div>
-              <label htmlFor="email" style={labelStyle}>E-mail</label>
+              <label htmlFor="email" style={labelStyle}>
+                E-mail
+              </label>
               <input
                 id="email"
                 name="email"
@@ -306,7 +322,9 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" style={labelStyle}>Senha</label>
+              <label htmlFor="password" style={labelStyle}>
+                Senha
+              </label>
               <div style={{ position: "relative" }}>
                 <input
                   id="password"
@@ -338,7 +356,11 @@ export default function LoginPage() {
                     alignItems: "center",
                   }}
                 >
-                  {showPassword ? <EyeOff size={15} strokeWidth={1.5} /> : <Eye size={15} strokeWidth={1.5} />}
+                  {showPassword ? (
+                    <EyeOff size={15} strokeWidth={1.5} />
+                  ) : (
+                    <Eye size={15} strokeWidth={1.5} />
+                  )}
                 </button>
               </div>
             </div>
@@ -357,7 +379,9 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div style={{ margin: "1.75rem 0", display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <div
+            style={{ margin: "1.75rem 0", display: "flex", alignItems: "center", gap: "0.75rem" }}
+          >
             <div style={{ height: "1px", flex: 1, background: C.border }} />
             <span style={{ fontSize: "0.72rem", color: C.textLight }}>ou</span>
             <div style={{ height: "1px", flex: 1, background: C.border }} />
