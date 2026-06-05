@@ -138,19 +138,19 @@ flowchart TD
     Frontend["frontend/ — Next.js 16<br/>site institucional · portal do cliente · painel admin"]
     API["src/ — FastAPI<br/>autenticação · regras de negócio · persistência"]
     DB[("PostgreSQL 16<br/>users · orders · order_status_history")]
-    SMTP["Servidor SMTP<br/>(e-mails de verificação)"]
+    Email["Brevo API (HTTPS)<br/>(e-mails de verificação)"]
 
     Browser -->|HTTPS| Frontend
     Frontend -->|JSON / REST · CORS| API
     API -->|SQLAlchemy ORM| DB
-    API -.->|opcional| SMTP
+    API -.->|opcional| Email
 
     classDef edge fill:#1a1a1a,stroke:#1a1a1a,color:#fff
     classDef core fill:#009688,stroke:#00695c,color:#fff
     classDef store fill:#4169E1,stroke:#2a47b8,color:#fff
     class Browser,Frontend edge
     class API core
-    class DB,SMTP store
+    class DB,Email store
 ```
 
 ### Arquitetura interna da API — camadas
@@ -217,7 +217,7 @@ flowchart LR
 | Ambiente local | Docker + Docker Compose (`api` + `db`) |
 | CI/CD | GitHub Actions — testes + cobertura a cada *push* |
 | Cobertura | pytest-cov + Codecov |
-| Deploy previsto | AWS ECS/Fargate + RDS (API) · Vercel (frontend) |
+| Deploy | Railway — backend (Docker) · frontend (Next.js) · PostgreSQL gerenciado |
 
 <br>
 
@@ -352,11 +352,9 @@ A interface fica disponível em **http://localhost:3000**.
 | `ENV` | — | `production` | `development` (logs texto) ou `production` (logs JSON) |
 | `FRONTEND_ORIGIN` | — | `http://localhost:3000` | Origem permitida no CORS |
 | `API_BASE_URL` | — | `http://localhost:8000` | URL base usada nos links de verificação de e-mail |
-| `SMTP_HOST` | — | `""` | Host SMTP — vazio = link de verificação impresso no log |
-| `SMTP_PORT` | — | `587` | Porta SMTP |
-| `SMTP_USER` | — | `""` | Usuário SMTP |
-| `SMTP_PASSWORD` | — | `""` | Senha SMTP |
-| `SMTP_FROM` | — | `""` | E-mail do remetente |
+| `BREVO_API_KEY` | — | `""` | Chave da API Brevo — vazio = link de verificação impresso no log |
+| `EMAIL_FROM` | — | `""` | E-mail do remetente (validado como *sender* no Brevo) |
+| `EMAIL_FROM_NAME` | — | `Ramos Planejados` | Nome exibido como remetente |
 
 ### Frontend (`.env.local`)
 
@@ -372,7 +370,7 @@ A interface fica disponível em **http://localhost:3000**.
 
 ## Qualidade e testes
 
-A suíte conta com **133 testes** automatizados (cobertura ~91% sobre `src/`), organizados em três níveis:
+A suíte conta com **133 testes** automatizados (cobertura ~96% sobre `src/`), organizados em três níveis:
 
 | Tipo | Marcador | O que verifica | Banco | HTTP |
 |---|---|---|:---:|:---:|
@@ -396,7 +394,7 @@ docker-compose exec api pytest -m security -v
 - Arquitetura em camadas com fronteiras de responsabilidade explícitas
 - Constantes nomeadas no lugar de *magic strings* / *magic numbers*
 - Sem mock de banco — testes de integração rodam contra um PostgreSQL real
-- CI bloqueia *merge* abaixo de 70% de cobertura (linha de base atual: ~91%)
+- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: ~96%)
 - Imagem Docker roda como usuário **não-root**, com *layers* otimizadas para cache
 
 <br>
@@ -457,7 +455,7 @@ O sistema é funcional e cobre o ciclo completo de um pedido. Evoluções planej
 - [ ] Agendamento de visitas com janelas de disponibilidade
 - [ ] Hierarquia de papéis (`ADMIN` / `EMPLOYEE` / `CUSTOMER`)
 - [ ] Observabilidade — métricas, *tracing* e *dashboards* operacionais
-- [ ] Deploy automatizado em AWS (ECS/Fargate + RDS)
+- [ ] Ambientes isolados de *staging* e produção no Railway (deploy automático por *branch*)
 
 <br>
 

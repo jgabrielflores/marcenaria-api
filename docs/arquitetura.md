@@ -38,7 +38,7 @@ flowchart TD
     end
 
     DB[("PostgreSQL 16")]
-    SMTP["SMTP<br/>(opcional)"]
+    Email["Brevo API (HTTPS)<br/>(opcional)"]
 
     Browser --> Proxy
     Proxy --> Landing & Portal & Admin
@@ -46,14 +46,14 @@ flowchart TD
     Routers --> Services
     Services --> Models
     Models -->|SQLAlchemy| DB
-    Services -.->|verificação de e-mail| SMTP
+    Services -.->|verificação de e-mail| Email
 
     classDef edge fill:#1a1a1a,stroke:#1a1a1a,color:#fff
     classDef core fill:#009688,stroke:#00695c,color:#fff
     classDef store fill:#4169E1,stroke:#2a47b8,color:#fff
     class Browser,Landing,Portal,Admin,Proxy edge
     class Routers,Services,Models core
-    class DB,SMTP store
+    class DB,Email store
 ```
 
 | Componente | Responsabilidade |
@@ -61,7 +61,7 @@ flowchart TD
 | **frontend/** | Renderizar a interface, gerir sessão no navegador, guardar rotas por papel |
 | **src/** | Autenticar, aplicar regras de negócio, persistir dados, expor a API REST |
 | **PostgreSQL** | Persistência durável — usuários, pedidos e histórico de status |
-| **SMTP** | Envio de e-mails de verificação de conta (opcional em desenvolvimento) |
+| **Brevo API** | Envio de e-mails de verificação de conta via HTTPS (opcional em desenvolvimento) |
 
 ---
 
@@ -71,8 +71,8 @@ O repositório `ramos-planejados` reúne **dois deployáveis independentes** que
 
 ```
 ramos-planejados/
-├── src/        → API REST       → deploy: AWS ECS/Fargate + RDS
-└── frontend/   → Interface web  → deploy: Vercel
+├── src/        → API REST       → deploy: Railway (contêiner Docker)
+└── frontend/   → Interface web  → deploy: Railway (Next.js via Nixpacks)
 ```
 
 **Por que monorepo:** mantém o contrato de API (tipos TypeScript em `frontend/lib/api.ts` que espelham os schemas Pydantic em `src/schemas/`) sincronizado em um único histórico de versão, sem o atrito de coordenar dois repositórios.
@@ -194,13 +194,13 @@ sequenceDiagram
 sequenceDiagram
     actor C as Cliente
     participant A as API
-    participant M as SMTP / Log
+    participant M as Brevo API / Log
     participant DB as PostgreSQL
 
     C->>A: POST /auth/register
     A->>DB: INSERT user (email_verified = false)
     A->>A: create_verification_token (JWT, 24 h)
-    A->>M: envia link de verificação<br/>(ou imprime no log se sem SMTP)
+    A->>M: envia link de verificação<br/>(ou imprime no log se sem BREVO_API_KEY)
     A-->>C: 201 UserRead
 
     C->>A: GET /auth/verify?token=...
@@ -268,42 +268,35 @@ O papel é lido diretamente do *payload* do JWT — sem chamada de API. É uma g
 
 ## Topologia de deploy
 
-Os dois deployáveis seguem para destinos distintos, cada um adequado ao seu perfil de carga:
+Os três serviços rodam na **Railway**, na mesma plataforma, com deploy automático a partir do GitHub:
 
 ```mermaid
 flowchart LR
     User["Usuário"]
 
-    subgraph vercel["Vercel"]
-        Next["Next.js 16<br/>frontend/"]
+    subgraph railway["Railway"]
+        Front["FrontEnd<br/>Next.js 16 (Nixpacks)"]
+        Back["BackEnd<br/>FastAPI (Docker)"]
+        PG[("Postgres<br/>PostgreSQL 16")]
     end
 
-    subgraph aws["AWS"]
-        ALB["Load Balancer"]
-        ECS["ECS / Fargate<br/>contêiner da API"]
-        RDS[("RDS<br/>PostgreSQL 16")]
-    end
+    User -->|HTTPS| Front
+    Front -->|HTTPS / REST · CORS| Back
+    Back -->|DATABASE_URL| PG
 
-    User -->|HTTPS| Next
-    Next -->|HTTPS / REST| ALB
-    ALB --> ECS
-    ECS --> RDS
-
-    classDef v fill:#000,stroke:#000,color:#fff
-    classDef a fill:#FF9900,stroke:#cc7a00,color:#1a1a1a
-    class Next v
-    class ALB,ECS,RDS a
+    classDef r fill:#6f56e9,stroke:#4b39b0,color:#fff
+    class Front,Back,PG r
 ```
 
-| Deployável | Destino | Justificativa |
+| Deployável | Serviço Railway | Justificativa |
 |---|---|---|
-| `frontend/` | **Vercel** | Integração nativa com Next.js, CDN global, *preview deploys* por *branch* |
-| `src/` | **AWS ECS/Fargate** | Contêineres sem gerenciar servidores; escala horizontal sob demanda |
-| Banco | **AWS RDS PostgreSQL 16** | Banco gerenciado — *backups*, *failover* e *patching* automáticos |
+| `frontend/` | **FrontEnd** (Nixpacks) | Build automático do Next.js; `npm start` honra a porta injetada pelo Railway |
+| `src/` | **BackEnd** (Docker) | Usa o `Dockerfile` da raiz; `entrypoint.sh` roda migrações + seed no boot |
+| Banco | **Postgres** | Banco gerenciado; conexão via referência `${{Postgres.DATABASE_URL}}` |
 
-O contêiner da API já está pronto para esse cenário: o `Dockerfile` produz uma imagem enxuta (Python 3.12-slim), roda como **usuário não-root** e lê toda a configuração do ambiente (princípio 12-factor).
+O contêiner da API já está pronto para esse cenário: o `Dockerfile` produz uma imagem enxuta (Python 3.12-slim), roda como **usuário não-root**, lê toda a configuração do ambiente (princípio 12-factor) e expõe a porta via `$PORT`. O envio de e-mail usa a **Brevo API por HTTPS** porque a Railway bloqueia portas SMTP de saída.
 
-> O deploy automatizado em AWS é um item do [roadmap](../README.md#roadmap). Hoje o pipeline de CI valida testes e cobertura a cada *push*.
+> Deploy automático por *branch*: `develop` → ambiente de *staging*, `main` → produção. O pipeline de CI valida lint, tipos, testes e cobertura a cada PR antes do *merge*.
 
 ---
 
