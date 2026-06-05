@@ -118,13 +118,13 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 
 ## 8. Non-Functional Requirements
 
-- **NFR-1. Stack.** Backend: Python 3.11+, FastAPI, PostgreSQL, SQLAlchemy, Pydantic, python-jose, passlib[bcrypt]. Frontend: Next.js 14, TypeScript, Tailwind CSS, shadcn/ui.
+- **NFR-1. Stack.** Backend: Python 3.11+, FastAPI, PostgreSQL, SQLAlchemy, Pydantic, python-jose, passlib[bcrypt]. Frontend: Next.js 16, TypeScript, Tailwind CSS, shadcn/ui.
 - **NFR-2. Containerization.** `docker-compose` brings up `api` + `db` for local development.
-- **NFR-3. Deploy.** Backend (`src/`): AWS — RDS + ECS/Fargate or Elastic Beanstalk. Frontend (`frontend/`): Vercel.
+- **NFR-3. Deploy.** Railway — backend (`src/`) as a Docker service, frontend (`frontend/`) via Nixpacks, and a managed PostgreSQL, all in the same project.
 - **NFR-4. HTTPS** in any deployed environment.
 - **NFR-5. 12-factor configuration.** All secrets and environment-specific values come from environment variables.
 - **NFR-6. Migrations.** Schema is managed with Alembic.
-- **NFR-7. Tests.** Unit + integration + security tests; ≥ 70% line coverage on `src/`. Current: 91%.
+- **NFR-7. Tests.** Unit + integration + security tests; ≥ 90% line coverage on `src/`. Current: ~96%.
 - **NFR-8. Logging.** Structured JSON logs in production.
 - **NFR-9. Errors.** Consistent error response shape (`{ "detail": "..." }`) across the API.
 - **NFR-10. Brute-force protection.** `/auth/login` rate-limited at 10 req/min per IP (slowapi).
@@ -176,11 +176,11 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 [ src/ — FastAPI ]        ← auth, business rules, persistence
      │
      ▼
-[ PostgreSQL (RDS) ]
+[ PostgreSQL (Railway) ]
 ```
 
 - Monorepo: `src/` (backend) + `frontend/` (Next.js) in the same repository.
-- Backend deployed to AWS; frontend deployed to Vercel (independently).
+- Both deployables and the database run on Railway, deployed independently per service.
 - JWT authentication; bcrypt password hashing.
 - Local development: `docker-compose` (api + db) + `npm run dev` (frontend).
 
@@ -202,21 +202,20 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 
 - **M-1.** A first-time customer can sign up, submit, and track an order via the web interface with zero external help.
 - **M-2.** Health endpoint reachable in the deployed environment.
-- **M-3.** CI runs the test suite on every push and stays green (current coverage: 91%).
-- **M-4.** `POST /api/v1/orders` round-trip latency under 500 ms p50 from same AWS region.
+- **M-3.** CI runs the test suite on every push and stays green (current coverage: ~96%).
+- **M-4.** `POST /api/v1/orders` round-trip latency under 500 ms p50 within the Railway region.
 
 ## 14. Risks & Open Questions
 
 > All previous open questions resolved:
 > - Admin elevation → FR-17 / BR-9
-> - Q-2 Frontend stack → **resolved**: Next.js 14 + TypeScript + Tailwind CSS + shadcn/ui in `marcenaria-web`
-
-- **Q-1.** Cloud target. *(Default plan: AWS RDS + ECS/Fargate for the API; Vercel for the frontend.)*
+> - Q-2 Frontend stack → **resolved**: Next.js 16 + TypeScript + Tailwind CSS + shadcn/ui in `frontend/`
+> - Q-1 Cloud target → **resolved**: Railway (backend + frontend + managed PostgreSQL).
 
 ## 15. Post-MVP Roadmap (themes, not commitments)
 
 **Actively in development:**
-- Web interface (`marcenaria-web`) — institutional landing page, customer portal, admin panel
+- Web interface (`frontend/`) — institutional landing page, customer portal, admin panel
 
 **Planned next:**
 - Notifications on creation and status change (e-mail, WhatsApp)

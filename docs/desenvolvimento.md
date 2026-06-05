@@ -12,6 +12,7 @@
 - [Migrações de banco](#migrações-de-banco)
 - [Estrutura de pastas](#estrutura-de-pastas)
 - [Padrões de qualidade](#padrões-de-qualidade)
+- [Fluxo de contribuição (Git Flow)](#fluxo-de-contribuição-git-flow)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -103,7 +104,10 @@ npm run dev                        # http://localhost:3000
 | `npm run build` | Build de produção |
 | `npm run start` | Sobe o build de produção |
 | `npm run lint` | Verificação de lint (ESLint) |
-| `npx tsc --noEmit` | Verificação de tipos TypeScript |
+| `npm run type-check` | Verificação de tipos TypeScript (`tsc --noEmit`) |
+| `npm run format:check` | Confere a formatação (Prettier) sem alterar arquivos |
+| `npm run format` | Aplica a formatação (Prettier) |
+| `npm test` | Roda os testes do frontend (Vitest) |
 
 ---
 
@@ -137,7 +141,7 @@ docker-compose exec api pytest -k "test_login_with_wrong_password" -v
 | Integração | `integration` | real | ✓ | Ciclo completo de requisição/resposta |
 | Segurança | `security` | real | ✓ | Ataques: JWT, IDOR, SQL injection, força bruta |
 
-**Cobertura:** linha de base ~91% sobre `src/`. A CI bloqueia *merge* abaixo de 70%.
+**Cobertura:** linha de base ~96% sobre `src/`. A CI bloqueia *merge* abaixo de 90%.
 
 ---
 
@@ -209,6 +213,49 @@ ramos-planejados/
 
 O fluxo de trabalho do projeto inclui revisões automatizadas: revisão de simplificação após editar o backend, revisão de código ao fechar cada fase e revisão de segurança obrigatória antes de qualquer *deploy*.
 
+### Gates de qualidade (rode antes de abrir um PR)
+
+Os mesmos checks que a CI executa. Um PR só pode ser mesclado com todos verdes.
+
+```bash
+# Backend (dentro do contêiner da API)
+docker-compose exec api ruff check src tests          # lint
+docker-compose exec api ruff format --check src tests  # formatação
+docker-compose exec api mypy src                        # tipos
+docker-compose exec api pytest --cov-fail-under=90      # testes + cobertura >= 90%
+
+# Frontend (dentro de frontend/)
+npm run lint          # ESLint
+npm run type-check    # tipos (tsc --noEmit)
+npm run format:check  # formatação (Prettier)
+npm test              # testes (Vitest)
+npm run build         # build de produção
+```
+
+> [!NOTE]
+> No Windows, rodar `pytest` com o banco apontando do host para o contêiner pode dar
+> `UnicodeDecodeError` (psycopg2). Para a suíte completa, rode tudo dentro do contêiner:
+> `docker compose run --rm -u root api sh -c "pip install -e '.[dev]' && alembic upgrade head && pytest"`.
+
+---
+
+## Fluxo de contribuição (Git Flow)
+
+As branches `main` (produção) e `develop` (*staging*/homologação) são **protegidas** no
+GitHub — push direto é bloqueado, **inclusive para o dono**. Toda alteração segue:
+
+1. **Atualize a `develop`:** `git checkout develop && git pull`.
+2. **Crie uma branch de trabalho:** `git checkout -b feature/<nome-curto>`.
+3. **Implemente** a alteração (código ou documentação).
+4. **Rode os gates de qualidade** localmente (seção acima) — todos verdes.
+5. **Commit + push:** `git push -u origin feature/<nome-curto>`.
+6. **Abra o Pull Request** para `develop`: `gh pr create --base develop`.
+7. **Aguarde a CI ficar verde** (jobs *Backend* e *Frontend* são obrigatórios) e faça o *merge*.
+8. **Promova para produção** quando a `develop` estiver estável: PR `develop` → `main`.
+
+> Convenção de branches: `feature/<descrição>` para novas funcionalidades e correções.
+> Nunca commite direto em `main` ou `develop`.
+
 ---
 
 ## Troubleshooting
@@ -240,7 +287,7 @@ docker-compose restart api
 
 ### Onde está o link de verificação de e-mail em desenvolvimento?
 
-Sem `SMTP_HOST` configurado, o link é impresso no log do backend:
+Sem `BREVO_API_KEY` configurada, o link é impresso no log do backend:
 
 ```bash
 docker-compose logs api | grep "Verification link"

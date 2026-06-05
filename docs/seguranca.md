@@ -149,7 +149,7 @@ Toda requisição passa por um schema Pydantic **antes** de chegar à camada de 
 ## Gestão de segredos
 
 - **Nenhum segredo é versionado.** `.env` está no `.gitignore`; o repositório contém apenas `.env.example` com valores de exemplo.
-- Toda configuração sensível (`DATABASE_URL`, `SECRET_KEY`, credenciais SMTP) vem de variável de ambiente, validada na inicialização por `pydantic-settings` — a aplicação **não sobe** com uma configuração inválida.
+- Toda configuração sensível (`DATABASE_URL`, `SECRET_KEY`, `BREVO_API_KEY`) vem de variável de ambiente, validada na inicialização por `pydantic-settings` — a aplicação **não sobe** com uma configuração inválida.
 - Segredos como `SECRET_KEY` e `ADMIN_PASSWORD` usam o tipo `SecretStr`, que evita o vazamento acidental do valor em *logs* ou *reprs*.
 - Os logs nunca registram senhas, tokens ou dados pessoais.
 

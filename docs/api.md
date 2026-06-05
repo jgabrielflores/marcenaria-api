@@ -77,7 +77,7 @@ Valores em dinheiro (`project_value`, `estimated_cost`, `profit`, `revenue_month
 Fluxo completo de uma conta nova:
 
 1. `POST /auth/register` — cria a conta com `email_verified = false`.
-2. Um e-mail de verificação é enviado (ou o link é impresso no log, em desenvolvimento sem SMTP).
+2. Um e-mail de verificação é enviado via Brevo (ou o link é impresso no log, em desenvolvimento sem `BREVO_API_KEY`).
 3. `GET /auth/verify?token=...` — confirma o e-mail.
 4. `POST /auth/login` — autentica e devolve o JWT. **O login só é permitido após a verificação do e-mail.**
 
