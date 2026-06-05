@@ -27,7 +27,7 @@ def get_current_user(
         )
         user_id_str: str | None = payload.get("sub")
     except JWTError:
-        raise _INVALID_TOKEN
+        raise _INVALID_TOKEN from None
 
     if user_id_str is None:
         raise _INVALID_TOKEN
@@ -35,7 +35,7 @@ def get_current_user(
     try:
         user_id = uuid.UUID(user_id_str)
     except ValueError:
-        raise _INVALID_TOKEN
+        raise _INVALID_TOKEN from None
 
     user = db.get(User, user_id)
     if user is None:

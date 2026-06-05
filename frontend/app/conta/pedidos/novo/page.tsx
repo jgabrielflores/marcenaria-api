@@ -122,7 +122,13 @@ export default function NewOrderPage() {
             Nossa equipe entrará em contato em breve para alinhar os detalhes do seu projeto.
           </p>
         </div>
-        <div style={{ border: `1px solid ${C.border}`, borderRadius: "2px", padding: "1.25rem 1.5rem" }}>
+        <div
+          style={{
+            border: `1px solid ${C.border}`,
+            borderRadius: "2px",
+            padding: "1.25rem 1.5rem",
+          }}
+        >
           <span style={{ ...labelStyle, marginBottom: "0.75rem" }}>Fale com a gente</span>
           {CONTACTS.map((c) => (
             <p key={c.name} style={{ fontSize: "0.9rem", color: C.text, marginTop: "0.35rem" }}>
@@ -134,7 +140,10 @@ export default function NewOrderPage() {
           <Link href={`/conta/pedidos/${created.id}`} className="btn-ink" style={inkButtonStyle}>
             Ver pedido <ArrowRight size={13} />
           </Link>
-          <Link href="/conta/pedidos" style={{ fontSize: "0.78rem", color: C.textLight, textDecoration: "none" }}>
+          <Link
+            href="/conta/pedidos"
+            style={{ fontSize: "0.78rem", color: C.textLight, textDecoration: "none" }}
+          >
             Voltar aos pedidos
           </Link>
         </div>
@@ -159,7 +168,9 @@ export default function NewOrderPage() {
         <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <SectionHeading>Contato</SectionHeading>
           <div>
-            <label htmlFor="whatsapp" style={fieldLabel}>WhatsApp</label>
+            <label htmlFor="whatsapp" style={fieldLabel}>
+              WhatsApp
+            </label>
             <WhatsappInput id="whatsapp" value={whatsapp} onChange={setWhatsapp} />
           </div>
         </section>
@@ -168,12 +179,16 @@ export default function NewOrderPage() {
         <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <SectionHeading>Endereço</SectionHeading>
           <div>
-            <label htmlFor="cep" style={fieldLabel}>CEP</label>
+            <label htmlFor="cep" style={fieldLabel}>
+              CEP
+            </label>
             <CepInput id="cep" value={cep} onChange={setCep} onAddressFound={applyAddress} />
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1rem" }}>
             <div>
-              <label htmlFor="city" style={fieldLabel}>Cidade</label>
+              <label htmlFor="city" style={fieldLabel}>
+                Cidade
+              </label>
               <input
                 id="city"
                 className="form-input"
@@ -184,7 +199,9 @@ export default function NewOrderPage() {
               />
             </div>
             <div>
-              <label htmlFor="uf" style={fieldLabel}>Estado</label>
+              <label htmlFor="uf" style={fieldLabel}>
+                Estado
+              </label>
               <input
                 id="uf"
                 className="form-input"
@@ -214,7 +231,9 @@ export default function NewOrderPage() {
         <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <SectionHeading>Projeto</SectionHeading>
           <div>
-            <label htmlFor="environments" style={fieldLabel}>Ambientes de interesse</label>
+            <label htmlFor="environments" style={fieldLabel}>
+              Ambientes de interesse
+            </label>
             <input
               id="environments"
               name="environments"
@@ -226,7 +245,8 @@ export default function NewOrderPage() {
           </div>
           <div>
             <label htmlFor="furniture_types" style={fieldLabel}>
-              Tipos de móveis <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
+              Tipos de móveis{" "}
+              <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
             </label>
             <input
               id="furniture_types"
@@ -238,7 +258,8 @@ export default function NewOrderPage() {
           </div>
           <div>
             <label htmlFor="observations" style={fieldLabel}>
-              Observações <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
+              Observações{" "}
+              <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
             </label>
             <textarea
               id="observations"
@@ -267,13 +288,18 @@ export default function NewOrderPage() {
           }}
         >
           <button type="submit" disabled={pending} className="btn-ink" style={inkButtonStyle}>
-            {pending ? "Enviando…" : (
+            {pending ? (
+              "Enviando…"
+            ) : (
               <>
                 Enviar pedido <ArrowRight size={13} />
               </>
             )}
           </button>
-          <Link href="/conta/pedidos" style={{ fontSize: "0.78rem", color: C.textLight, textDecoration: "none" }}>
+          <Link
+            href="/conta/pedidos"
+            style={{ fontSize: "0.78rem", color: C.textLight, textDecoration: "none" }}
+          >
             Cancelar
           </Link>
         </div>

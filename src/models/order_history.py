@@ -15,7 +15,9 @@ if TYPE_CHECKING:
 
 class OrderStatusHistory(Base):
     __tablename__ = "order_status_history"
-    __table_args__ = (Index("ix_order_status_history_order_id_created_at", "order_id", "created_at"),)
+    __table_args__ = (
+        Index("ix_order_status_history_order_id_created_at", "order_id", "created_at"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
@@ -35,8 +37,6 @@ class OrderStatusHistory(Base):
         UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
     )
     note: Mapped[str | None] = mapped_column(Text)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     order: Mapped["Order"] = relationship("Order", back_populates="history")

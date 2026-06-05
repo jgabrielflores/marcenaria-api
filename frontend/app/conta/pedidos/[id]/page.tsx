@@ -119,11 +119,9 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
             <Field label="WhatsApp" value={formatPhone(order.whatsapp)} />
             <Field
               label="Endereço"
-              value={
-                [order.address_line, `${order.city} / ${order.state}`, `CEP ${order.cep}`]
-                  .filter(Boolean)
-                  .join(" · ")
-              }
+              value={[order.address_line, `${order.city} / ${order.state}`, `CEP ${order.cep}`]
+                .filter(Boolean)
+                .join(" · ")}
             />
           </Section>
 

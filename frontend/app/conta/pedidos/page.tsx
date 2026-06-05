@@ -47,7 +47,12 @@ export default function PedidosPage() {
         <Link
           href="/conta/pedidos/novo"
           className="btn-ink"
-          style={{ ...inkButtonStyle, padding: "0.7rem 1.5rem", fontSize: "0.72rem", whiteSpace: "nowrap" }}
+          style={{
+            ...inkButtonStyle,
+            padding: "0.7rem 1.5rem",
+            fontSize: "0.72rem",
+            whiteSpace: "nowrap",
+          }}
         >
           Novo pedido <ArrowRight size={12} />
         </Link>
@@ -106,7 +111,9 @@ export default function PedidosPage() {
 
       {data && data.items.length > 0 && (
         <>
-          <ul style={{ borderTop: `1px solid ${C.border}`, listStyle: "none", padding: 0, margin: 0 }}>
+          <ul
+            style={{ borderTop: `1px solid ${C.border}`, listStyle: "none", padding: 0, margin: 0 }}
+          >
             {data.items.map((order, i) => (
               <li
                 key={order.id}
@@ -165,7 +172,9 @@ export default function PedidosPage() {
                       )}
                     </span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexShrink: 0 }}>
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: "1rem", flexShrink: 0 }}
+                  >
                     <StatusBadge status={order.status} />
                     <ArrowRight size={14} style={{ color: C.border }} />
                   </div>

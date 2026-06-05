@@ -2,13 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  ApiError,
-  changePassword,
-  getMe,
-  updateMe,
-  type UserRead,
-} from "@/lib/api";
+import { ApiError, changePassword, getMe, updateMe, type UserRead } from "@/lib/api";
 import { getToken } from "@/lib/auth";
 import { C, labelStyle, headingStyle, inkButtonStyle } from "@/lib/theme";
 
@@ -90,7 +84,10 @@ export default function PerfilPage() {
         </p>
       </div>
 
-      <form action={profileAction} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+      <form
+        action={profileAction}
+        style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+      >
         <div>
           <label htmlFor="name" style={{ ...labelStyle, marginBottom: "0.4rem" }}>
             Nome

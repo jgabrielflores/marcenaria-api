@@ -12,13 +12,13 @@ import { getToken } from "@/lib/auth";
 
 /* ── Palette (same as home page) ─────────────────────────────────────── */
 const C = {
-  bg:        "oklch(1.000 0.000 0)",
-  text:      "oklch(0.10 0.006 0)",
-  textSub:   "oklch(0.40 0.004 0)",
+  bg: "oklch(1.000 0.000 0)",
+  text: "oklch(0.10 0.006 0)",
+  textSub: "oklch(0.40 0.004 0)",
   textLight: "oklch(0.62 0.002 0)",
-  ink:       "oklch(0.12 0.006 0)",
-  inkFg:     "oklch(1.000 0.000 0)",
-  border:    "oklch(0.88 0.003 0)",
+  ink: "oklch(0.12 0.006 0)",
+  inkFg: "oklch(1.000 0.000 0)",
+  border: "oklch(0.88 0.003 0)",
 } as const;
 
 const labelStyle: CSSProperties = {
@@ -146,8 +146,8 @@ export default function RegisterPage() {
                 maxWidth: "300px",
               }}
             >
-              Solicite seu orçamento, acompanhe cada etapa da produção e receba
-              um móvel feito exclusivamente para você.
+              Solicite seu orçamento, acompanhe cada etapa da produção e receba um móvel feito
+              exclusivamente para você.
             </p>
           </blockquote>
           <div>
@@ -162,7 +162,9 @@ export default function RegisterPage() {
             >
               Tremembé · São Paulo
             </p>
-            <p style={{ fontSize: "0.72rem", color: "oklch(1.000 0.000 0 / 0.55)", lineHeight: 1.5 }}>
+            <p
+              style={{ fontSize: "0.72rem", color: "oklch(1.000 0.000 0 / 0.55)", lineHeight: 1.5 }}
+            >
               Atendemos em toda a região do estado de SP
             </p>
           </div>
@@ -237,10 +239,12 @@ export default function RegisterPage() {
               </h1>
               <p style={{ fontSize: "0.9rem", color: C.textSub, lineHeight: 1.7 }}>
                 Enviamos um link de confirmação para{" "}
-                <strong style={{ color: C.text }}>{registeredEmail}</strong>. Clique
-                no link para ativar sua conta, só depois disso será possível entrar.
+                <strong style={{ color: C.text }}>{registeredEmail}</strong>. Clique no link para
+                ativar sua conta, só depois disso será possível entrar.
               </p>
-              <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div
+                style={{ marginTop: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}
+              >
                 <Link href="/login" className="btn-ink" style={submitStyle}>
                   Ir para o login
                 </Link>
@@ -282,13 +286,25 @@ export default function RegisterPage() {
               >
                 Criar sua conta
               </h1>
-              <p style={{ fontSize: "0.9rem", color: C.textSub, marginBottom: "2.5rem", lineHeight: 1.6 }}>
+              <p
+                style={{
+                  fontSize: "0.9rem",
+                  color: C.textSub,
+                  marginBottom: "2.5rem",
+                  lineHeight: 1.6,
+                }}
+              >
                 Solicite seu primeiro orçamento em minutos.
               </p>
 
-              <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              <form
+                action={formAction}
+                style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+              >
                 <div>
-                  <label htmlFor="name" style={labelStyle}>Nome completo</label>
+                  <label htmlFor="name" style={labelStyle}>
+                    Nome completo
+                  </label>
                   <input
                     id="name"
                     name="name"
@@ -302,7 +318,9 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" style={labelStyle}>E-mail</label>
+                  <label htmlFor="email" style={labelStyle}>
+                    E-mail
+                  </label>
                   <input
                     id="email"
                     name="email"
@@ -316,7 +334,9 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="password" style={labelStyle}>Senha</label>
+                  <label htmlFor="password" style={labelStyle}>
+                    Senha
+                  </label>
                   <div style={{ position: "relative" }}>
                     <input
                       id="password"
@@ -349,14 +369,22 @@ export default function RegisterPage() {
                         alignItems: "center",
                       }}
                     >
-                      {showPassword ? <EyeOff size={15} strokeWidth={1.5} /> : <Eye size={15} strokeWidth={1.5} />}
+                      {showPassword ? (
+                        <EyeOff size={15} strokeWidth={1.5} />
+                      ) : (
+                        <Eye size={15} strokeWidth={1.5} />
+                      )}
                     </button>
                   </div>
                 </div>
 
                 {state.error && (
                   <p
-                    style={{ fontSize: "0.82rem", color: "oklch(0.577 0.245 27.325)", lineHeight: 1.5 }}
+                    style={{
+                      fontSize: "0.82rem",
+                      color: "oklch(0.577 0.245 27.325)",
+                      lineHeight: 1.5,
+                    }}
                     role="alert"
                   >
                     {state.error}
@@ -368,7 +396,14 @@ export default function RegisterPage() {
                 </button>
               </form>
 
-              <div style={{ margin: "1.75rem 0", display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div
+                style={{
+                  margin: "1.75rem 0",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                }}
+              >
                 <div style={{ height: "1px", flex: 1, background: C.border }} />
                 <span style={{ fontSize: "0.72rem", color: C.textLight }}>ou</span>
                 <div style={{ height: "1px", flex: 1, background: C.border }} />

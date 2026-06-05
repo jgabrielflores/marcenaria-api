@@ -8,13 +8,7 @@ import { OrderNumber } from "@/components/OrderNumber";
 import { MoneyInput } from "@/components/MoneyInput";
 import { WhatsappInput } from "@/components/WhatsappInput";
 import { isOverdue } from "@/components/DueDate";
-import {
-  ApiError,
-  getOrder,
-  updateOrderAdmin,
-  type OrderRead,
-  type OrderStatus,
-} from "@/lib/api";
+import { ApiError, getOrder, updateOrderAdmin, type OrderRead, type OrderStatus } from "@/lib/api";
 import { getToken } from "@/lib/auth";
 import { C, labelStyle, headingStyle, formatMoney, formatPhone } from "@/lib/theme";
 
@@ -71,7 +65,14 @@ function Field({ label, value }: { label: string; value: string }) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{ ...labelStyle, paddingBottom: "1rem", borderBottom: `1px solid ${C.border}`, display: "block" }}>
+    <span
+      style={{
+        ...labelStyle,
+        paddingBottom: "1rem",
+        borderBottom: `1px solid ${C.border}`,
+        display: "block",
+      }}
+    >
       {children}
     </span>
   );
@@ -135,7 +136,8 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
     if (nextStatus !== order.status) {
       if (nextStatus === "APROVADO" && (!projectValue || !dueDate || !estimatedCost)) {
         setFeedback({
-          error: "Para aprovar, informe o valor do projeto, o custo estimado e a previsão de entrega.",
+          error:
+            "Para aprovar, informe o valor do projeto, o custo estimado e a previsão de entrega.",
         });
         return;
       }
@@ -169,7 +171,8 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
       setFeedback({ ok: "Pedido atualizado." });
     } catch (err) {
       setFeedback({
-        error: err instanceof ApiError ? translateApiError(err.message) : "Erro ao salvar o pedido.",
+        error:
+          err instanceof ApiError ? translateApiError(err.message) : "Erro ao salvar o pedido.",
       });
     } finally {
       setSaving(false);
@@ -258,15 +261,15 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
               }}
             >
               <div>
-                <label htmlFor="edit-whatsapp" style={fieldLabel}>WhatsApp</label>
-                <WhatsappInput
-                  id="edit-whatsapp"
-                  value={editWhatsapp}
-                  onChange={setEditWhatsapp}
-                />
+                <label htmlFor="edit-whatsapp" style={fieldLabel}>
+                  WhatsApp
+                </label>
+                <WhatsappInput id="edit-whatsapp" value={editWhatsapp} onChange={setEditWhatsapp} />
               </div>
               <div>
-                <label htmlFor="edit-address" style={fieldLabel}>Endereço</label>
+                <label htmlFor="edit-address" style={fieldLabel}>
+                  Endereço
+                </label>
                 <input
                   id="edit-address"
                   className="form-input"
@@ -276,7 +279,9 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                 />
               </div>
               <div>
-                <label htmlFor="edit-city" style={fieldLabel}>Cidade</label>
+                <label htmlFor="edit-city" style={fieldLabel}>
+                  Cidade
+                </label>
                 <input
                   id="edit-city"
                   className="form-input"
@@ -285,7 +290,9 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                 />
               </div>
               <div>
-                <label htmlFor="edit-state" style={fieldLabel}>Estado (UF)</label>
+                <label htmlFor="edit-state" style={fieldLabel}>
+                  Estado (UF)
+                </label>
                 <input
                   id="edit-state"
                   className="form-input"
@@ -324,7 +331,9 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
         {isAguardando ? (
           <>
             <div>
-              <label htmlFor="edit-environments" style={fieldLabel}>Ambientes</label>
+              <label htmlFor="edit-environments" style={fieldLabel}>
+                Ambientes
+              </label>
               <input
                 id="edit-environments"
                 className="form-input"
@@ -333,7 +342,9 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
               />
             </div>
             <div>
-              <label htmlFor="edit-furniture" style={fieldLabel}>Tipos de móveis</label>
+              <label htmlFor="edit-furniture" style={fieldLabel}>
+                Tipos de móveis
+              </label>
               <input
                 id="edit-furniture"
                 className="form-input"
@@ -342,7 +353,9 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
               />
             </div>
             <div>
-              <label htmlFor="edit-observations" style={fieldLabel}>Observações do cliente</label>
+              <label htmlFor="edit-observations" style={fieldLabel}>
+                Observações do cliente
+              </label>
               <textarea
                 id="edit-observations"
                 rows={3}

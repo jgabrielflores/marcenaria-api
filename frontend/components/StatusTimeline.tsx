@@ -29,7 +29,11 @@ export function StatusTimeline({ history }: { history: OrderHistoryEntry[] }) {
                   flexShrink: 0,
                 }}
               />
-              {!last && <span style={{ width: "1px", flex: 1, background: C.border, minHeight: "1.5rem" }} />}
+              {!last && (
+                <span
+                  style={{ width: "1px", flex: 1, background: C.border, minHeight: "1.5rem" }}
+                />
+              )}
             </div>
             <div style={{ paddingBottom: last ? 0 : "1.5rem" }}>
               <p style={{ fontSize: "0.875rem", fontWeight: 600, color: C.text }}>

@@ -3,6 +3,7 @@
 Usage:
     docker-compose exec api python -m src.scripts.seed_admin
 """
+
 from src.config import get_settings
 from src.database import SessionLocal
 from src.models.user import Role, User

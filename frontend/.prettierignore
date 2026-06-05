@@ -1,0 +1,14 @@
+.next/
+node_modules/
+out/
+build/
+public/
+package-lock.json
+*.tsbuildinfo
+
+# AI tooling / docs (gitignored — not part of the formatted source)
+CLAUDE.md
+AGENTS.md
+skills-lock.json
+.agents/
+Referencias/

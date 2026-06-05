@@ -125,7 +125,9 @@ export default function AdminNewOrderPage() {
         <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <SectionHeading>Cliente</SectionHeading>
           <div>
-            <label htmlFor="client_name" style={fieldLabel}>Nome do cliente</label>
+            <label htmlFor="client_name" style={fieldLabel}>
+              Nome do cliente
+            </label>
             <input
               id="client_name"
               name="client_name"
@@ -149,7 +151,9 @@ export default function AdminNewOrderPage() {
             />
           </div>
           <div>
-            <label htmlFor="whatsapp" style={fieldLabel}>WhatsApp</label>
+            <label htmlFor="whatsapp" style={fieldLabel}>
+              WhatsApp
+            </label>
             <WhatsappInput id="whatsapp" value={whatsapp} onChange={setWhatsapp} />
           </div>
         </section>
@@ -157,12 +161,16 @@ export default function AdminNewOrderPage() {
         <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <SectionHeading>Endereço</SectionHeading>
           <div>
-            <label htmlFor="cep" style={fieldLabel}>CEP</label>
+            <label htmlFor="cep" style={fieldLabel}>
+              CEP
+            </label>
             <CepInput id="cep" value={cep} onChange={setCep} onAddressFound={applyAddress} />
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1rem" }}>
             <div>
-              <label htmlFor="city" style={fieldLabel}>Cidade</label>
+              <label htmlFor="city" style={fieldLabel}>
+                Cidade
+              </label>
               <input
                 id="city"
                 className="form-input"
@@ -173,7 +181,9 @@ export default function AdminNewOrderPage() {
               />
             </div>
             <div>
-              <label htmlFor="uf" style={fieldLabel}>Estado</label>
+              <label htmlFor="uf" style={fieldLabel}>
+                Estado
+              </label>
               <input
                 id="uf"
                 className="form-input"
@@ -202,7 +212,9 @@ export default function AdminNewOrderPage() {
         <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <SectionHeading>Projeto</SectionHeading>
           <div>
-            <label htmlFor="environments" style={fieldLabel}>Ambientes de interesse</label>
+            <label htmlFor="environments" style={fieldLabel}>
+              Ambientes de interesse
+            </label>
             <input
               id="environments"
               name="environments"
@@ -214,7 +226,8 @@ export default function AdminNewOrderPage() {
           </div>
           <div>
             <label htmlFor="furniture_types" style={fieldLabel}>
-              Tipos de móveis <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
+              Tipos de móveis{" "}
+              <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
             </label>
             <input
               id="furniture_types"
@@ -226,7 +239,8 @@ export default function AdminNewOrderPage() {
           </div>
           <div>
             <label htmlFor="observations" style={fieldLabel}>
-              Observações <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
+              Observações{" "}
+              <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
             </label>
             <textarea
               id="observations"
@@ -255,13 +269,18 @@ export default function AdminNewOrderPage() {
           }}
         >
           <button type="submit" disabled={pending} className="btn-ink" style={inkButtonStyle}>
-            {pending ? "Registrando…" : (
+            {pending ? (
+              "Registrando…"
+            ) : (
               <>
                 Registrar pedido <ArrowRight size={13} />
               </>
             )}
           </button>
-          <Link href="/admin/pedidos" style={{ fontSize: "0.78rem", color: C.textLight, textDecoration: "none" }}>
+          <Link
+            href="/admin/pedidos"
+            style={{ fontSize: "0.78rem", color: C.textLight, textDecoration: "none" }}
+          >
             Cancelar
           </Link>
         </div>
