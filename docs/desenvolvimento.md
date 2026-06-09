@@ -225,12 +225,18 @@ docker-compose exec api mypy src                        # tipos
 docker-compose exec api pytest --cov-fail-under=90      # testes + cobertura >= 90%
 
 # Frontend (dentro de frontend/)
-npm run lint          # ESLint
-npm run type-check    # tipos (tsc --noEmit)
-npm run format:check  # formatação (Prettier)
-npm test              # testes (Vitest)
-npm run build         # build de produção
+npm run lint           # ESLint
+npm run type-check     # tipos (tsc --noEmit)
+npm run format:check   # formatação (Prettier)
+npm run test:coverage  # testes (Vitest) + gate de cobertura
+npm run build          # build de produção
 ```
+
+> **Política de testes (Definition of Done):** toda alteração de comportamento entra com
+> teste. O backend tem gate de cobertura ≥ 90% e o frontend tem gate próprio (Vitest +
+> v8) escopado aos módulos testados — ao criar um arquivo novo, inclua-o em
+> `frontend/vitest.config.ts` (`coverage.include`). O checklist de Segurança + QA é
+> preenchido em todo PR (`.github/pull_request_template.md`).
 
 > [!NOTE]
 > No Windows, rodar `pytest` com o banco apontando do host para o contêiner pode dar

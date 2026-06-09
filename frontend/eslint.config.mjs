@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated test-coverage report — never lint it.
+    "coverage/**",
   ]),
   {
     rules: {
