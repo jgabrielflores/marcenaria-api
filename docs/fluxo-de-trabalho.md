@@ -126,19 +126,12 @@ siga de novo. Nada avança enquanto a etapa anterior não estiver verde.
 ## Diagrama 2 — Pipeline CI/CD
 
 O mesmo fluxo em **raias** (*swimlanes*), separando quem faz o quê. Legenda visual: **setas
-grossas = "Sim"** (avança), **setas pontilhadas = "Não"** (voltam ao passo *Implementar*); as
-**cores** distinguem os tipos de etapa — passos (azul), decisões (âmbar), *deploys* (verde).
+cheias = "Sim"** (avança), **setas pontilhadas = "Não"** (voltam ao passo *Implementar*); as
+**cores** distinguem os tipos — passos (cinza), decisões (âmbar), *deploys* (verde).
 
 ```mermaid
-%%{init: {'theme': 'base'}}%%
 flowchart TD
-    classDef step fill:#eef2ff,stroke:#6366f1,color:#1e1b4b;
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12;
-    classDef deploy fill:#ecfdf5,stroke:#10b981,color:#064e3b;
-    classDef done fill:#064e3b,stroke:#064e3b,color:#ffffff;
-
-    subgraph DEV["🧑‍💻 Desenvolvedor · máquina local"]
-        direction TB
+    subgraph DEV["🧑‍💻 Desenvolvedor · local"]
         A["1 · Atualizar a develop"]
         B["2 · Criar branch de trabalho"]
         C["3 · Implementar a alteração"]
@@ -148,9 +141,8 @@ flowchart TD
     end
 
     subgraph GH["🐙 GitHub · Actions"]
-        direction TB
         G["7 · Abrir PR → develop"]
-        H{"8 · CI verde? — Backend + Frontend"}
+        H{"8 · CI verde?"}
         I["9 · Merge na develop"]
         N["11 · Abrir PR develop → main"]
         O{"12 · CI verde?"}
@@ -158,31 +150,33 @@ flowchart TD
     end
 
     subgraph STG["🧪 Staging · Railway (develop)"]
-        direction TB
         J["Deploy automático"]
         K{"10 · Validado em staging?"}
     end
 
     subgraph PRD["🌐 Produção · Railway (main)"]
-        direction TB
         Q["Deploy automático"]
         R(["✅ No ar para os clientes"])
     end
 
     A --> B --> C --> D --> E
-    E -. "Não" .-> C
-    E == "Sim" ==> F
+    E -->|"Sim"| F
+    E -.->|"Não"| C
     F --> G --> H
-    H -. "Não" .-> C
-    H == "Sim" ==> I
+    H -->|"Sim"| I
+    H -.->|"Não"| C
     I --> J --> K
-    K -. "Não" .-> C
-    K == "Sim" ==> N
+    K -->|"Sim"| N
+    K -.->|"Não"| C
     N --> O
-    O -. "Não" .-> C
-    O == "Sim" ==> P
+    O -->|"Sim"| P
+    O -.->|"Não"| C
     P --> Q --> R
 
+    classDef step fill:#f5f5f5,stroke:#888,color:#1a1a1a
+    classDef decision fill:#fff2cc,stroke:#d6b656,color:#7c4a03
+    classDef deploy fill:#d5e8d4,stroke:#82b366,color:#1e4620
+    classDef done fill:#1a1a1a,stroke:#1a1a1a,color:#ffffff
     class A,B,C,D,F,G,I,N,P step
     class E,H,K,O decision
     class J,Q deploy
