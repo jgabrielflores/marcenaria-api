@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from src.config import get_settings
 from src.database import get_db
+from src.limiter import limiter
 from src.main import app
 from src.models.user import Role, User
 from src.services.auth import create_access_token, pwd_context
@@ -18,6 +19,24 @@ ORDER_PAYLOAD = {
     "furniture_types": "armário",
     "observations": "Projeto de teste",
 }
+
+
+@pytest.fixture(autouse=True)
+def _reset_rate_limiter():
+    """slowapi keeps an in-memory, per-IP counter that the DB transaction rollback
+    does NOT undo. Reset it around every test so rate-limit state can't leak between
+    tests (the root cause of flaky rate-limit assertions)."""
+
+    def _reset() -> None:
+        storage = getattr(limiter, "_storage", None) or getattr(
+            getattr(limiter, "limiter", None), "storage", None
+        )
+        if storage is not None and hasattr(storage, "reset"):
+            storage.reset()
+
+    _reset()
+    yield
+    _reset()
 
 
 @pytest.fixture(scope="session")
