@@ -76,15 +76,16 @@ Como as branches se relacionam: a `feature` nasce da `develop`, volta para ela (
 staging) e, quando validada, a `develop` é promovida para a `main` (deploy em produção).
 
 ```mermaid
+%%{init: {'theme': 'base', 'gitGraph': {'mainBranchName': 'main'}}}%%
 gitGraph
-   commit id: "projeto"
+   commit id: "início"
    branch develop
    checkout develop
-   commit id: "staging em dia"
+   commit id: "base"
    branch feature/exemplo
    checkout feature/exemplo
    commit id: "implementa"
-   commit id: "ajusta"
+   commit id: "ajusta + gates"
    checkout develop
    merge feature/exemplo tag: "deploy STAGING"
    checkout main
@@ -124,52 +125,68 @@ siga de novo. Nada avança enquanto a etapa anterior não estiver verde.
 
 ## Diagrama 2 — Pipeline CI/CD
 
-O mesmo fluxo em **raias** (*swimlanes*), separando quem faz o quê. As setas pontilhadas "Não"
-voltam sempre ao passo *Implementar*.
+O mesmo fluxo em **raias** (*swimlanes*), separando quem faz o quê. Legenda visual: **setas
+grossas = "Sim"** (avança), **setas pontilhadas = "Não"** (voltam ao passo *Implementar*); as
+**cores** distinguem os tipos de etapa — passos (azul), decisões (âmbar), *deploys* (verde).
 
 ```mermaid
+%%{init: {'theme': 'base'}}%%
 flowchart TD
-    subgraph DEV["Desenvolvedor — máquina local"]
+    classDef step fill:#eef2ff,stroke:#6366f1,color:#1e1b4b;
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12;
+    classDef deploy fill:#ecfdf5,stroke:#10b981,color:#064e3b;
+    classDef done fill:#064e3b,stroke:#064e3b,color:#ffffff;
+
+    subgraph DEV["🧑‍💻 Desenvolvedor · máquina local"]
+        direction TB
         A["1 · Atualizar a develop"]
         B["2 · Criar branch de trabalho"]
         C["3 · Implementar a alteração"]
-        D["4 · Teste local: ver funcionar"]
+        D["4 · Teste local — ver funcionar"]
         E{"5 · Gates locais passam?"}
         F["6 · Push da branch"]
     end
 
-    subgraph GH["GitHub / Actions"]
-        G["7 · Abrir PR para develop"]
-        H{"8 · CI verde? Backend + Frontend"}
+    subgraph GH["🐙 GitHub · Actions"]
+        direction TB
+        G["7 · Abrir PR → develop"]
+        H{"8 · CI verde? — Backend + Frontend"}
         I["9 · Merge na develop"]
-        N["11 · Abrir PR develop para main"]
+        N["11 · Abrir PR develop → main"]
         O{"12 · CI verde?"}
         P["13 · Merge na main"]
     end
 
-    subgraph STG["Staging — Railway · branch develop"]
-        J["Deploy automático em STAGING"]
+    subgraph STG["🧪 Staging · Railway (develop)"]
+        direction TB
+        J["Deploy automático"]
         K{"10 · Validado em staging?"}
     end
 
-    subgraph PRD["Produção — Railway · branch main"]
-        Q["Deploy automático em PRODUÇÃO"]
-        R(["No ar para os clientes"])
+    subgraph PRD["🌐 Produção · Railway (main)"]
+        direction TB
+        Q["Deploy automático"]
+        R(["✅ No ar para os clientes"])
     end
 
     A --> B --> C --> D --> E
-    E -.->|"Não"| C
-    E -->|"Sim"| F
+    E -. "Não" .-> C
+    E == "Sim" ==> F
     F --> G --> H
-    H -.->|"Não"| C
-    H -->|"Sim"| I
+    H -. "Não" .-> C
+    H == "Sim" ==> I
     I --> J --> K
-    K -.->|"Não"| C
-    K -->|"Sim"| N
+    K -. "Não" .-> C
+    K == "Sim" ==> N
     N --> O
-    O -.->|"Não"| C
-    O -->|"Sim"| P
+    O -. "Não" .-> C
+    O == "Sim" ==> P
     P --> Q --> R
+
+    class A,B,C,D,F,G,I,N,P step
+    class E,H,K,O decision
+    class J,Q deploy
+    class R done
 ```
 
 ---
