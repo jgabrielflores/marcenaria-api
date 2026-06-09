@@ -12,6 +12,7 @@ Documentação aprofundada da plataforma de gestão de pedidos. Para uma visão 
 | [modelo-de-dados.md](modelo-de-dados.md) | Diagrama entidade-relacionamento, tabelas, índices e relacionamentos |
 | [seguranca.md](seguranca.md) | Modelo de segurança, mitigações OWASP, testes adversariais |
 | [desenvolvimento.md](desenvolvimento.md) | Setup do ambiente, fluxo de trabalho, comandos e *troubleshooting* |
+| [fluxo-de-trabalho.md](fluxo-de-trabalho.md) | Ambientes, branches, Git Flow e pipeline CI/CD — o processo de ponta a ponta, com diagramas |
 
 ## Diagramas de fluxo (draw.io)
 
