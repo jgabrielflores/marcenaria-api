@@ -242,19 +242,24 @@ npm run build         # build de produção
 ## Fluxo de contribuição (Git Flow)
 
 As branches `main` (produção) e `develop` (*staging*/homologação) são **protegidas** no
-GitHub — push direto é bloqueado, **inclusive para o dono**. Toda alteração segue:
+GitHub — push direto é bloqueado, **inclusive para o dono**. Em resumo, toda alteração segue:
 
 1. **Atualize a `develop`:** `git checkout develop && git pull`.
 2. **Crie uma branch de trabalho:** `git checkout -b feature/<nome-curto>`.
 3. **Implemente** a alteração (código ou documentação).
-4. **Rode os gates de qualidade** localmente (seção acima) — todos verdes.
-5. **Commit + push:** `git push -u origin feature/<nome-curto>`.
-6. **Abra o Pull Request** para `develop`: `gh pr create --base develop`.
-7. **Aguarde a CI ficar verde** (jobs *Backend* e *Frontend* são obrigatórios) e faça o *merge*.
-8. **Promova para produção** quando a `develop` estiver estável: PR `develop` → `main`.
+4. **Teste localmente** — suba o app e *veja a alteração funcionando* (validação manual).
+5. **Rode os gates de qualidade** localmente (seção acima) — todos verdes.
+6. **Commit + push:** `git push -u origin feature/<nome-curto>`.
+7. **Abra o Pull Request** para `develop`: `gh pr create --base develop`.
+8. **Aguarde a CI ficar verde** (jobs *Backend* e *Frontend* são obrigatórios) e faça o *merge* →
+   deploy automático em **staging**.
+9. **Valide em staging** e, quando estável, **promova para produção**: PR `develop` → `main` →
+   deploy automático em **produção**.
 
-> Convenção de branches: `feature/<descrição>` para novas funcionalidades e correções.
-> Nunca commite direto em `main` ou `develop`.
+> **Explicação completa do processo — ambientes, papéis e diagramas — em
+> [fluxo-de-trabalho.md](fluxo-de-trabalho.md).**
+> Convenção de branches: `feature/`, `fix/`, `chore/`, `docs/`. Nunca commite direto em
+> `main` ou `develop`.
 
 ---
 
