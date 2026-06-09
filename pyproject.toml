@@ -42,14 +42,14 @@ markers = [
   "integration: real test database and HTTP client",
   "security: adversarial scenarios",
 ]
-addopts = "--cov=src --cov-report=term-missing"
+addopts = "--cov=src --cov-report=term-missing --cov-branch"
 
 [tool.coverage.run]
-# Excluded per tests/CLAUDE.md: pydantic-settings boilerplate and the interactive
-# seed script are not meaningfully unit-testable.
+# Excluded: pydantic-settings boilerplate is validated by the framework, not us.
+# The seed script IS now covered (tests/integration/test_seed_admin.py) — it runs
+# in production at boot, so it earns a regression test.
 omit = [
   "src/config.py",
-  "src/scripts/*",
 ]
 
 [tool.ruff]
