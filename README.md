@@ -8,18 +8,11 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 
 <br>
 
-### [🌐 Acessar a aplicação no ar](https://ramos-planejados.up.railway.app) &nbsp;·&nbsp; [📖 API / Swagger](https://ramos-planejados-api.up.railway.app/docs)
-
-[![Aplicação no ar](https://img.shields.io/badge/deploy-online-2ea44f?style=for-the-badge&logo=railway&logoColor=white)](https://ramos-planejados.up.railway.app)
-[![API docs](https://img.shields.io/badge/API-Swagger_UI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://ramos-planejados-api.up.railway.app/docs)
-
-<sub>Aplicação publicada na Railway. A landing page e a documentação da API são públicas; o portal do cliente e o painel admin exigem login.</sub>
-
-<br>
-
 [![CI](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/jgabrielflores/ramos-planejados/branch/main/graph/badge.svg)](https://codecov.io/gh/jgabrielflores/ramos-planejados)
-![Tests](https://img.shields.io/badge/testes-133%20passando-2ea44f)
+![Cobertura](https://img.shields.io/badge/cobertura-95%25-2ea44f)
+![Testes](https://img.shields.io/badge/testes-169%20passando-2ea44f)
+[![Deploy](https://img.shields.io/badge/deploy-online-2ea44f?logo=railway&logoColor=white)](https://ramos-planejados.up.railway.app)
+[![API](https://img.shields.io/badge/API-Swagger-009688?logo=fastapi&logoColor=white)](https://ramos-planejados-api.up.railway.app/docs)
 
 <br>
 
@@ -98,8 +91,8 @@ A aplicação está **publicada e no ar** na Railway:
 
 | Recurso | Link | Acesso |
 |---|---|---|
-| 🌐 **Aplicação** (site + portal + admin) | **https://ramos-planejados.up.railway.app** | público (landing) |
-| 📖 **API - Swagger UI** | **https://ramos-planejados-api.up.railway.app/docs** | público |
+| **Aplicação** (site + portal + admin) | **https://ramos-planejados.up.railway.app** | público |
+| **API - Swagger UI** | **https://ramos-planejados-api.up.railway.app/docs** | público |
 
 As telas abaixo são rotas da aplicação no ar. A landing e as telas de autenticação são públicas; o portal do cliente (`/conta/*`) e o painel admin (`/admin/*`) exigem login.
 
@@ -226,7 +219,7 @@ flowchart LR
 | Framework | Next.js 16 (App Router) | Renderização *server-first*, roteamento por arquivos |
 | Linguagem | TypeScript (strict) | Tipagem fim a fim, contratos de API tipados |
 | Estilo | Tailwind CSS v4 | Design system consistente sem CSS solto |
-| Componentes | shadcn/ui | Componentes acessíveis e componíveis |
+| Componentes | Componentes próprios + shadcn (tema base) | Telas com classes próprias de `globals.css`; shadcn fornece o tema base do Tailwind |
 | Guarda de rotas | `proxy.ts` (middleware) | Redireciona não autenticados e bloqueia `/admin` para não-admins |
 
 ### Infraestrutura e qualidade
@@ -235,7 +228,7 @@ flowchart LR
 |---|---|
 | Ambiente local | Docker + Docker Compose (`api` + `db`) |
 | CI/CD | GitHub Actions - testes + cobertura a cada *push* |
-| Cobertura | pytest-cov + Codecov |
+| Cobertura | pytest-cov (gate de 90% no CI) |
 | Deploy | Railway - backend (Docker) · frontend (Next.js) · PostgreSQL gerenciado |
 
 <br>
@@ -391,7 +384,7 @@ A interface fica disponível em **http://localhost:3000**.
 
 ## Qualidade e testes
 
-A suíte conta com **133 testes** automatizados (cobertura ~96% sobre `src/`), organizados em três níveis:
+A suíte soma **169 testes** automatizados: **136 no backend** (cobertura de **95%** sobre `src/`) e **33 no frontend** (Vitest). Os testes de backend organizam-se em três níveis:
 
 | Tipo | Marcador | O que verifica | Banco | HTTP |
 |---|---|---|:---:|:---:|
@@ -415,7 +408,7 @@ docker-compose exec api pytest -m security -v
 - Arquitetura em camadas com fronteiras de responsabilidade explícitas
 - Constantes nomeadas no lugar de *magic strings* / *magic numbers*
 - Sem mock de banco - testes de integração rodam contra um PostgreSQL real
-- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: ~96%)
+- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: 95%)
 - Imagem Docker roda como usuário **não-root**, com *layers* otimizadas para cache
 
 <br>

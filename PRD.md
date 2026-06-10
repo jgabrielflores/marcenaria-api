@@ -16,7 +16,7 @@
 > admin has a metrics dashboard. Sections below marked *(v2.0)* reflect the
 > current system; where v1.2 prose conflicts, v2.0 wins.
 
-> **Note on language:** This document and all source artifacts (code, commits, PLAN.md, identifiers) are written in English. The end-user product text - anything a Brazilian customer of the marcenaria sees in the UI - is written in Portuguese.
+> **Note on language:** This document and all source artifacts (code, commits, identifiers) are written in English. The end-user product text - anything a Brazilian customer of the marcenaria sees in the UI - is written in Portuguese.
 
 ---
 
@@ -26,7 +26,7 @@ A focused web platform that lets a custom-furniture workshop (*marcenaria*) capt
 
 The product lives in a single monorepo (`ramos-planejados`):
 - **`src/`** - REST API (FastAPI + PostgreSQL). Backend complete.
-- **`frontend/`** - Web interface (Next.js + TypeScript + Tailwind CSS + shadcn/ui). In development.
+- **`frontend/`** - Web interface (Next.js + TypeScript + Tailwind CSS). Deployed.
 
 ## 2. Problem
 
@@ -162,7 +162,7 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 - `status` *(enum: `PENDING`, `IN_PROGRESS`, `DONE`)*
 - `created_at`, `updated_at`
 
-> Formal ERD with column types, indexes, and constraints: see `PLAN.md`.
+> Formal ERD with column types, indexes, and constraints: see [docs/modelo-de-dados.md](docs/modelo-de-dados.md).
 
 ## 11. High-Level Architecture
 
