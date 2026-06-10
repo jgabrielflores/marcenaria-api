@@ -7,7 +7,7 @@
 
         <!-- Base: DOCUMENTACAO.md secoes 6 (Fluxo Administrativo), 7 (Status) e 9 (Permissoes) -->
 
-        <mxCell id="title" value="Jornada do Administrador — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="title" value="Jornada do Administrador - Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="20" width="640" height="32" as="geometry" />
         </mxCell>
 
@@ -46,7 +46,7 @@
           <mxGeometry x="480" y="616" width="280" height="62" as="geometry" />
         </mxCell>
 
-        <mxCell id="Pwalkin" value="&lt;b&gt;Pedido walk-in&lt;/b&gt;&amp;nbsp;(opcional)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/admin/pedidos/novo — cria pedido para&lt;br&gt;cliente sem conta (client_name / client_email)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;dashed=1;" vertex="1" parent="1">
+        <mxCell id="Pwalkin" value="&lt;b&gt;Pedido walk-in&lt;/b&gt;&amp;nbsp;(opcional)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/admin/pedidos/novo - cria pedido para&lt;br&gt;cliente sem conta (client_name / client_email)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="900" y="612" width="290" height="72" as="geometry" />
         </mxCell>
 
@@ -58,21 +58,21 @@
           <mxGeometry x="505" y="818" width="230" height="110" as="geometry" />
         </mxCell>
 
-        <!-- ───────── RAMO A — EDITAR DADOS (esquerda) ───────── -->
+        <!-- ───────── RAMO A - EDITAR DADOS (esquerda) ───────── -->
         <mxCell id="Daguard" value="Pedido em&lt;br&gt;AGUARDANDO_ANALISE?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
           <mxGeometry x="90" y="972" width="240" height="96" as="geometry" />
         </mxCell>
         <mxCell id="Pedit" value="Edita dados do cliente e do projeto&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;WhatsApp, endereço, cidade, UF,&lt;br&gt;ambientes, tipos de móveis, observações&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="90" y="1124" width="240" height="74" as="geometry" />
         </mxCell>
-        <mxCell id="noteRO" value="Demais status: dados do cliente e do projeto ficam somente leitura — nenhuma edição é possível." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff8dc;strokeColor=#d6b656;size=14;align=left;verticalAlign=middle;fontSize=10;spacing=6;" vertex="1" parent="1">
+        <mxCell id="noteRO" value="Demais status: dados do cliente e do projeto ficam somente leitura - nenhuma edição é possível." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff8dc;strokeColor=#d6b656;size=14;align=left;verticalAlign=middle;fontSize=10;spacing=6;" vertex="1" parent="1">
           <mxGeometry x="90" y="1246" width="240" height="78" as="geometry" />
         </mxCell>
         <mxCell id="Psave" value="&lt;b&gt;Salvar alterações&lt;/b&gt;&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;dados persistidos&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="100" y="1492" width="220" height="58" as="geometry" />
         </mxCell>
 
-        <!-- ───────── RAMO B — ALTERAR STATUS (centro) ───────── -->
+        <!-- ───────── RAMO B - ALTERAR STATUS (centro) ───────── -->
         <mxCell id="Pstatus" value="Seleciona o novo status no dropdown&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;avançar / retroceder uma etapa&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="480" y="982" width="280" height="58" as="geometry" />
         </mxCell>
@@ -97,7 +97,7 @@
           <mxGeometry x="480" y="1492" width="280" height="58" as="geometry" />
         </mxCell>
 
-        <!-- ───────── RAMO C — CANCELAR (direita) ───────── -->
+        <!-- ───────── RAMO C - CANCELAR (direita) ───────── -->
         <mxCell id="Dconfirm" value="Confirma o&lt;br&gt;cancelamento?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="905" y="980" width="210" height="96" as="geometry" />
         </mxCell>
@@ -212,7 +212,7 @@
         <mxCell id="ea_fields_yes" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="Dfields" target="Pfields">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ea_fields_no" value="Não — demais status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="Dfields" target="Dvalid">
+        <mxCell id="ea_fields_no" value="Não - demais status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#333333;fontSize=9;" edge="1" parent="1" source="Dfields" target="Dvalid">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="420" y="1136" />

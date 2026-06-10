@@ -28,7 +28,7 @@ A segurança foi tratada como requisito de primeira ordem. As decisões seguem o
 
 | Propriedade | Valor | Justificativa |
 |---|---|---|
-| Algoritmo | `HS256` — **fixo** | Impede o ataque de confusão de algoritmo (`alg: none`) |
+| Algoritmo | `HS256` - **fixo** | Impede o ataque de confusão de algoritmo (`alg: none`) |
 | Chave de assinatura | `SECRET_KEY`, mínimo 32 caracteres, lida só do ambiente | Nunca versionada |
 | Validade | 24 horas | Limita a janela de uso de um token vazado |
 | *Payload* | `sub` (UUID), `role`, `exp` | O mínimo necessário, sem dados sensíveis |
@@ -38,7 +38,7 @@ A configuração `algorithm: Literal["HS256"]` em `config.py` torna impossível,
 ### Verificação de e-mail
 
 - Contas novas nascem com `email_verified = false` e **não conseguem fazer login** antes de confirmar o e-mail.
-- O link de verificação é um JWT com `purpose: email_verify` e validade de 24 h — o `purpose` impede que um token de acesso seja reaproveitado como token de verificação.
+- O link de verificação é um JWT com `purpose: email_verify` e validade de 24 h - o `purpose` impede que um token de acesso seja reaproveitado como token de verificação.
 
 ### Defesa contra enumeração de usuários
 
@@ -49,7 +49,7 @@ Dois cuidados impedem que um atacante descubra quais e-mails existem:
 
 ### Defesa contra *timing attack*
 
-Quando o e-mail informado no login não existe, o código ainda executa `pwd_context.dummy_verify()` — uma verificação de hash "vazia". Sem isso, a ausência do trabalho de hashing tornaria a resposta mensuravelmente mais rápida, vazando a informação "este e-mail não existe" pelo tempo de resposta.
+Quando o e-mail informado no login não existe, o código ainda executa `pwd_context.dummy_verify()` - uma verificação de hash "vazia". Sem isso, a ausência do trabalho de hashing tornaria a resposta mensuravelmente mais rápida, vazando a informação "este e-mail não existe" pelo tempo de resposta.
 
 ---
 
@@ -74,15 +74,15 @@ flowchart LR
 
 | Mecanismo | Onde | O que faz |
 |---|---|---|
-| `get_current_user` | `dependencies.py` | Decodifica o JWT, valida, resolve o usuário — 401 se inválido |
-| `require_admin` | `dependencies.py` | Bloqueia não-admins em rotas de admin — 403 |
+| `get_current_user` | `dependencies.py` | Decodifica o JWT, valida, resolve o usuário - 401 se inválido |
+| `require_admin` | `dependencies.py` | Bloqueia não-admins em rotas de admin - 403 |
 | Verificação de propriedade | `services/order.py` | Cliente só acessa os próprios pedidos |
 
 ### Proteção contra IDOR
 
-*Insecure Direct Object Reference* — acessar o recurso de outro usuário trocando o ID na URL.
+*Insecure Direct Object Reference* - acessar o recurso de outro usuário trocando o ID na URL.
 
-`get_order` compara `order.user_id` com o usuário autenticado: se um cliente tenta ler o pedido de outro, recebe **HTTP 403**. A guarda fica na **camada de serviço**, não no router — qualquer caminho que chegue ao pedido passa por ela.
+`get_order` compara `order.user_id` com o usuário autenticado: se um cliente tenta ler o pedido de outro, recebe **HTTP 403**. A guarda fica na **camada de serviço**, não no router - qualquer caminho que chegue ao pedido passa por ela.
 
 ### Sem escalonamento de papel
 
@@ -102,7 +102,7 @@ A mesma entidade `Order` é exposta de formas diferentes conforme quem visualiza
 | `customer_name`, `customer_email` | sempre `null` | visível |
 | `project_value` | só após `AGUARDANDO_ANALISE` | sempre visível |
 
-Como a redação é feita na serialização — e não escondida só na UI — o dado sensível **nunca sai da API** para um cliente, mesmo que ele chame o endpoint diretamente.
+Como a redação é feita na serialização - e não escondida só na UI - o dado sensível **nunca sai da API** para um cliente, mesmo que ele chame o endpoint diretamente.
 
 ### CORS
 
@@ -130,7 +130,7 @@ Toda requisição passa por um schema Pydantic **antes** de chegar à camada de 
 - Limites de tamanho em todos os campos de texto (evita *payloads* gigantes).
 - Normalização de dados (WhatsApp e CEP reduzidos a dígitos; UF em maiúsculas).
 - `EmailStr` valida o formato do e-mail, incluindo o TLD.
-- IDs de rota são tipados como `UUID` — um valor malformado é rejeitado com 422 antes de qualquer consulta.
+- IDs de rota são tipados como `UUID` - um valor malformado é rejeitado com 422 antes de qualquer consulta.
 
 ---
 
@@ -149,7 +149,7 @@ Toda requisição passa por um schema Pydantic **antes** de chegar à camada de 
 ## Gestão de segredos
 
 - **Nenhum segredo é versionado.** `.env` está no `.gitignore`; o repositório contém apenas `.env.example` com valores de exemplo.
-- Toda configuração sensível (`DATABASE_URL`, `SECRET_KEY`, `BREVO_API_KEY`) vem de variável de ambiente, validada na inicialização por `pydantic-settings` — a aplicação **não sobe** com uma configuração inválida.
+- Toda configuração sensível (`DATABASE_URL`, `SECRET_KEY`, `BREVO_API_KEY`) vem de variável de ambiente, validada na inicialização por `pydantic-settings` - a aplicação **não sobe** com uma configuração inválida.
 - Segredos como `SECRET_KEY` e `ADMIN_PASSWORD` usam o tipo `SecretStr`, que evita o vazamento acidental do valor em *logs* ou *reprs*.
 - Os logs nunca registram senhas, tokens ou dados pessoais.
 
@@ -157,7 +157,7 @@ Toda requisição passa por um schema Pydantic **antes** de chegar à camada de 
 
 ## Testes de segurança
 
-A pasta `tests/security/` contém **apenas testes adversariais** — nenhum teste de caminho feliz. Cada classe de ataque do OWASP relevante tem cobertura dedicada:
+A pasta `tests/security/` contém **apenas testes adversariais** - nenhum teste de caminho feliz. Cada classe de ataque do OWASP relevante tem cobertura dedicada:
 
 | Arquivo | Classe de ataque | Cenários |
 |---|---|---|

@@ -5,7 +5,7 @@
 
 ## O que muda e por quê
 
-<!-- Descreva a alteração e a motivação em 1–3 frases. -->
+<!-- Descreva a alteração e a motivação em 1-3 frases. -->
 
 ## Tipo
 
@@ -13,7 +13,7 @@
 - [ ] `fix` (correção de bug)
 - [ ] `chore` / `docs` (manutenção, infra ou documentação)
 
-## ✅ QA — Quality Engineer
+## ✅ QA - Quality Engineer
 
 - [ ] Adicionei/atualizei testes cobrindo o **caminho feliz** e o **principal caso de erro**.
 - [ ] Backend: há teste de **integração** exercitando o ciclo HTTP, quando aplicável.
@@ -21,7 +21,7 @@
 - [ ] Rodei os **gates localmente** e estão verdes (`ruff` · `mypy` · `pytest --cov-fail-under=90` · `npm run lint/type-check/format:check/test:coverage/build`).
 - [ ] Cobertura **não caiu** abaixo do mínimo (backend ≥ 90%; gate do frontend verde).
 
-## 🔒 Segurança — Security Engineer
+## 🔒 Segurança - Security Engineer
 
 - [ ] Autenticação e **autorização** corretas (papel `CUSTOMER` vs `ADMIN`; sem IDOR).
 - [ ] Entrada validada por schema (Pydantic no back; sem confiar no front).

@@ -25,7 +25,7 @@
 | [Node.js](https://nodejs.org/) | 22+ | Rodar o frontend |
 | [Git](https://git-scm.com/) | recente | Clonar o repositório |
 
-O backend roda inteiramente em contêineres — **não é preciso instalar Python nem PostgreSQL** na máquina.
+O backend roda inteiramente em contêineres - **não é preciso instalar Python nem PostgreSQL** na máquina.
 
 ---
 
@@ -39,9 +39,9 @@ cp .env.example .env
 
 Abra o `.env` e preencha os valores. No mínimo:
 
-- `SECRET_KEY` — gere com `python -c "import secrets; print(secrets.token_hex(32))"`
-- `ADMIN_EMAIL` e `ADMIN_PASSWORD` — credenciais do administrador inicial
-- `ENV=development` — habilita logs em texto legível
+- `SECRET_KEY` - gere com `python -c "import secrets; print(secrets.token_hex(32))"`
+- `ADMIN_EMAIL` e `ADMIN_PASSWORD` - credenciais do administrador inicial
+- `ENV=development` - habilita logs em texto legível
 
 > A referência completa das variáveis está no [README principal](../README.md#variáveis-de-ambiente).
 
@@ -74,7 +74,7 @@ docker-compose exec api python -m src.scripts.seed_admin
 # Ver os logs da API em tempo real
 docker-compose logs -f api
 
-# Reiniciar a API (necessário após mudar código Python — veja a nota abaixo)
+# Reiniciar a API (necessário após mudar código Python - veja a nota abaixo)
 docker-compose restart api
 
 # Derrubar tudo (mantém os dados do banco)
@@ -119,7 +119,7 @@ A suíte tem **133 testes** em três níveis. Todos rodam dentro do contêiner d
 # Todos os testes com relatório de cobertura
 docker-compose exec api pytest --cov=src --cov-report=term-missing
 
-# Apenas unitários (rápidos — sem banco, sem HTTP)
+# Apenas unitários (rápidos - sem banco, sem HTTP)
 docker-compose exec api pytest -m unit -v
 
 # Apenas integração (ciclo HTTP completo + banco de teste real)
@@ -137,7 +137,7 @@ docker-compose exec api pytest -k "test_login_with_wrong_password" -v
 
 | Tipo | Marcador | Banco | HTTP | O que cobre |
 |---|---|:---:|:---:|---|
-| Unitário | `unit` | — | — | Lógica pura: services, validadores, máquina de estados |
+| Unitário | `unit` | - | - | Lógica pura: services, validadores, máquina de estados |
 | Integração | `integration` | real | ✓ | Ciclo completo de requisição/resposta |
 | Segurança | `security` | real | ✓ | Ataques: JWT, IDOR, SQL injection, força bruta |
 
@@ -147,7 +147,7 @@ docker-compose exec api pytest -k "test_login_with_wrong_password" -v
 
 ## Migrações de banco
 
-O schema é versionado com **Alembic** — nunca é alterado manualmente nem por `create_all`.
+O schema é versionado com **Alembic** - nunca é alterado manualmente nem por `create_all`.
 
 ```bash
 # Aplicar todas as migrações pendentes
@@ -163,7 +163,7 @@ docker-compose exec api alembic downgrade -1
 docker-compose exec api alembic current
 ```
 
-Depois de gerar uma migração com `--autogenerate`, **revise o arquivo** em `migrations/versions/` antes de aplicá-lo — o Alembic acerta a maior parte, mas nem sempre tudo.
+Depois de gerar uma migração com `--autogenerate`, **revise o arquivo** em `migrations/versions/` antes de aplicá-lo - o Alembic acerta a maior parte, mas nem sempre tudo.
 
 ---
 
@@ -171,7 +171,7 @@ Depois de gerar uma migração com `--autogenerate`, **revise o arquivo** em `mi
 
 ```
 ramos-planejados/
-├── src/                      # API REST — FastAPI
+├── src/                      # API REST - FastAPI
 │   ├── main.py               # App factory
 │   ├── config.py             # Settings (pydantic-settings)
 │   ├── database.py           # Engine + sessão
@@ -183,7 +183,7 @@ ramos-planejados/
 │   ├── services/             # Regras de negócio
 │   └── scripts/              # seed_admin
 │
-├── frontend/                 # Interface web — Next.js 16
+├── frontend/                 # Interface web - Next.js 16
 │   ├── app/                  # Rotas (App Router)
 │   ├── components/           # Componentes de UI
 │   ├── lib/                  # api · auth · theme · constants
@@ -234,7 +234,7 @@ npm run build          # build de produção
 
 > **Política de testes (Definition of Done):** toda alteração de comportamento entra com
 > teste. O backend tem gate de cobertura ≥ 90% e o frontend tem gate próprio (Vitest +
-> v8) escopado aos módulos testados — ao criar um arquivo novo, inclua-o em
+> v8) escopado aos módulos testados - ao criar um arquivo novo, inclua-o em
 > `frontend/vitest.config.ts` (`coverage.include`). O checklist de Segurança + QA é
 > preenchido em todo PR (`.github/pull_request_template.md`).
 
@@ -248,13 +248,13 @@ npm run build          # build de produção
 ## Fluxo de contribuição (Git Flow)
 
 As branches `main` (produção) e `develop` (*staging*/homologação) são **protegidas** no
-GitHub — push direto é bloqueado, **inclusive para o dono**. Em resumo, toda alteração segue:
+GitHub - push direto é bloqueado, **inclusive para o dono**. Em resumo, toda alteração segue:
 
 1. **Atualize a `develop`:** `git checkout develop && git pull`.
 2. **Crie uma branch de trabalho:** `git checkout -b feature/<nome-curto>`.
 3. **Implemente** a alteração (código ou documentação).
-4. **Teste localmente** — suba o app e *veja a alteração funcionando* (validação manual).
-5. **Rode os gates de qualidade** localmente (seção acima) — todos verdes.
+4. **Teste localmente** - suba o app e *veja a alteração funcionando* (validação manual).
+5. **Rode os gates de qualidade** localmente (seção acima) - todos verdes.
 6. **Commit + push:** `git push -u origin feature/<nome-curto>`.
 7. **Abra o Pull Request** para `develop`: `gh pr create --base develop`.
 8. **Aguarde a CI ficar verde** (jobs *Backend* e *Frontend* são obrigatórios) e faça o *merge* →
@@ -262,7 +262,7 @@ GitHub — push direto é bloqueado, **inclusive para o dono**. Em resumo, toda 
 9. **Valide em staging** e, quando estável, **promova para produção**: PR `develop` → `main` →
    deploy automático em **produção**.
 
-> **Explicação completa do processo — ambientes, papéis e diagramas — em
+> **Explicação completa do processo - ambientes, papéis e diagramas - em
 > [fluxo-de-trabalho.md](fluxo-de-trabalho.md).**
 > Convenção de branches: `feature/`, `fix/`, `chore/`, `docs/`. Nunca commite direto em
 > `main` ou `develop`.
@@ -306,7 +306,7 @@ docker-compose logs api | grep "Verification link"
 
 ### Não consigo fazer login mesmo com a senha certa
 
-A conta provavelmente está com o e-mail não verificado (resposta `403 EMAIL_NOT_VERIFIED`). Verifique o e-mail pelo link no log, ou — para a conta de admin — rode o `seed_admin`, que já marca o e-mail como verificado.
+A conta provavelmente está com o e-mail não verificado (resposta `403 EMAIL_NOT_VERIFIED`). Verifique o e-mail pelo link no log, ou - para a conta de admin - rode o `seed_admin`, que já marca o e-mail como verificado.
 
 ### Quero recomeçar com o banco limpo
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Sora, Raleway } from "next/font/google";
+import { Cormorant_Garamond, Sora } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -16,13 +16,6 @@ const sora = Sora({
   display: "swap",
 });
 
-const raleway = Raleway({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "800"],
-  variable: "--font-display",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Ramos Planejados",
   description: "Móveis planejados sob medida — acompanhe seu projeto do orçamento à entrega.",
@@ -34,10 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${cormorant.variable} ${sora.variable} ${raleway.variable} h-full antialiased`}
-    >
+    <html lang="pt-BR" className={`${cormorant.variable} ${sora.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

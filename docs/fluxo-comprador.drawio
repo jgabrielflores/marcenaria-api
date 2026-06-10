@@ -7,7 +7,7 @@
 
         <!-- Base: DOCUMENTACAO.md secoes 4 (Autenticacao) e 5 (Fluxo do Comprador) -->
 
-        <mxCell id="title" value="Jornada do Comprador — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="title" value="Jornada do Comprador - Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="20" width="620" height="32" as="geometry" />
         </mxCell>
 
@@ -57,7 +57,7 @@
         </mxCell>
 
         <!-- Erros de login (direita) -->
-        <mxCell id="E401" value="&lt;b&gt;Credenciais inválidas&lt;/b&gt;&amp;nbsp;(HTTP 401)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;mensagem genérica — não revela se o e-mail existe&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+        <mxCell id="E401" value="&lt;b&gt;Credenciais inválidas&lt;/b&gt;&amp;nbsp;(HTTP 401)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;mensagem genérica - não revela se o e-mail existe&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="772" y="676" width="340" height="58" as="geometry" />
         </mxCell>
         <mxCell id="E403" value="&lt;b&gt;E-mail não verificado&lt;/b&gt;&amp;nbsp;(HTTP 403)&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;código EMAIL_NOT_VERIFIED&lt;br&gt;a tela oferece reenvio da verificação (máx. 5/min)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
@@ -65,7 +65,7 @@
         </mxCell>
 
         <!-- ───────── ÁREA DO CLIENTE (centro) ───────── -->
-        <mxCell id="P3" value="&lt;b&gt;Área do cliente&lt;/b&gt;&amp;nbsp;&amp;nbsp;/conta/pedidos&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Lista paginada — 10 pedidos por página&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+        <mxCell id="P3" value="&lt;b&gt;Área do cliente&lt;/b&gt;&amp;nbsp;&amp;nbsp;/conta/pedidos&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Lista paginada - 10 pedidos por página&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="420" y="950" width="280" height="58" as="geometry" />
         </mxCell>
         <mxCell id="P4" value="&lt;b&gt;Novo pedido&lt;/b&gt;&amp;nbsp;&amp;nbsp;/conta/pedidos/novo&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Seções: Contato · Endereço (CEP via ViaCEP) · Projeto&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
@@ -77,7 +77,7 @@
         <mxCell id="P6" value="Tela de confirmação&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;Contatos da equipe · botão Ver pedido&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="420" y="1248" width="280" height="56" as="geometry" />
         </mxCell>
-        <mxCell id="P7" value="Acompanha o pedido&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/conta/pedidos/[id] — detalhe + histórico de status&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+        <mxCell id="P7" value="Acompanha o pedido&lt;br&gt;&lt;span style=&apos;font-size:9px;color:#7a7a7a&apos;&gt;/conta/pedidos/[id] - detalhe + histórico de status&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="420" y="1344" width="280" height="56" as="geometry" />
         </mxCell>
 
@@ -145,7 +145,7 @@
         <mxCell id="e_p2_d2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" edge="1" parent="1" source="P2" target="D2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_d2_p3" value="Sucesso (200) — JWT emitido" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="D2" target="P3">
+        <mxCell id="e_d2_p3" value="Sucesso (200) - JWT emitido" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="D2" target="P3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e_d2_401" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.25;entryX=0;entryY=0.5;strokeColor=#b85450;dashed=1;" edge="1" parent="1" source="D2" target="E401">

@@ -24,14 +24,14 @@ flowchart TD
         Browser["Navegador<br/>cliente · admin · visitante"]
     end
 
-    subgraph web["frontend/ — Next.js 16"]
+    subgraph web["frontend/ - Next.js 16"]
         Landing["Site institucional<br/>/"]
         Portal["Portal do cliente<br/>/conta/*"]
         Admin["Painel admin<br/>/admin/*"]
         Proxy["proxy.ts<br/>guarda de rotas"]
     end
 
-    subgraph api["src/ — FastAPI"]
+    subgraph api["src/ - FastAPI"]
         Routers["Routers"]
         Services["Services"]
         Models["Models / ORM"]
@@ -60,7 +60,7 @@ flowchart TD
 |---|---|
 | **frontend/** | Renderizar a interface, gerir sessão no navegador, guardar rotas por papel |
 | **src/** | Autenticar, aplicar regras de negócio, persistir dados, expor a API REST |
-| **PostgreSQL** | Persistência durável — usuários, pedidos e histórico de status |
+| **PostgreSQL** | Persistência durável - usuários, pedidos e histórico de status |
 | **Brevo API** | Envio de e-mails de verificação de conta via HTTPS (opcional em desenvolvimento) |
 
 ---
@@ -88,9 +88,9 @@ flowchart TB
     HTTP["Requisição HTTP"]
     Dep["dependencies.py<br/>get_current_user · require_admin"]
     Router["routers/<br/>parse HTTP · valida via schema · delega"]
-    Schema["schemas/<br/>DTOs Pydantic — validação de entrada/saída"]
+    Schema["schemas/<br/>DTOs Pydantic - validação de entrada/saída"]
     Service["services/<br/>regras de negócio · orquestração"]
-    Model["models/<br/>schema do banco — SQLAlchemy ORM"]
+    Model["models/<br/>schema do banco - SQLAlchemy ORM"]
     DB[("PostgreSQL")]
 
     HTTP --> Dep
@@ -116,14 +116,14 @@ flowchart TB
 | **Services** | `services/*.py` | Concentra a regra de negócio, orquestra operações no ORM | Importa de `routers/`, lida com objetos HTTP |
 | **Models** | `models/*.py` | Define o schema do banco (tabelas, colunas, índices) | Contém lógica de negócio |
 
-> **Regra de ouro:** a camada de serviço não conhece HTTP. Ela recebe objetos de domínio e parâmetros simples, e levanta `HTTPException` apenas para sinalizar violações de regra de negócio. Isso a torna testável de forma isolada — veja os testes unitários em `tests/unit/`.
+> **Regra de ouro:** a camada de serviço não conhece HTTP. Ela recebe objetos de domínio e parâmetros simples, e levanta `HTTPException` apenas para sinalizar violações de regra de negócio. Isso a torna testável de forma isolada - veja os testes unitários em `tests/unit/`.
 
 ### Anatomia de um endpoint
 
 O endpoint `POST /api/v1/orders` ilustra a separação:
 
 ```python
-# routers/orders.py — fino: valida, delega, serializa
+# routers/orders.py - fino: valida, delega, serializa
 @router.post("", status_code=201, response_model=OrderRead)
 def create(body: OrderCreate, db: Session = Depends(get_db),
            current_user: User = Depends(get_current_user)) -> OrderRead:
@@ -139,7 +139,7 @@ def create(body: OrderCreate, db: Session = Depends(get_db),
 
 ## Fluxos de requisição
 
-### Fluxo 1 — Autenticação e criação de pedido
+### Fluxo 1 - Autenticação e criação de pedido
 
 ```mermaid
 sequenceDiagram
@@ -153,17 +153,17 @@ sequenceDiagram
     A->>DB: busca usuário por e-mail
     A->>A: verifica hash bcrypt + e-mail verificado
     A-->>F: 200 { access_token }
-    F->>F: saveSession(token) — cookie + localStorage
+    F->>F: saveSession(token) - cookie + localStorage
 
     C->>F: preenche novo pedido
     F->>A: POST /api/v1/orders (Bearer token)
-    A->>A: get_current_user — decodifica JWT
-    A->>A: OrderCreate — valida e normaliza CEP/WhatsApp
+    A->>A: get_current_user - decodifica JWT
+    A->>A: OrderCreate - valida e normaliza CEP/WhatsApp
     A->>DB: INSERT order + INSERT order_status_history
     A-->>F: 201 OrderRead (redigido por papel)
 ```
 
-### Fluxo 2 — Avanço de status pelo admin
+### Fluxo 2 - Avanço de status pelo admin
 
 ```mermaid
 sequenceDiagram
@@ -174,7 +174,7 @@ sequenceDiagram
 
     Adm->>F: seleciona novo status
     F->>A: PATCH /api/v1/orders/{id} (Bearer token)
-    A->>A: require_admin — bloqueia não-admin (403)
+    A->>A: require_admin - bloqueia não-admin (403)
     A->>DB: SELECT order
     A->>A: is_valid_transition(atual, novo)?
     alt transição inválida
@@ -188,7 +188,7 @@ sequenceDiagram
     end
 ```
 
-### Fluxo 3 — Verificação de e-mail
+### Fluxo 3 - Verificação de e-mail
 
 ```mermaid
 sequenceDiagram
@@ -213,16 +213,16 @@ sequenceDiagram
 
 ## Arquitetura do frontend
 
-O frontend usa **Next.js 16 com App Router** — arquitetura *server-first*, em que componentes rodam no servidor por padrão e só recebem `"use client"` quando precisam de estado, eventos ou APIs do navegador.
+O frontend usa **Next.js 16 com App Router** - arquitetura *server-first*, em que componentes rodam no servidor por padrão e só recebem `"use client"` quando precisam de estado, eventos ou APIs do navegador.
 
 ```
 frontend/app/
-├── page.tsx              # / — site institucional (server component)
+├── page.tsx              # / - site institucional (server component)
 ├── login · register      # autenticação (useActionState)
-├── conta/                # área do cliente — exige JWT + e-mail verificado
+├── conta/                # área do cliente - exige JWT + e-mail verificado
 │   ├── pedidos/          # lista · novo · detalhe
 │   └── perfil/           # editar nome · trocar senha
-└── admin/                # painel admin — exige JWT com role ADMIN
+└── admin/                # painel admin - exige JWT com role ADMIN
     ├── page.tsx          # dashboard
     └── pedidos/          # lista · novo · detalhe/gestão
 ```
@@ -233,7 +233,7 @@ frontend/app/
 |---|---|
 | `lib/api.ts` | Funções de *fetch* tipadas + classe `ApiError` + tipos espelhados da API |
 | `lib/auth.ts` | `saveSession` · `clearSession` · `getToken` · `getUser` · `isAdmin` |
-| `lib/constants.ts` | Chaves de armazenamento (`TOKEN_KEY`, `USER_KEY`) — nunca *hardcoded* |
+| `lib/constants.ts` | Chaves de armazenamento (`TOKEN_KEY`, `USER_KEY`) - nunca *hardcoded* |
 | `proxy.ts` | Guarda de rotas (middleware do Next.js 16) |
 
 ### Guarda de rotas
@@ -262,7 +262,7 @@ flowchart TD
     Role -->|não| Conta
 ```
 
-O papel é lido diretamente do *payload* do JWT — sem chamada de API. É uma guarda de **navegação** (UX); a autorização real é sempre reaplicada no servidor pela API.
+O papel é lido diretamente do *payload* do JWT - sem chamada de API. É uma guarda de **navegação** (UX); a autorização real é sempre reaplicada no servidor pela API.
 
 ---
 
