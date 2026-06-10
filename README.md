@@ -436,6 +436,7 @@ A pasta [`docs/`](docs/) reúne a documentação técnica aprofundada:
 | [docs/seguranca.md](docs/seguranca.md) | Modelo de segurança, mitigações OWASP, testes adversariais |
 | [docs/desenvolvimento.md](docs/desenvolvimento.md) | Setup, ambiente, fluxo de trabalho, *troubleshooting* |
 | [docs/fluxo-de-trabalho.md](docs/fluxo-de-trabalho.md) | Ambientes, branches, Git Flow e pipeline CI/CD, de ponta a ponta |
+| [docs/deploy-railway.md](docs/deploy-railway.md) | Deploy na Railway: URLs ao vivo, estrutura dos ambientes e como o deploy acontece |
 
 O índice completo da documentação técnica está em [docs/README.md](docs/README.md). Veja também [CONTRIBUTING.md](CONTRIBUTING.md) (como contribuir), [CHANGELOG.md](CHANGELOG.md) (histórico de versões) e [LICENSE](LICENSE) (licença MIT).
 

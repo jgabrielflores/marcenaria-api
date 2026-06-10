@@ -13,6 +13,7 @@ Documentação aprofundada da plataforma de gestão de pedidos. Para uma visão 
 | [seguranca.md](seguranca.md) | Modelo de segurança, mitigações OWASP, testes adversariais |
 | [desenvolvimento.md](desenvolvimento.md) | Setup do ambiente, fluxo de trabalho, comandos e *troubleshooting* |
 | [fluxo-de-trabalho.md](fluxo-de-trabalho.md) | Ambientes, branches, Git Flow e pipeline CI/CD - o processo de ponta a ponta, com diagramas |
+| [deploy-railway.md](deploy-railway.md) | Deploy na Railway - URLs ao vivo, estrutura dos ambientes e como o deploy acontece |
 
 ## Diagramas de fluxo (draw.io)
 
