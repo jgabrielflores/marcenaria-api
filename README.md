@@ -1,16 +1,18 @@
 <div align="center">
 
-# Ramos Planejados — Plataforma de Gestão de Pedidos
+# Ramos Planejados - Plataforma de Gestão de Pedidos
 
-**Sistema fullstack para uma marcenaria de móveis planejados gerenciar todo o ciclo de vida de um pedido — do orçamento à instalação.**
+**Sistema fullstack para uma marcenaria de móveis planejados gerenciar todo o ciclo de vida de um pedido - do orçamento à instalação.**
 
 Substitui o controle informal por WhatsApp e planilhas por uma plataforma estruturada, com portal do cliente, painel administrativo e API REST documentada.
 
 <br>
 
 [![CI](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/jgabrielflores/ramos-planejados/branch/main/graph/badge.svg)](https://codecov.io/gh/jgabrielflores/ramos-planejados)
-![Tests](https://img.shields.io/badge/testes-133%20passando-2ea44f)
+![Cobertura](https://img.shields.io/badge/cobertura-95%25-2ea44f)
+![Testes](https://img.shields.io/badge/testes-169%20passando-2ea44f)
+[![Deploy](https://img.shields.io/badge/deploy-online-2ea44f?logo=railway&logoColor=white)](https://ramos-planejados.up.railway.app)
+[![API](https://img.shields.io/badge/API-Swagger-009688?logo=fastapi&logoColor=white)](https://ramos-planejados-api.up.railway.app/docs)
 
 <br>
 
@@ -49,6 +51,8 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 - [Documentação completa](#documentação-completa)
 - [Roadmap](#roadmap)
 - [Aprendizados técnicos](#aprendizados-técnicos)
+- [Como contribuir](#como-contribuir)
+- [Licença](#licença)
 - [Autor](#autor)
 
 <br>
@@ -57,7 +61,7 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 
 ### O problema
 
-Marcenarias de pequeno porte coordenam pedidos por canais informais — conversas de WhatsApp, e-mail e planilhas soltas. Disso decorrem três dores concretas:
+Marcenarias de pequeno porte coordenam pedidos por canais informais - conversas de WhatsApp, e-mail e planilhas soltas. Disso decorrem três dores concretas:
 
 | Dor | Consequência |
 |---|---|
@@ -69,9 +73,9 @@ Marcenarias de pequeno porte coordenam pedidos por canais informais — conversa
 
 Uma plataforma web única, organizada em três frentes:
 
-- **Site institucional** — apresenta a marcenaria e direciona o visitante ao cadastro.
-- **Portal do cliente** (`/conta`) — solicitar orçamentos e acompanhar cada projeto em tempo real.
-- **Painel administrativo** (`/admin`) — gerenciar o ciclo completo de cada pedido, com dashboard financeiro e operacional.
+- **Site institucional** - apresenta a marcenaria e direciona o visitante ao cadastro.
+- **Portal do cliente** (`/conta`) - solicitar orçamentos e acompanhar cada projeto em tempo real.
+- **Painel administrativo** (`/admin`) - gerenciar o ciclo completo de cada pedido, com dashboard financeiro e operacional.
 
 Tudo sustentado por uma **API REST** com lifecycle de pedido explícito (7 estados), histórico de auditoria imutável e documentação OpenAPI gerada automaticamente.
 
@@ -83,21 +87,29 @@ O sistema foi modelado para a **Ramos Planejados**, marcenaria de móveis sob me
 
 ## Demonstração
 
-A API expõe documentação interativa **Swagger UI** assim que sobe localmente:
+A aplicação está **publicada e no ar** na Railway:
 
-> **http://localhost:8000/docs** — explore e teste todos os endpoints no navegador.
-
-| Tela | Rota | Descrição |
+| Recurso | Link | Acesso |
 |---|---|---|
-| Site institucional | `/` | Hero, filosofia, galeria de projetos, contato |
-| Login / Cadastro | `/login` · `/register` | Autenticação com verificação de e-mail |
-| Meus pedidos | `/conta/pedidos` | Lista paginada dos pedidos do cliente |
-| Novo pedido | `/conta/pedidos/novo` | Formulário com autopreenchimento de endereço via CEP |
-| Detalhe do pedido | `/conta/pedidos/[id]` | Dados do projeto + linha do tempo de status |
-| Dashboard admin | `/admin` | KPIs financeiros, pipeline e alertas de atraso |
-| Gestão de pedido | `/admin/pedidos/[id]` | Edição de status, valores, prazos e notas internas |
+| **Aplicação** (site + portal + admin) | **https://ramos-planejados.up.railway.app** | público |
+| **API - Swagger UI** | **https://ramos-planejados-api.up.railway.app/docs** | público |
 
-> _Capturas de tela da interface serão adicionadas aqui._
+As telas abaixo são rotas da aplicação no ar. A landing e as telas de autenticação são públicas; o portal do cliente (`/conta/*`) e o painel admin (`/admin/*`) exigem login.
+
+| Tela | Rota | Acesso | Descrição |
+|---|---|---|---|
+| Site institucional | `/` | público | Hero, filosofia, galeria de projetos, contato |
+| Login / Cadastro | `/login` · `/register` | público | Autenticação com verificação de e-mail |
+| Meus pedidos | `/conta/pedidos` | login | Lista paginada dos pedidos do cliente |
+| Novo pedido | `/conta/pedidos/novo` | login | Formulário com autopreenchimento de endereço via CEP |
+| Detalhe do pedido | `/conta/pedidos/[id]` | login | Dados do projeto + linha do tempo de status |
+| Dashboard admin | `/admin` | admin | KPIs financeiros, pipeline e alertas de atraso |
+| Gestão de pedido | `/admin/pedidos/[id]` | admin | Edição de status, valores, prazos e notas internas |
+
+### Capturas de tela
+
+> Imagens das áreas autenticadas (portal e painel admin), que não ficam acessíveis sem login.
+> _(em preparação - serão adicionadas em `docs/screenshots/`.)_
 
 <br>
 
@@ -111,14 +123,14 @@ A API expõe documentação interativa **Swagger UI** assim que sobe localmente:
 **Gestão de pedidos**
 - Criação de pedido com endereço (busca automática por CEP), ambientes e tipos de móveis
 - Ciclo de vida com **7 estados** e transições validadas no servidor
-- **Histórico de status imutável** (*append-only*) — auditoria completa de cada transição
+- **Histórico de status imutável** (*append-only*) - auditoria completa de cada transição
 - Visão dupla por papel: campos financeiros e notas internas são redigidos para o cliente
 
 **Painel administrativo**
 - Dashboard com **resumo financeiro** (faturamento, custo, lucro e margem por mês)
-- **Pipeline operacional** — contagem de pedidos em cada estado
+- **Pipeline operacional** - contagem de pedidos em cada estado
 - Alerta automático de **entregas atrasadas**
-- Pedidos de balcão (*walk-in*) — admin cria pedido para clientes sem conta
+- Pedidos de balcão (*walk-in*) - admin cria pedido para clientes sem conta
 
 **Plataforma**
 - Documentação OpenAPI/Swagger gerada automaticamente
@@ -135,8 +147,8 @@ O projeto é um **monorepo** com dois deployáveis independentes: a API (`src/`)
 ```mermaid
 flowchart TD
     Browser["Navegador<br/>(cliente / admin / visitante)"]
-    Frontend["frontend/ — Next.js 16<br/>site institucional · portal do cliente · painel admin"]
-    API["src/ — FastAPI<br/>autenticação · regras de negócio · persistência"]
+    Frontend["frontend/ - Next.js 16<br/>site institucional · portal do cliente · painel admin"]
+    API["src/ - FastAPI<br/>autenticação · regras de negócio · persistência"]
     DB[("PostgreSQL 16<br/>users · orders · order_status_history")]
     Email["Brevo API (HTTPS)<br/>(e-mails de verificação)"]
 
@@ -153,7 +165,7 @@ flowchart TD
     class DB,Email store
 ```
 
-### Arquitetura interna da API — camadas
+### Arquitetura interna da API - camadas
 
 A API segue uma **arquitetura em camadas** com responsabilidades estritas. Uma camada nunca pula a seguinte, e o fluxo de dependência é unidirecional.
 
@@ -207,7 +219,7 @@ flowchart LR
 | Framework | Next.js 16 (App Router) | Renderização *server-first*, roteamento por arquivos |
 | Linguagem | TypeScript (strict) | Tipagem fim a fim, contratos de API tipados |
 | Estilo | Tailwind CSS v4 | Design system consistente sem CSS solto |
-| Componentes | shadcn/ui | Componentes acessíveis e componíveis |
+| Componentes | Componentes próprios + shadcn (tema base) | Telas com classes próprias de `globals.css`; shadcn fornece o tema base do Tailwind |
 | Guarda de rotas | `proxy.ts` (middleware) | Redireciona não autenticados e bloqueia `/admin` para não-admins |
 
 ### Infraestrutura e qualidade
@@ -215,9 +227,9 @@ flowchart LR
 | Camada | Tecnologia |
 |---|---|
 | Ambiente local | Docker + Docker Compose (`api` + `db`) |
-| CI/CD | GitHub Actions — testes + cobertura a cada *push* |
-| Cobertura | pytest-cov + Codecov |
-| Deploy | Railway — backend (Docker) · frontend (Next.js) · PostgreSQL gerenciado |
+| CI/CD | GitHub Actions - testes + cobertura a cada *push* |
+| Cobertura | pytest-cov (gate de 90% no CI) |
+| Deploy | Railway - backend (Docker) · frontend (Next.js) · PostgreSQL gerenciado |
 
 <br>
 
@@ -225,7 +237,7 @@ flowchart LR
 
 ```
 ramos-planejados/
-├── src/                        # API REST — FastAPI
+├── src/                        # API REST - FastAPI
 │   ├── main.py                 # App factory: routers, CORS, rate limiter, logging
 │   ├── config.py               # Settings tipados (pydantic-settings)
 │   ├── database.py             # Engine + SessionLocal + dependência get_db()
@@ -233,11 +245,11 @@ ramos-planejados/
 │   ├── limiter.py              # Singleton do slowapi
 │   ├── models/                 # Modelos ORM (User, Order, OrderStatusHistory)
 │   ├── schemas/                # DTOs Pydantic (request/response)
-│   ├── routers/                # Handlers HTTP — finos, delegam aos services
+│   ├── routers/                # Handlers HTTP - finos, delegam aos services
 │   ├── services/               # Regras de negócio (auth, order, user, email)
 │   └── scripts/seed_admin.py   # Criação idempotente do admin inicial
 │
-├── frontend/                   # Interface web — Next.js 16
+├── frontend/                   # Interface web - Next.js 16
 │   ├── app/                    # Rotas (App Router): /, /login, /conta, /admin
 │   ├── components/             # Componentes de UI (StatusBadge, KpiCard, ...)
 │   ├── lib/                    # api.ts · auth.ts · theme.ts · constants.ts
@@ -245,7 +257,7 @@ ramos-planejados/
 │
 ├── migrations/                 # Migrações de schema (Alembic)
 ├── tests/                      # Suíte de testes
-│   ├── unit/                   # Lógica pura — sem banco, sem HTTP
+│   ├── unit/                   # Lógica pura - sem banco, sem HTTP
 │   ├── integration/            # Ciclo HTTP completo + banco de teste real
 │   └── security/               # Cenários adversariais (OWASP)
 │
@@ -259,7 +271,7 @@ ramos-planejados/
 
 ## Ciclo de vida do pedido
 
-Todo pedido nasce em `AGUARDANDO_ANALISE` e percorre uma **máquina de estados** explícita. As transições são validadas no servidor — o estado nunca é sobrescrito por um valor arbitrário.
+Todo pedido nasce em `AGUARDANDO_ANALISE` e percorre uma **máquina de estados** explícita. As transições são validadas no servidor - o estado nunca é sobrescrito por um valor arbitrário.
 
 ```mermaid
 stateDiagram-v2
@@ -283,9 +295,9 @@ stateDiagram-v2
 **Regras de transição** aplicadas pelo serviço:
 
 - **Um passo para frente** ao longo da sequência principal.
-- **Um passo para trás** (ex.: `APROVADO → EM_ORCAMENTO`) — para corrigir um avanço indevido.
+- **Um passo para trás** (ex.: `APROVADO → EM_ORCAMENTO`) - para corrigir um avanço indevido.
 - **`CANCELADO`** alcançável a partir de qualquer estado não-terminal.
-- `CONCLUIDO` e `CANCELADO` são **terminais** — sem transições de saída.
+- `CONCLUIDO` e `CANCELADO` são **terminais** - sem transições de saída.
 - Qualquer outra transição retorna **HTTP 409 Conflict**.
 - Alguns estados exigem campos preenchidos: `APROVADO` requer `project_value` e `due_date`; `INSTALACAO_AGENDADA` requer `install_date`.
 
@@ -293,12 +305,14 @@ stateDiagram-v2
 
 <br>
 
-## Como executar
+## Como executar (desenvolvimento local)
+
+> Para apenas **ver o sistema funcionando**, use a [aplicação no ar](https://ramos-planejados.up.railway.app) - não é preciso instalar nada. Esta seção é para rodar o projeto localmente, em ambiente de desenvolvimento.
 
 ### Pré-requisitos
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (inclui Docker Compose)
-- [Node.js 22+](https://nodejs.org/) — apenas para rodar o frontend
+- [Node.js 22+](https://nodejs.org/) - apenas para rodar o frontend
 
 ### 1. Backend (API + banco de dados)
 
@@ -343,18 +357,18 @@ A interface fica disponível em **http://localhost:3000**.
 
 | Variável | Obrigatória | Padrão | Descrição |
 |---|:---:|---|---|
-| `DATABASE_URL` | ✓ | — | String de conexão PostgreSQL |
-| `SECRET_KEY` | ✓ | — | Chave de assinatura JWT (mínimo 32 caracteres) |
-| `ALGORITHM` | — | `HS256` | Algoritmo de assinatura JWT |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | — | `1440` | Validade do token em minutos (1440 = 24 h) |
-| `ADMIN_EMAIL` | ✓ | — | E-mail do administrador inicial (seed) |
-| `ADMIN_PASSWORD` | ✓ | — | Senha do administrador inicial (seed) |
-| `ENV` | — | `production` | `development` (logs texto) ou `production` (logs JSON) |
-| `FRONTEND_ORIGIN` | — | `http://localhost:3000` | Origem permitida no CORS |
-| `API_BASE_URL` | — | `http://localhost:8000` | URL base usada nos links de verificação de e-mail |
-| `BREVO_API_KEY` | — | `""` | Chave da API Brevo — vazio = link de verificação impresso no log |
-| `EMAIL_FROM` | — | `""` | E-mail do remetente (validado como *sender* no Brevo) |
-| `EMAIL_FROM_NAME` | — | `Ramos Planejados` | Nome exibido como remetente |
+| `DATABASE_URL` | ✓ | - | String de conexão PostgreSQL |
+| `SECRET_KEY` | ✓ | - | Chave de assinatura JWT (mínimo 32 caracteres) |
+| `ALGORITHM` | - | `HS256` | Algoritmo de assinatura JWT |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | - | `1440` | Validade do token em minutos (1440 = 24 h) |
+| `ADMIN_EMAIL` | ✓ | - | E-mail do administrador inicial (seed) |
+| `ADMIN_PASSWORD` | ✓ | - | Senha do administrador inicial (seed) |
+| `ENV` | - | `production` | `development` (logs texto) ou `production` (logs JSON) |
+| `FRONTEND_ORIGIN` | - | `http://localhost:3000` | Origem permitida no CORS |
+| `API_BASE_URL` | - | `http://localhost:8000` | URL base usada nos links de verificação de e-mail |
+| `BREVO_API_KEY` | - | `""` | Chave da API Brevo - vazio = link de verificação impresso no log |
+| `EMAIL_FROM` | - | `""` | E-mail do remetente (validado como *sender* no Brevo) |
+| `EMAIL_FROM_NAME` | - | `Ramos Planejados` | Nome exibido como remetente |
 
 ### Frontend (`.env.local`)
 
@@ -370,11 +384,11 @@ A interface fica disponível em **http://localhost:3000**.
 
 ## Qualidade e testes
 
-A suíte conta com **133 testes** automatizados (cobertura ~96% sobre `src/`), organizados em três níveis:
+A suíte soma **169 testes** automatizados: **136 no backend** (cobertura de **95%** sobre `src/`) e **33 no frontend** (Vitest). Os testes de backend organizam-se em três níveis:
 
 | Tipo | Marcador | O que verifica | Banco | HTTP |
 |---|---|---|:---:|:---:|
-| **Unitário** | `unit` | Lógica pura — services, validadores, máquina de estados | — | — |
+| **Unitário** | `unit` | Lógica pura - services, validadores, máquina de estados | - | - |
 | **Integração** | `integration` | Ciclo HTTP completo via `TestClient` | real (teste) | ✓ |
 | **Segurança** | `security` | Cenários adversariais (OWASP) | real (teste) | ✓ |
 
@@ -382,7 +396,7 @@ A suíte conta com **133 testes** automatizados (cobertura ~96% sobre `src/`), o
 # Todos os testes com relatório de cobertura
 docker-compose exec api pytest --cov=src --cov-report=term-missing
 
-# Apenas testes unitários (rápidos — sem banco)
+# Apenas testes unitários (rápidos - sem banco)
 docker-compose exec api pytest -m unit -v
 
 # Apenas testes de segurança
@@ -393,8 +407,8 @@ docker-compose exec api pytest -m security -v
 
 - Arquitetura em camadas com fronteiras de responsabilidade explícitas
 - Constantes nomeadas no lugar de *magic strings* / *magic numbers*
-- Sem mock de banco — testes de integração rodam contra um PostgreSQL real
-- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: ~96%)
+- Sem mock de banco - testes de integração rodam contra um PostgreSQL real
+- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: 95%)
 - Imagem Docker roda como usuário **não-root**, com *layers* otimizadas para cache
 
 <br>
@@ -405,13 +419,13 @@ A segurança foi tratada como requisito de primeira ordem, com decisões alinhad
 
 | Vetor | Mitigação |
 |---|---|
-| Senhas | Armazenadas como *hash* bcrypt — nunca retornadas em nenhuma resposta |
+| Senhas | Armazenadas como *hash* bcrypt - nunca retornadas em nenhuma resposta |
 | Enumeração de usuários | Erro de login idêntico para "e-mail inexistente" e "senha errada" (ASVS 2.2.2) |
 | *Timing attack* | `dummy_verify()` iguala o tempo de resposta quando o e-mail não existe |
-| Força bruta | *Rate limiting* — 10 req/min no login, 5 req/min no reenvio de verificação (ASVS 2.2.5) |
+| Força bruta | *Rate limiting* - 10 req/min no login, 5 req/min no reenvio de verificação (ASVS 2.2.5) |
 | Tokens JWT | Algoritmo fixo em `HS256`, expiração de 24 h, chave lida apenas do ambiente |
-| IDOR | Cliente só acessa os próprios pedidos — acesso *cross-user* retorna 403 |
-| SQL Injection | Acesso a dados exclusivamente via ORM — sem interpolação de SQL bruto |
+| IDOR | Cliente só acessa os próprios pedidos - acesso *cross-user* retorna 403 |
+| SQL Injection | Acesso a dados exclusivamente via ORM - sem interpolação de SQL bruto |
 | Exposição de dados | Serialização redige campos financeiros e notas internas para o cliente |
 | CORS | Restrito à origem configurada; apenas métodos `GET`, `POST`, `PATCH` |
 
@@ -428,11 +442,15 @@ A pasta [`docs/`](docs/) reúne a documentação técnica aprofundada:
 | Documento | Conteúdo |
 |---|---|
 | [docs/arquitetura.md](docs/arquitetura.md) | Arquitetura em camadas, fluxos de requisição, topologia de deploy |
-| [docs/api.md](docs/api.md) | Referência completa da API — endpoints, payloads, respostas, códigos de status |
+| [docs/api.md](docs/api.md) | Referência completa da API - endpoints, payloads, respostas, códigos de status |
 | [docs/regras-de-negocio.md](docs/regras-de-negocio.md) | Regras de negócio, máquina de estados, matriz de permissões |
 | [docs/modelo-de-dados.md](docs/modelo-de-dados.md) | Diagrama ER, tabelas, índices e relacionamentos |
 | [docs/seguranca.md](docs/seguranca.md) | Modelo de segurança, mitigações OWASP, testes adversariais |
 | [docs/desenvolvimento.md](docs/desenvolvimento.md) | Setup, ambiente, fluxo de trabalho, *troubleshooting* |
+| [docs/fluxo-de-trabalho.md](docs/fluxo-de-trabalho.md) | Ambientes, branches, Git Flow e pipeline CI/CD, de ponta a ponta |
+| [docs/deploy-railway.md](docs/deploy-railway.md) | Deploy na Railway: URLs ao vivo, estrutura dos ambientes e como o deploy acontece |
+
+O índice completo da documentação técnica está em [docs/README.md](docs/README.md). Veja também [CONTRIBUTING.md](CONTRIBUTING.md) (como contribuir), [CHANGELOG.md](CHANGELOG.md) (histórico de versões) e [LICENSE](LICENSE) (licença MIT).
 
 <br>
 
@@ -454,8 +472,7 @@ O sistema é funcional e cobre o ciclo completo de um pedido. Evoluções planej
 **Longo prazo**
 - [ ] Agendamento de visitas com janelas de disponibilidade
 - [ ] Hierarquia de papéis (`ADMIN` / `EMPLOYEE` / `CUSTOMER`)
-- [ ] Observabilidade — métricas, *tracing* e *dashboards* operacionais
-- [ ] Ambientes isolados de *staging* e produção no Railway (deploy automático por *branch*)
+- [ ] Observabilidade - métricas, *tracing* e *dashboards* operacionais
 
 <br>
 
@@ -467,28 +484,40 @@ O sistema é funcional e cobre o ciclo completo de um pedido. Evoluções planej
 Separar `routers → services → models` mantém a regra de negócio testável de forma isolada (sem HTTP, sem banco) e impede o vazamento de responsabilidades. Cada camada tem um contrato claro do que pode e do que não pode fazer.
 
 **Modelagem de domínio como máquina de estados.**
-O status do pedido não é um campo livre — é uma máquina de estados com adjacência declarada. A função `is_valid_transition` centraliza a regra, tornando impossível um estado inválido entrar no banco. Erros viram `HTTP 409`, não corrupção de dados.
+O status do pedido não é um campo livre - é uma máquina de estados com adjacência declarada. A função `is_valid_transition` centraliza a regra, tornando impossível um estado inválido entrar no banco. Erros viram `HTTP 409`, não corrupção de dados.
 
 **Auditoria via tabela *append-only*.**
 Cada transição grava uma linha em `order_status_history`, que nunca é editada ou apagada. Isso dá um *trail* de auditoria completo e habilita métricas (tempo médio em cada estado, faturamento por período) sem lógica adicional.
 
 **Segurança aplicada, não improvisada.**
-Decisões como resposta uniforme no login, `dummy_verify` contra *timing attack* e *rate limiting* foram tomadas com base no OWASP ASVS — e cada uma tem um teste adversarial que a comprova.
+Decisões como resposta uniforme no login, `dummy_verify` contra *timing attack* e *rate limiting* foram tomadas com base no OWASP ASVS - e cada uma tem um teste adversarial que a comprova.
 
 **Serialização sensível ao papel do usuário.**
 A mesma entidade `Order` é exposta de formas diferentes para cliente e admin. A função `serialize_order` concentra essa lógica de redação, garantindo que custo, lucro e notas internas nunca cheguem ao cliente.
 
 **Pensamento de dados.**
-O dashboard administrativo agrega dados — faturamento, custo, lucro, margem e contagem por estado — com consultas SQL eficientes (`GROUP BY`, `SUM`, `JOIN` no histórico). É a ponte natural entre desenvolvimento de software e análise de dados.
+O dashboard administrativo agrega dados - faturamento, custo, lucro, margem e contagem por estado - com consultas SQL eficientes (`GROUP BY`, `SUM`, `JOIN` no histórico). É a ponte natural entre desenvolvimento de software e análise de dados.
 
 **Configuração 12-factor e ambiente reproduzível.**
-Todo segredo vem de variável de ambiente, validada na inicialização por `pydantic-settings`. O `docker-compose` sobe a stack inteira com um comando — qualquer máquina roda o projeto de forma idêntica.
+Todo segredo vem de variável de ambiente, validada na inicialização por `pydantic-settings`. O `docker-compose` sobe a stack inteira com um comando - qualquer máquina roda o projeto de forma idêntica.
+
+<br>
+
+## Como contribuir
+
+Contribuições são bem-vindas. O fluxo completo (branches, portões de qualidade, padrões de código e processo de PR) está em [CONTRIBUTING.md](CONTRIBUTING.md). O histórico de versões fica em [CHANGELOG.md](CHANGELOG.md).
+
+<br>
+
+## Licença
+
+Distribuído sob a licença **MIT**. Veja [LICENSE](LICENSE) para o texto completo.
 
 <br>
 
 ## Autor
 
-**José Gabriel Flores** — Engenheiro de Computação (UNIFEI)
+**José Gabriel Flores** - Engenheiro de Computação (UNIFEI)
 
 Atuação com **Python**, **análise de dados** e **automação de processos**. Este projeto consolida boas práticas de engenharia de software aplicadas a um sistema fullstack real.
 
@@ -498,5 +527,5 @@ Atuação com **Python**, **análise de dados** e **automação de processos**. 
 ---
 
 <div align="center">
-<sub>Aplicação fullstack — projeto de portfólio de engenharia de software.</sub>
+<sub>Aplicação fullstack - projeto de portfólio de engenharia de software.</sub>
 </div>

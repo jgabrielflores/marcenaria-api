@@ -1,4 +1,4 @@
-# Product Requirements Document — Marcenaria Order Management System
+# Product Requirements Document - Marcenaria Order Management System
 
 | | |
 |---|---|
@@ -9,14 +9,14 @@
 | **Owner** | Gabriel |
 | **Last updated** | 2026-05-20 |
 
-> **v2.0 — order-management expansion.** The product moved past the original
+> **v2.0 - order-management expansion.** The product moved past the original
 > capture-and-track MVP. Orders now carry contact/address, multiple
 > environments, furniture-type tags, financial fields and scheduling dates;
 > the lifecycle has 7 states with an automatic status-change history; the
 > admin has a metrics dashboard. Sections below marked *(v2.0)* reflect the
 > current system; where v1.2 prose conflicts, v2.0 wins.
 
-> **Note on language:** This document and all source artifacts (code, commits, PLAN.md, identifiers) are written in English. The end-user product text — anything a Brazilian customer of the marcenaria sees in the UI — is written in Portuguese.
+> **Note on language:** This document and all source artifacts (code, commits, identifiers) are written in English. The end-user product text - anything a Brazilian customer of the marcenaria sees in the UI - is written in Portuguese.
 
 ---
 
@@ -25,8 +25,8 @@
 A focused web platform that lets a custom-furniture workshop (*marcenaria*) capture quote requests online, track every order through a clear lifecycle, and give customers self-service visibility into the status of their order.
 
 The product lives in a single monorepo (`ramos-planejados`):
-- **`src/`** — REST API (FastAPI + PostgreSQL). Backend complete.
-- **`frontend/`** — Web interface (Next.js + TypeScript + Tailwind CSS + shadcn/ui). In development.
+- **`src/`** - REST API (FastAPI + PostgreSQL). Backend complete.
+- **`frontend/`** - Web interface (Next.js + TypeScript + Tailwind CSS). Deployed.
 
 ## 2. Problem
 
@@ -69,17 +69,17 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 ## 6. User Stories
 
 **Customer**
-- **US-1** — As a customer, I can register and log in so I can submit and track orders.
-- **US-2** — As a customer, I can submit a quote request that captures the furniture I want.
-- **US-3** — As a customer, I can list my own orders and see each one's current status.
+- **US-1** - As a customer, I can register and log in so I can submit and track orders.
+- **US-2** - As a customer, I can submit a quote request that captures the furniture I want.
+- **US-3** - As a customer, I can list my own orders and see each one's current status.
 
 **Admin**
-- **US-4** — As an admin, I can list every order in the system.
-- **US-5** — As an admin, I can filter orders by status.
-- **US-6** — As an admin, I can advance an order's status as work progresses.
+- **US-4** - As an admin, I can list every order in the system.
+- **US-5** - As an admin, I can filter orders by status.
+- **US-6** - As an admin, I can advance an order's status as work progresses.
 
 **Visitor**
-- **US-7** — As a visitor, I can browse the public landing page and be directed to register.
+- **US-7** - As a visitor, I can browse the public landing page and be directed to register.
 
 ## 7. Functional Requirements
 
@@ -87,7 +87,7 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 - **FR-1.** Users register with name, e-mail, and password.
 - **FR-2.** Login returns a signed JWT access token with a 24 h expiry. Refresh tokens are out of scope.
 - **FR-3.** Every protected endpoint requires a valid JWT.
-- **FR-4.** Passwords are stored as bcrypt hashes — never in plaintext.
+- **FR-4.** Passwords are stored as bcrypt hashes - never in plaintext.
 - **FR-5.** E-mail is unique per account.
 
 ### 7.2 Orders *(v2.0)*
@@ -120,7 +120,7 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 
 - **NFR-1. Stack.** Backend: Python 3.11+, FastAPI, PostgreSQL, SQLAlchemy, Pydantic, python-jose, passlib[bcrypt]. Frontend: Next.js 16, TypeScript, Tailwind CSS, shadcn/ui.
 - **NFR-2. Containerization.** `docker-compose` brings up `api` + `db` for local development.
-- **NFR-3. Deploy.** Railway — backend (`src/`) as a Docker service, frontend (`frontend/`) via Nixpacks, and a managed PostgreSQL, all in the same project.
+- **NFR-3. Deploy.** Railway - backend (`src/`) as a Docker service, frontend (`frontend/`) via Nixpacks, and a managed PostgreSQL, all in the same project.
 - **NFR-4. HTTPS** in any deployed environment.
 - **NFR-5. 12-factor configuration.** All secrets and environment-specific values come from environment variables.
 - **NFR-6. Migrations.** Schema is managed with Alembic.
@@ -162,7 +162,7 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 - `status` *(enum: `PENDING`, `IN_PROGRESS`, `DONE`)*
 - `created_at`, `updated_at`
 
-> Formal ERD with column types, indexes, and constraints: see `PLAN.md`.
+> Formal ERD with column types, indexes, and constraints: see [docs/modelo-de-dados.md](docs/modelo-de-dados.md).
 
 ## 11. High-Level Architecture
 
@@ -170,10 +170,10 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 [ Browser ]
      │  HTTPS
      ▼
-[ frontend/ — Next.js ]   ← landing page + customer portal + admin panel
+[ frontend/ - Next.js ]   ← landing page + customer portal + admin panel
      │  HTTPS / JSON (CORS)
      ▼
-[ src/ — FastAPI ]        ← auth, business rules, persistence
+[ src/ - FastAPI ]        ← auth, business rules, persistence
      │
      ▼
 [ PostgreSQL (Railway) ]
@@ -190,13 +190,13 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 
 | Method | Path | Auth | Role |
 |---|---|---|---|
-| `POST` | `/auth/register` | public | — |
-| `POST` | `/auth/login` | public | — |
+| `POST` | `/auth/register` | public | - |
+| `POST` | `/auth/login` | public | - |
 | `POST` | `/api/v1/orders` | JWT | customer |
 | `GET` | `/api/v1/orders?page=1&limit=20` | JWT | customer (own) / admin (all) |
 | `GET` | `/api/v1/orders/{id}` | JWT | customer (own) / admin |
 | `PATCH` | `/api/v1/orders/{id}/status` | JWT | admin only |
-| `GET` | `/health` | public | — |
+| `GET` | `/health` | public | - |
 
 ## 13. Success Metrics
 
@@ -215,7 +215,7 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 ## 15. Post-MVP Roadmap (themes, not commitments)
 
 **Actively in development:**
-- Web interface (`frontend/`) — institutional landing page, customer portal, admin panel
+- Web interface (`frontend/`) - institutional landing page, customer portal, admin panel
 
 **Planned next:**
 - Notifications on creation and status change (e-mail, WhatsApp)
@@ -232,6 +232,6 @@ Small marcenarias today coordinate orders through WhatsApp threads, e-mail, and 
 
 ## 16. Glossary
 
-- **Marcenaria** — a custom woodworking / cabinet-making shop.
-- **Order** — a customer's request for a custom furniture piece, regardless of stage.
-- **Status** — discrete lifecycle state of an order: `PENDING`, `IN_PROGRESS`, `DONE`.
+- **Marcenaria** - a custom woodworking / cabinet-making shop.
+- **Order** - a customer's request for a custom furniture piece, regardless of stage.
+- **Status** - discrete lifecycle state of an order: `PENDING`, `IN_PROGRESS`, `DONE`.

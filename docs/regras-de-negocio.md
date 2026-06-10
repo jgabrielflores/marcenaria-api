@@ -40,8 +40,8 @@ Todo pedido nasce em `AGUARDANDO_ANALISE` e percorre uma sequência de estados a
 | `APROVADO` | Aprovado | Orçamento definido, pronto para produção |
 | `EM_PRODUCAO` | Em produção | Móveis sendo fabricados |
 | `INSTALACAO_AGENDADA` | Instalação agendada | Data de instalação combinada com o cliente |
-| `CONCLUIDO` | Concluído | Projeto entregue — **estado terminal** |
-| `CANCELADO` | Cancelado | Pedido encerrado — **estado terminal, sem reversão** |
+| `CONCLUIDO` | Concluído | Projeto entregue - **estado terminal** |
+| `CANCELADO` | Cancelado | Pedido encerrado - **estado terminal, sem reversão** |
 
 ---
 
@@ -79,8 +79,8 @@ stateDiagram-v2
 A função `is_valid_transition` (`src/services/order.py`) aceita exatamente três tipos de transição:
 
 1. **Um passo para frente** ao longo da sequência principal.
-2. **Um passo para trás** — para corrigir um avanço indevido (ex.: `APROVADO → EM_ORCAMENTO`).
-3. **Para `CANCELADO`** — a partir de qualquer estado não-terminal.
+2. **Um passo para trás** - para corrigir um avanço indevido (ex.: `APROVADO → EM_ORCAMENTO`).
+3. **Para `CANCELADO`** - a partir de qualquer estado não-terminal.
 
 Qualquer outra transição (pular etapas, reverter dois passos, sair de um estado terminal) retorna **HTTP 409 Conflict**.
 
@@ -115,10 +115,10 @@ Aplicadas na atualização de pedido (`PATCH /api/v1/orders/{id}`):
 
 | Regra | Resultado |
 |---|---|
-| `due_date` **nova** no passado | Rejeitado — HTTP 400 |
-| `install_date` **nova** no passado | Rejeitado — HTTP 400 |
-| `install_date` anterior a `due_date` | Rejeitado — HTTP 400 |
-| Data **já existente** reenviada sem alteração | Permitido — o servidor detecta que o valor não mudou |
+| `due_date` **nova** no passado | Rejeitado - HTTP 400 |
+| `install_date` **nova** no passado | Rejeitado - HTTP 400 |
+| `install_date` anterior a `due_date` | Rejeitado - HTTP 400 |
+| Data **já existente** reenviada sem alteração | Permitido - o servidor detecta que o valor não mudou |
 
 A distinção "nova" vs. "existente" é importante: o formulário de edição reenvia o pedido inteiro, inclusive datas antigas que já passaram. O servidor só rejeita uma data no passado se ela for **diferente** do valor atual do pedido.
 
@@ -154,7 +154,7 @@ Os **campos de gestão** (status, valores, prazos, notas internas) são editáve
 | Lucro (`profit`) | Calculado: `project_value − estimated_cost`, apenas quando ambos existem |
 | Dashboard financeiro | Considera apenas pedidos que atingiram `CONCLUIDO` no mês selecionado |
 
-A redação desses campos é centralizada na função `serialize_order` — a mesma entidade `Order` produz uma resposta diferente para cliente e para admin.
+A redação desses campos é centralizada na função `serialize_order` - a mesma entidade `Order` produz uma resposta diferente para cliente e para admin.
 
 ---
 
@@ -164,7 +164,7 @@ Cada mudança de status gera **uma linha** na tabela `order_status_history`:
 
 - A primeira entrada (criação do pedido) tem `from_status = null` e a nota `"Pedido criado"`.
 - Toda transição posterior registra `from_status`, `to_status`, o admin responsável (`changed_by`) e uma `note` opcional.
-- O histórico é **imutável** — *append-only*. Nunca é editado nem deletado.
+- O histórico é **imutável** - *append-only*. Nunca é editado nem deletado.
 
 Esse histórico cumpre dois papéis: trilha de auditoria e fonte de dados para métricas temporais (ex.: o dashboard usa a data de entrada em `CONCLUIDO` para calcular o faturamento do mês).
 
@@ -175,7 +175,7 @@ Esse histórico cumpre dois papéis: trilha de auditoria e fonte de dados para m
 Para clientes que chegam à marcenaria sem conta no sistema (*walk-in*), o admin cria o pedido em `/admin/pedidos/novo`:
 
 - O formulário aceita dois campos extras opcionais: `client_name` e `client_email`.
-- Esses campos só são considerados quando quem cria é admin — um cliente comum que os enviasse os teria ignorados.
+- Esses campos só são considerados quando quem cria é admin - um cliente comum que os enviasse os teria ignorados.
 - Tecnicamente, o pedido é associado ao `user_id` do admin que o criou, mas a identidade exibida (`customer_name` / `customer_email`) prioriza os dados de balcão.
 
 ---
@@ -184,7 +184,7 @@ Para clientes que chegam à marcenaria sem conta no sistema (*walk-in*), o admin
 
 | Ação | `CUSTOMER` | `ADMIN` |
 |---|:---:|:---:|
-| Criar conta | ✓ (público) | — |
+| Criar conta | ✓ (público) | - |
 | Ver os próprios pedidos | ✓ | ✓ |
 | Ver todos os pedidos | ✗ | ✓ |
 | Filtrar pedidos por status | ✗ | ✓ |
@@ -204,7 +204,7 @@ Para clientes que chegam à marcenaria sem conta no sistema (*walk-in*), o admin
 
 ## Catálogo de regras
 
-Referência consolidada — cada regra tem um identificador estável (`BR-n`).
+Referência consolidada - cada regra tem um identificador estável (`BR-n`).
 
 | ID | Regra |
 |---|---|
