@@ -491,7 +491,7 @@ Unit tests were already written in Phases 3 and 4. This phase adds the tests tha
 - [x] Deploy the frontend (Nixpacks) with `NEXT_PUBLIC_API_URL` pointing at the backend
 - [x] Verify `GET /health` is reachable over HTTPS; admin can log in
 - [x] Set `FRONTEND_ORIGIN` on the backend to the frontend's Railway URL (CORS)
-- [ ] Split staging (`develop`) and production (`main`) into isolated environments
+- [x] Split staging (`develop`) and production (`main`) into isolated environments
 - [ ] Validate M-4: `POST /api/v1/orders` p50 < 500 ms within the Railway region
 
 **Checkpoint:** `GET /health` returns `{"status":"ok"}` over HTTPS; seed admin can log in.

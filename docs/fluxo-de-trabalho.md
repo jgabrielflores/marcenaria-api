@@ -39,8 +39,8 @@ Cada branch **alimenta** um ambiente: quando a branch muda, o ambiente ligado a 
 | Ambiente | Branch que alimenta | Onde roda | URL | Propósito | Dados |
 |---|---|---|---|---|---|
 | **Local** | `feature/*` (sua cópia) | sua máquina (`docker-compose` + `npm run dev`) | `localhost:3000` · `localhost:8000` | desenvolver e ver funcionar | descartáveis |
-| **🧪 Staging** | `develop` | Railway — ambiente `staging-qa` | `frontend-staging-qa.up.railway.app` | homologação / teste antes de produção | de teste, **isolados** |
-| **🌐 Produção** | `main` | Railway — ambiente `production` | `frontend-production-db08.up.railway.app` | sistema real, clientes reais | **reais** |
+| **🧪 Staging** | `develop` | Railway — ambiente `staging` | `ramos-planejados-staging.up.railway.app` · `ramos-planejados-api-staging.up.railway.app` | homologação / teste antes de produção | de teste, **isolados** |
+| **🌐 Produção** | `main` | Railway — ambiente `production` | `ramos-planejados.up.railway.app` · `ramos-planejados-api.up.railway.app` | sistema real, clientes reais | **reais** |
 
 Cada ambiente na nuvem tem **banco PostgreSQL próprio** e **segredos próprios** (`SECRET_KEY`,
 senha de admin) — um teste em staging **nunca** toca os dados de produção.
@@ -234,7 +234,7 @@ confira o destino (**base: `develop`**), descreva e crie.
 ### Validar em staging (passo 10)
 
 Após o merge na `develop`, espere o deploy (1–3 min) e abra o **staging** no navegador:
-`https://frontend-staging-qa.up.railway.app`. Teste o fluxo real (login, criar pedido, etc.).
+`https://ramos-planejados-staging.up.railway.app`. Teste o fluxo real (login, criar pedido, etc.).
 Acompanhe o deploy pelo painel do Railway ou pelos logs do serviço.
 
 ### Promover para produção (passos 11–13)
@@ -245,7 +245,7 @@ gh pr create --base main --head develop   # 11 · PR de promoção
 gh pr merge --squash                      # 13 · merge → deploy automático em produção
 ```
 
-Confirme em `https://ramos-planejados-production.up.railway.app/health` (deve responder `200`).
+Confirme em `https://ramos-planejados-api.up.railway.app/health` (deve responder `200`).
 
 ---
 

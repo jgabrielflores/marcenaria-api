@@ -49,6 +49,8 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 - [Documentação completa](#documentação-completa)
 - [Roadmap](#roadmap)
 - [Aprendizados técnicos](#aprendizados-técnicos)
+- [Como contribuir](#como-contribuir)
+- [Licença](#licença)
 - [Autor](#autor)
 
 <br>
@@ -433,6 +435,9 @@ A pasta [`docs/`](docs/) reúne a documentação técnica aprofundada:
 | [docs/modelo-de-dados.md](docs/modelo-de-dados.md) | Diagrama ER, tabelas, índices e relacionamentos |
 | [docs/seguranca.md](docs/seguranca.md) | Modelo de segurança, mitigações OWASP, testes adversariais |
 | [docs/desenvolvimento.md](docs/desenvolvimento.md) | Setup, ambiente, fluxo de trabalho, *troubleshooting* |
+| [docs/fluxo-de-trabalho.md](docs/fluxo-de-trabalho.md) | Ambientes, branches, Git Flow e pipeline CI/CD, de ponta a ponta |
+
+O índice completo da documentação técnica está em [docs/README.md](docs/README.md). Veja também [CONTRIBUTING.md](CONTRIBUTING.md) (como contribuir), [CHANGELOG.md](CHANGELOG.md) (histórico de versões) e [LICENSE](LICENSE) (licença MIT).
 
 <br>
 
@@ -455,7 +460,6 @@ O sistema é funcional e cobre o ciclo completo de um pedido. Evoluções planej
 - [ ] Agendamento de visitas com janelas de disponibilidade
 - [ ] Hierarquia de papéis (`ADMIN` / `EMPLOYEE` / `CUSTOMER`)
 - [ ] Observabilidade — métricas, *tracing* e *dashboards* operacionais
-- [ ] Ambientes isolados de *staging* e produção no Railway (deploy automático por *branch*)
 
 <br>
 
@@ -483,6 +487,18 @@ O dashboard administrativo agrega dados — faturamento, custo, lucro, margem e 
 
 **Configuração 12-factor e ambiente reproduzível.**
 Todo segredo vem de variável de ambiente, validada na inicialização por `pydantic-settings`. O `docker-compose` sobe a stack inteira com um comando — qualquer máquina roda o projeto de forma idêntica.
+
+<br>
+
+## Como contribuir
+
+Contribuições são bem-vindas. O fluxo completo (branches, portões de qualidade, padrões de código e processo de PR) está em [CONTRIBUTING.md](CONTRIBUTING.md). O histórico de versões fica em [CHANGELOG.md](CHANGELOG.md).
+
+<br>
+
+## Licença
+
+Distribuído sob a licença **MIT**. Veja [LICENSE](LICENSE) para o texto completo.
 
 <br>
 
