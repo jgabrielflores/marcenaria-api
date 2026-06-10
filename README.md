@@ -8,6 +8,15 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 
 <br>
 
+### [🌐 Acessar a aplicação no ar](https://ramos-planejados.up.railway.app) &nbsp;·&nbsp; [📖 API / Swagger](https://ramos-planejados-api.up.railway.app/docs)
+
+[![Aplicação no ar](https://img.shields.io/badge/deploy-online-2ea44f?style=for-the-badge&logo=railway&logoColor=white)](https://ramos-planejados.up.railway.app)
+[![API docs](https://img.shields.io/badge/API-Swagger_UI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://ramos-planejados-api.up.railway.app/docs)
+
+<sub>Aplicação publicada na Railway. A landing page e a documentação da API são públicas; o portal do cliente e o painel admin exigem login.</sub>
+
+<br>
+
 [![CI](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/jgabrielflores/ramos-planejados/branch/main/graph/badge.svg)](https://codecov.io/gh/jgabrielflores/ramos-planejados)
 ![Tests](https://img.shields.io/badge/testes-133%20passando-2ea44f)
@@ -85,21 +94,29 @@ O sistema foi modelado para a **Ramos Planejados**, marcenaria de móveis sob me
 
 ## Demonstração
 
-A API expõe documentação interativa **Swagger UI** assim que sobe localmente:
+A aplicação está **publicada e no ar** na Railway:
 
-> **http://localhost:8000/docs** - explore e teste todos os endpoints no navegador.
-
-| Tela | Rota | Descrição |
+| Recurso | Link | Acesso |
 |---|---|---|
-| Site institucional | `/` | Hero, filosofia, galeria de projetos, contato |
-| Login / Cadastro | `/login` · `/register` | Autenticação com verificação de e-mail |
-| Meus pedidos | `/conta/pedidos` | Lista paginada dos pedidos do cliente |
-| Novo pedido | `/conta/pedidos/novo` | Formulário com autopreenchimento de endereço via CEP |
-| Detalhe do pedido | `/conta/pedidos/[id]` | Dados do projeto + linha do tempo de status |
-| Dashboard admin | `/admin` | KPIs financeiros, pipeline e alertas de atraso |
-| Gestão de pedido | `/admin/pedidos/[id]` | Edição de status, valores, prazos e notas internas |
+| 🌐 **Aplicação** (site + portal + admin) | **https://ramos-planejados.up.railway.app** | público (landing) |
+| 📖 **API - Swagger UI** | **https://ramos-planejados-api.up.railway.app/docs** | público |
 
-> _Capturas de tela da interface serão adicionadas aqui._
+As telas abaixo são rotas da aplicação no ar. A landing e as telas de autenticação são públicas; o portal do cliente (`/conta/*`) e o painel admin (`/admin/*`) exigem login.
+
+| Tela | Rota | Acesso | Descrição |
+|---|---|---|---|
+| Site institucional | `/` | público | Hero, filosofia, galeria de projetos, contato |
+| Login / Cadastro | `/login` · `/register` | público | Autenticação com verificação de e-mail |
+| Meus pedidos | `/conta/pedidos` | login | Lista paginada dos pedidos do cliente |
+| Novo pedido | `/conta/pedidos/novo` | login | Formulário com autopreenchimento de endereço via CEP |
+| Detalhe do pedido | `/conta/pedidos/[id]` | login | Dados do projeto + linha do tempo de status |
+| Dashboard admin | `/admin` | admin | KPIs financeiros, pipeline e alertas de atraso |
+| Gestão de pedido | `/admin/pedidos/[id]` | admin | Edição de status, valores, prazos e notas internas |
+
+### Capturas de tela
+
+> Imagens das áreas autenticadas (portal e painel admin), que não ficam acessíveis sem login.
+> _(em preparação - serão adicionadas em `docs/screenshots/`.)_
 
 <br>
 
@@ -295,7 +312,9 @@ stateDiagram-v2
 
 <br>
 
-## Como executar
+## Como executar (desenvolvimento local)
+
+> Para apenas **ver o sistema funcionando**, use a [aplicação no ar](https://ramos-planejados.up.railway.app) - não é preciso instalar nada. Esta seção é para rodar o projeto localmente, em ambiente de desenvolvimento.
 
 ### Pré-requisitos
 
