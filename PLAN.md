@@ -1,4 +1,4 @@
-# PLAN.md — ramos-planejados Technical Implementation Plan
+# PLAN.md - ramos-planejados Technical Implementation Plan
 
 | | |
 |---|---|
@@ -7,7 +7,7 @@
 | **Last updated** | 2026-05-11 |
 
 > This document translates the PRD into concrete technical decisions.
-> When PRD and PLAN.md conflict, raise the issue — do not silently resolve it.
+> When PRD and PLAN.md conflict, raise the issue - do not silently resolve it.
 
 ---
 
@@ -108,13 +108,13 @@ ramos-planejados/
 │
 ├── tests/
 │   ├── conftest.py           # Test DB setup, fixtures (test client, test user, test admin)
-│   ├── unit/                 # Pure logic — no DB, no HTTP (@pytest.mark.unit)
+│   ├── unit/                 # Pure logic - no DB, no HTTP (@pytest.mark.unit)
 │   │   ├── test_auth_service.py
 │   │   └── test_order_service.py
 │   ├── integration/          # Real test DB + HTTP via TestClient (@pytest.mark.integration)
 │   │   ├── test_auth_routes.py
 │   │   └── test_order_routes.py
-│   └── security/             # Adversarial scenarios — attack simulations (@pytest.mark.security)
+│   └── security/             # Adversarial scenarios - attack simulations (@pytest.mark.security)
 │       ├── test_authentication.py        # JWT missing/expired/tampered/alg:none
 │       ├── test_authorization.py         # IDOR, customer→admin endpoint, unauthenticated
 │       ├── test_input_validation.py      # SQL injection, oversized inputs, bad UUIDs
@@ -125,8 +125,8 @@ ramos-planejados/
 │   └── workflows/
 │       └── ci.yml            # Runs all tests on every push and PR (GitHub Actions)
 │
-├── .env.example              # Variable names without values — committed to repo
-├── .env                      # Actual secrets — NEVER committed
+├── .env.example              # Variable names without values - committed to repo
+├── .env                      # Actual secrets - NEVER committed
 ├── .gitignore
 ├── alembic.ini
 ├── docker-compose.yml
@@ -143,7 +143,7 @@ ramos-planejados/
 | `services/` | Business rules, orchestrate DB calls | Import from `routers/` |
 | `models/` | Define DB schema | Contain business logic |
 | `schemas/` | Define request/response shapes | Reference DB models directly |
-| `dependencies.py` | FastAPI `Depends` — resolve current user | Business logic |
+| `dependencies.py` | FastAPI `Depends` - resolve current user | Business logic |
 
 ---
 
@@ -188,7 +188,7 @@ ramos-planejados/
 **Errors:**
 | Status | When |
 |---|---|
-| 401 | Wrong email **or** wrong password — always return `"detail": "invalid credentials"` (never reveal which) |
+| 401 | Wrong email **or** wrong password - always return `"detail": "invalid credentials"` (never reveal which) |
 | 422 | Validation failure |
 
 ---
@@ -256,7 +256,7 @@ ramos-planejados/
 
 ### 3.6 PATCH `/api/v1/orders/{id}/status`
 
-**Auth:** Bearer JWT — **admin only**
+**Auth:** Bearer JWT - **admin only**
 
 **Request body:**
 ```json
@@ -352,7 +352,7 @@ dev = [
 |---|---|
 | `fastapi` | Web framework |
 | `uvicorn` | ASGI server that runs FastAPI |
-| `sqlalchemy` | ORM — maps Python classes to DB tables |
+| `sqlalchemy` | ORM - maps Python classes to DB tables |
 | `alembic` | Manages DB schema changes (migrations) |
 | `pydantic` + `pydantic-settings` | Data validation + reading env vars |
 | `python-jose` | Sign and verify JWT tokens |
@@ -367,26 +367,26 @@ dev = [
 
 Work through phases in order. Each phase produces something testable before the next begins.
 
-**Testing principle:** unit tests are written in the same phase as the code they cover — not deferred. Only integration tests (which require a running database) and security tests are grouped in Phase 6, because they depend on the full stack being in place.
+**Testing principle:** unit tests are written in the same phase as the code they cover - not deferred. Only integration tests (which require a running database) and security tests are grouped in Phase 6, because they depend on the full stack being in place.
 
-### Phase 1 — Project skeleton
+### Phase 1 - Project skeleton
 - [x] `pyproject.toml` with all dependencies
 - [x] `Dockerfile` (Python 3.11-slim, installs deps, runs uvicorn)
 - [x] `docker-compose.yml` (services: `api`, `db`)
 - [x] `.env.example` + `.gitignore`
 - [x] `git init` + first commit
-- [x] `src/main.py` — bare FastAPI app with `/health`
-- [x] `src/config.py` — `Settings` class reading from env
-- [x] `src/database.py` — engine + `get_db()` dependency
+- [x] `src/main.py` - bare FastAPI app with `/health`
+- [x] `src/config.py` - `Settings` class reading from env
+- [x] `src/database.py` - engine + `get_db()` dependency
 - [x] `alembic.ini` + `migrations/env.py` wired to `DATABASE_URL`
 
 **Checkpoint:** `docker-compose up` → `GET /health` returns `{"status": "ok"}`.
 
 ---
 
-### Phase 2 — Models and first migration
-- [x] `src/models/user.py` — `User` model + `Role` enum
-- [x] `src/models/order.py` — `Order` model + `OrderStatus` enum
+### Phase 2 - Models and first migration
+- [x] `src/models/user.py` - `User` model + `Role` enum
+- [x] `src/models/order.py` - `Order` model + `OrderStatus` enum
 - [x] `alembic revision --autogenerate -m "create users and orders tables"`
 - [x] Review generated migration, verify indexes and FK
 - [x] `alembic upgrade head`
@@ -395,17 +395,17 @@ Work through phases in order. Each phase produces something testable before the 
 
 ---
 
-### Phase 3 — Authentication
-- [x] `src/schemas/auth.py` — `RegisterRequest`, `LoginRequest`, `TokenResponse`, `UserRead`
-- [x] `src/services/auth.py` — `register_user()`, `authenticate_user()`, `create_access_token()`
-- [x] `tests/unit/test_auth_service.py` — written alongside `services/auth.py`:
+### Phase 3 - Authentication
+- [x] `src/schemas/auth.py` - `RegisterRequest`, `LoginRequest`, `TokenResponse`, `UserRead`
+- [x] `src/services/auth.py` - `register_user()`, `authenticate_user()`, `create_access_token()`
+- [x] `tests/unit/test_auth_service.py` - written alongside `services/auth.py`:
   - `test_register_user_returns_user_read`
   - `test_register_user_with_duplicate_email_raises_409`
   - `test_authenticate_user_with_wrong_password_raises_401`
   - `test_authenticate_user_with_unknown_email_raises_401`
   - `test_create_access_token_contains_expected_claims`
-- [x] `src/dependencies.py` — `get_current_user()`, `require_admin()`
-- [x] `src/routers/auth.py` — `POST /auth/register`, `POST /auth/login`
+- [x] `src/dependencies.py` - `get_current_user()`, `require_admin()`
+- [x] `src/routers/auth.py` - `POST /auth/register`, `POST /auth/login`
 - [x] Mount router in `src/main.py`
 - [x] Apply `slowapi` rate limit to `POST /auth/login`
 
@@ -413,10 +413,10 @@ Work through phases in order. Each phase produces something testable before the 
 
 ---
 
-### Phase 4 — Orders
-- [x] `src/schemas/order.py` — `OrderCreate`, `OrderRead`, `OrderStatusUpdate`
-- [x] `src/services/order.py` — `create_order()`, `list_orders()`, `get_order()`, `update_order_status()`
-- [x] `tests/unit/test_order_service.py` — written alongside `services/order.py`:
+### Phase 4 - Orders
+- [x] `src/schemas/order.py` - `OrderCreate`, `OrderRead`, `OrderStatusUpdate`
+- [x] `src/services/order.py` - `create_order()`, `list_orders()`, `get_order()`, `update_order_status()`
+- [x] `tests/unit/test_order_service.py` - written alongside `services/order.py`:
   - `test_create_order_defaults_to_pending`
   - `test_list_orders_customer_sees_only_own_orders`
   - `test_get_order_customer_cannot_read_another_users_order`
@@ -424,15 +424,15 @@ Work through phases in order. Each phase produces something testable before the 
   - `test_update_order_status_pending_to_done_raises_409`
   - `test_update_order_status_done_to_any_raises_409`
   - `test_update_order_status_non_admin_raises_403`
-- [x] `src/routers/orders.py` — all 4 order endpoints
+- [x] `src/routers/orders.py` - all 4 order endpoints
 - [x] Mount router in `src/main.py`
 
 **Checkpoint:** full order lifecycle testable via `/docs` with a customer token and an admin token; `pytest -m unit` exits green.
 
 ---
 
-### Phase 5 — Hardening
-- [x] `src/scripts/seed_admin.py` — idempotent admin seed
+### Phase 5 - Hardening
+- [x] `src/scripts/seed_admin.py` - idempotent admin seed
 - [x] Structured JSON logging (production) vs. plain text (development)
 - [x] Verify all error responses match `{ "detail": "..." }` shape
 - [x] Verify uniform 401 response for wrong email vs. wrong password
@@ -441,17 +441,17 @@ Work through phases in order. Each phase produces something testable before the 
 
 ---
 
-### Phase 6 — Integration & Security Tests
+### Phase 6 - Integration & Security Tests
 Unit tests were already written in Phases 3 and 4. This phase adds the tests that require a full running stack (database + HTTP layer) and adversarial scenarios.
 
-- [x] `tests/conftest.py` — test DB (dedicated Postgres container), fixtures: `client`, `customer_token`, `admin_token`
-- [x] `tests/integration/test_auth_routes.py` — HTTP-level register + login
-- [x] `tests/integration/test_order_routes.py` — HTTP-level order CRUD + status update + 403/404/409 cases
-- [x] `tests/security/test_authentication.py` — JWT missing, expired, tampered, `alg:none` attack
-- [x] `tests/security/test_authorization.py` — IDOR check, customer→admin endpoint, unauthenticated access
-- [x] `tests/security/test_input_validation.py` — SQL injection payloads, oversized inputs, bad UUIDs
-- [x] `tests/security/test_rate_limiting.py` — 11th login attempt returns 429
-- [x] `tests/security/test_information_disclosure.py` — uniform login error, `password_hash` never in any response
+- [x] `tests/conftest.py` - test DB (dedicated Postgres container), fixtures: `client`, `customer_token`, `admin_token`
+- [x] `tests/integration/test_auth_routes.py` - HTTP-level register + login
+- [x] `tests/integration/test_order_routes.py` - HTTP-level order CRUD + status update + 403/404/409 cases
+- [x] `tests/security/test_authentication.py` - JWT missing, expired, tampered, `alg:none` attack
+- [x] `tests/security/test_authorization.py` - IDOR check, customer→admin endpoint, unauthenticated access
+- [x] `tests/security/test_input_validation.py` - SQL injection payloads, oversized inputs, bad UUIDs
+- [x] `tests/security/test_rate_limiting.py` - 11th login attempt returns 429
+- [x] `tests/security/test_information_disclosure.py` - uniform login error, `password_hash` never in any response
 - [x] `pytest` (no args) must exit green with coverage ≥ 90%
 - [x] `pytest -m security -v` must exit green independently
 
@@ -459,14 +459,14 @@ Unit tests were already written in Phases 3 and 4. This phase adds the tests tha
 
 ---
 
-### Phase 7 — CI Pipeline
-*(Source: GitHub Actions official docs — docs.github.com/actions)*
+### Phase 7 - CI Pipeline
+*(Source: GitHub Actions official docs - docs.github.com/actions)*
 
-- [x] `.github/workflows/ci.yml` — triggers on every `push` and `pull_request` to `main`/`develop`
+- [x] `.github/workflows/ci.yml` - triggers on every `push` and `pull_request` to `main`/`develop`
   - Spins up a Postgres 16 service container (same version as production)
   - Installs deps via `pip install -e ".[dev]"`
   - Runs `alembic upgrade head` against the test DB
-  - Runs `pytest` — fails if coverage < 90% or any test fails
+  - Runs `pytest` - fails if coverage < 90% or any test fails
 - [x] Add coverage badge to `README.md` (generated by `pytest-cov` + shields.io or codecov)
 
 > Expanded in the deploy plan (Fase 4): the pipeline now also runs `ruff` + `mypy`
@@ -479,7 +479,7 @@ Unit tests were already written in Phases 3 and 4. This phase adds the tests tha
 
 ---
 
-### Phase 8 — Deploy (Railway)
+### Phase 8 - Deploy (Railway)
 
 > Deploy runs entirely on Railway: a Docker `BackEnd` service, a Nixpacks `FrontEnd`
 > service, and a managed `Postgres`, all in the same project. Migrations and the admin
@@ -498,38 +498,38 @@ Unit tests were already written in Phases 3 and 4. This phase adds the tests tha
 
 ---
 
-### Phase 9 — Frontend (frontend/ — this repo)
+### Phase 9 - Frontend (frontend/ - this repo)
 
 > Frontend lives in `frontend/` inside this monorepo.
 
-#### Phase 9-A — Backend adjustments ✅ Done
+#### Phase 9-A - Backend adjustments ✅ Done
 - [x] `CORSMiddleware` with `FRONTEND_ORIGIN` env var (GET/POST/PATCH only)
-- [x] Paginate `GET /api/v1/orders` — returns `{items, total, page, limit, pages}`
+- [x] Paginate `GET /api/v1/orders` - returns `{items, total, page, limit, pages}`
 - [x] Update all affected tests and CI green
 
-#### Phase 9-B — Next.js setup (inside frontend/)
+#### Phase 9-B - Next.js setup (inside frontend/)
 - [x] `npx create-next-app@latest frontend --typescript --tailwind --app` (Next.js 16)
 - [x] Install shadcn/ui: `npx shadcn@latest init`
 - [x] Configure `lib/api.ts` (fetch wrapper with base URL + Authorization header)
-- [x] Configure `proxy.ts` (Next.js 16 route guard — protects `/conta` and `/admin`)
+- [x] Configure `proxy.ts` (Next.js 16 route guard - protects `/conta` and `/admin`)
 
-#### Phase 9-C — Authentication pages
-- [ ] `/login` — calls `POST /auth/login`, stores JWT in secure cookie
-- [ ] `/register` — calls `POST /auth/register`
+#### Phase 9-C - Authentication pages
+- [ ] `/login` - calls `POST /auth/login`, stores JWT in secure cookie
+- [ ] `/register` - calls `POST /auth/register`
 - [ ] Logout (clears token)
 - [ ] Middleware redirects unauthenticated users to `/login`
 
-#### Phase 9-D — Customer portal
-- [ ] `/orders` — paginated list with status badge (PENDING / IN_PROGRESS / DONE)
-- [ ] `/orders/new` — order creation form
-- [ ] `/orders/[id]` — order detail with status stepper
+#### Phase 9-D - Customer portal
+- [ ] `/orders` - paginated list with status badge (PENDING / IN_PROGRESS / DONE)
+- [ ] `/orders/new` - order creation form
+- [ ] `/orders/[id]` - order detail with status stepper
 
-#### Phase 9-E — Admin panel
-- [x] `/admin/orders` — full order table, status filter, pagination, inline status advance
+#### Phase 9-E - Admin panel
+- [x] `/admin/orders` - full order table, status filter, pagination, inline status advance
 - [x] Summary cards: total by status
 
-#### Phase 9-F — Landing page
-- [ ] Public `/` — shop presentation, gallery, CTA to register
+#### Phase 9-F - Landing page
+- [ ] Public `/` - shop presentation, gallery, CTA to register
 - [ ] Header / footer shared layout
 - [ ] SEO metadata (Next.js Metadata API)
 
@@ -537,9 +537,9 @@ Unit tests were already written in Phases 3 and 4. This phase adds the tests tha
 
 ---
 
-### Phase 10–13 — Order-management expansion ✅ Done
+### Phase 10-13 - Order-management expansion ✅ Done
 
-Expansion beyond the original MVP — see the plan file
+Expansion beyond the original MVP - see the plan file
 `preciso-que-voc-atualize-iterative-sifakis.md` for the full design.
 
 - **Phase 10 (backend):** `orders` recreated with the production schema
@@ -548,7 +548,7 @@ Expansion beyond the original MVP — see the plan file
   sequential `order_number`; endpoints `PATCH /orders/{id}`,
   `GET /admin/dashboard`, `GET/PATCH /me`, `PATCH /me/password`; migration
   `0002`. Admin order view also exposes `customer_name` / `customer_email`.
-- **Phase 12–13 (frontend):** customer area `/conta` (list, new-order form with
+- **Phase 12-13 (frontend):** customer area `/conta` (list, new-order form with
   ViaCEP autofill, detail + timeline, profile) and admin panel `/admin`
   (KPI dashboard, order table, editable management detail). Legacy `/orders`
   routes redirect to `/conta/pedidos`.

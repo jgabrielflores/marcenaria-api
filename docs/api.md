@@ -11,11 +11,11 @@
 
 - [Convenções](#convenções)
 - [Autenticação](#autenticação)
-- [Endpoints — Auth](#endpoints--auth)
-- [Endpoints — Perfil](#endpoints--perfil)
-- [Endpoints — Pedidos](#endpoints--pedidos)
-- [Endpoints — Admin](#endpoints--admin)
-- [Endpoints — Health](#endpoints--health)
+- [Endpoints - Auth](#endpoints--auth)
+- [Endpoints - Perfil](#endpoints--perfil)
+- [Endpoints - Pedidos](#endpoints--pedidos)
+- [Endpoints - Admin](#endpoints--admin)
+- [Endpoints - Health](#endpoints--health)
 - [Modelos de dados](#modelos-de-dados)
 - [Códigos de status](#códigos-de-status)
 - [Tratamento de erros](#tratamento-de-erros)
@@ -32,7 +32,7 @@ Endpoints protegidos exigem o cabeçalho:
 Authorization: Bearer <access_token>
 ```
 
-O token é obtido em `POST /auth/login`. O *payload* JWT carrega `sub` (UUID do usuário), `role` e `exp`. Validade padrão: **24 horas**. Não há *refresh token* — ao expirar, é necessário autenticar novamente.
+O token é obtido em `POST /auth/login`. O *payload* JWT carrega `sub` (UUID do usuário), `role` e `exp`. Validade padrão: **24 horas**. Não há *refresh token* - ao expirar, é necessário autenticar novamente.
 
 ### Paginação
 
@@ -76,26 +76,26 @@ Valores em dinheiro (`project_value`, `estimated_cost`, `profit`, `revenue_month
 
 Fluxo completo de uma conta nova:
 
-1. `POST /auth/register` — cria a conta com `email_verified = false`.
+1. `POST /auth/register` - cria a conta com `email_verified = false`.
 2. Um e-mail de verificação é enviado via Brevo (ou o link é impresso no log, em desenvolvimento sem `BREVO_API_KEY`).
-3. `GET /auth/verify?token=...` — confirma o e-mail.
-4. `POST /auth/login` — autentica e devolve o JWT. **O login só é permitido após a verificação do e-mail.**
+3. `GET /auth/verify?token=...` - confirma o e-mail.
+4. `POST /auth/login` - autentica e devolve o JWT. **O login só é permitido após a verificação do e-mail.**
 
 ---
 
-## Endpoints — Auth
+## Endpoints - Auth
 
 ### `POST /auth/register`
 
-Cria uma conta de cliente. O papel é sempre `CUSTOMER` — não há como criar um admin por aqui.
+Cria uma conta de cliente. O papel é sempre `CUSTOMER` - não há como criar um admin por aqui.
 
 **Request body**
 
 | Campo | Tipo | Regras |
 |---|---|---|
-| `name` | string | 1–255 caracteres |
+| `name` | string | 1-255 caracteres |
 | `email` | string | e-mail válido com TLD, único no sistema |
-| `password` | string | 8–128 caracteres |
+| `password` | string | 8-128 caracteres |
 
 ```json
 {
@@ -105,7 +105,7 @@ Cria uma conta de cliente. O papel é sempre `CUSTOMER` — não há como criar 
 }
 ```
 
-**Resposta `201 Created`** — `UserRead`
+**Resposta `201 Created`** - `UserRead`
 
 ```json
 {
@@ -135,7 +135,7 @@ Autentica e devolve o token de acesso. **Rate limit: 10 requisições/minuto por
 { "email": "joao@example.com", "password": "minhasenha123" }
 ```
 
-**Resposta `200 OK`** — `TokenResponse`
+**Resposta `200 OK`** - `TokenResponse`
 
 ```json
 { "access_token": "eyJhbGciOi…", "token_type": "bearer" }
@@ -144,8 +144,8 @@ Autentica e devolve o token de acesso. **Rate limit: 10 requisições/minuto por
 | Status | Quando |
 |---|---|
 | `200` | Autenticado |
-| `401` | Credenciais inválidas — mensagem genérica `"invalid credentials"`, idêntica para e-mail inexistente e senha errada |
-| `403` | E-mail não verificado — `detail: "EMAIL_NOT_VERIFIED"` (a UI oferece reenvio) |
+| `401` | Credenciais inválidas - mensagem genérica `"invalid credentials"`, idêntica para e-mail inexistente e senha errada |
+| `403` | E-mail não verificado - `detail: "EMAIL_NOT_VERIFIED"` (a UI oferece reenvio) |
 | `429` | *Rate limit* excedido |
 
 ---
@@ -175,7 +175,7 @@ Reenvia o e-mail de verificação. **Rate limit: 5 requisições/minuto por IP.*
 { "email": "joao@example.com" }
 ```
 
-**Resposta `200 OK`** — resposta **uniforme**, independentemente de o e-mail existir ou já estar verificado (evita enumeração de usuários):
+**Resposta `200 OK`** - resposta **uniforme**, independentemente de o e-mail existir ou já estar verificado (evita enumeração de usuários):
 
 ```json
 { "detail": "Se o e-mail estiver cadastrado e pendente, enviamos um novo link." }
@@ -183,7 +183,7 @@ Reenvia o e-mail de verificação. **Rate limit: 5 requisições/minuto por IP.*
 
 ---
 
-## Endpoints — Perfil
+## Endpoints - Perfil
 
 Prefixo `/api/v1/me`. Todos exigem JWT válido.
 
@@ -199,7 +199,7 @@ Atualiza o nome do usuário. O e-mail **não** é editável.
 { "name": "João Silva Souza" }
 ```
 
-Resposta `200 OK` — `UserRead`.
+Resposta `200 OK` - `UserRead`.
 
 ### `PATCH /api/v1/me/password`
 
@@ -213,11 +213,11 @@ Troca a senha. Exige a senha atual.
 |---|---|
 | `204` | Senha alterada (sem corpo de resposta) |
 | `400` | Senha atual incorreta |
-| `422` | Nova senha fora de 8–128 caracteres |
+| `422` | Nova senha fora de 8-128 caracteres |
 
 ---
 
-## Endpoints — Pedidos
+## Endpoints - Pedidos
 
 Prefixo `/api/v1/orders`. Todos exigem JWT válido.
 
@@ -225,20 +225,20 @@ Prefixo `/api/v1/orders`. Todos exigem JWT válido.
 
 Cria um pedido. O pedido nasce em `AGUARDANDO_ANALISE` e já recebe a primeira entrada no histórico de status.
 
-**Request body** — `OrderCreate`
+**Request body** - `OrderCreate`
 
 | Campo | Tipo | Obrigatório | Regras |
 |---|---|:---:|---|
 | `whatsapp` | string | ✓ | Normalizado para dígitos; deve resultar em 10 ou 11 dígitos |
 | `cep` | string | ✓ | Normalizado para o formato `NNNNN-NNN` (8 dígitos) |
-| `city` | string | ✓ | 1–120 caracteres |
+| `city` | string | ✓ | 1-120 caracteres |
 | `state` | string | ✓ | UF de 2 letras (convertida para maiúsculas) |
-| `address_line` | string | — | Máx. 255 caracteres |
-| `environments` | string | ✓ | 1–300 caracteres (ex.: `"Cozinha, Closet"`) |
-| `furniture_types` | string | — | Máx. 500 caracteres |
-| `observations` | string | — | Máx. 2000 caracteres |
-| `client_name` | string | — | Máx. 255 — **considerado apenas em pedidos criados por admin** (*walk-in*) |
-| `client_email` | string | — | E-mail válido — **considerado apenas em pedidos criados por admin** |
+| `address_line` | string | - | Máx. 255 caracteres |
+| `environments` | string | ✓ | 1-300 caracteres (ex.: `"Cozinha, Closet"`) |
+| `furniture_types` | string | - | Máx. 500 caracteres |
+| `observations` | string | - | Máx. 2000 caracteres |
+| `client_name` | string | - | Máx. 255 - **considerado apenas em pedidos criados por admin** (*walk-in*) |
+| `client_email` | string | - | E-mail válido - **considerado apenas em pedidos criados por admin** |
 
 ```json
 {
@@ -253,7 +253,7 @@ Cria um pedido. O pedido nasce em `AGUARDANDO_ANALISE` e já recebe a primeira e
 }
 ```
 
-**Resposta `201 Created`** — `OrderRead` (redigido conforme o papel de quem cria).
+**Resposta `201 Created`** - `OrderRead` (redigido conforme o papel de quem cria).
 
 ---
 
@@ -264,10 +264,10 @@ Lista pedidos paginados. **Cliente** vê apenas os próprios; **admin** vê todo
 | Query param | Padrão | Regras |
 |---|---|---|
 | `page` | `1` | ≥ 1 |
-| `limit` | `20` | 1–100 |
-| `status` | — | Filtra por status — **aplicado apenas para admin** |
+| `limit` | `20` | 1-100 |
+| `status` | - | Filtra por status - **aplicado apenas para admin** |
 
-**Resposta `200 OK`** — `PaginatedOrders` (lista de `OrderRead` no envelope de paginação).
+**Resposta `200 OK`** - `PaginatedOrders` (lista de `OrderRead` no envelope de paginação).
 
 ```
 GET /api/v1/orders?page=1&limit=20&status=APROVADO
@@ -279,7 +279,7 @@ GET /api/v1/orders?page=1&limit=20&status=APROVADO
 
 Busca um pedido por UUID.
 
-**Resposta `200 OK`** — `OrderRead`.
+**Resposta `200 OK`** - `OrderRead`.
 
 | Status | Quando |
 |---|---|
@@ -291,24 +291,24 @@ Busca um pedido por UUID.
 
 ### `PATCH /api/v1/orders/{id}`
 
-Atualiza um pedido. **Exclusivo de admin** — clientes recebem `403`.
+Atualiza um pedido. **Exclusivo de admin** - clientes recebem `403`.
 
 É um *patch* parcial: apenas os campos presentes no corpo são alterados.
 
-**Request body** — `OrderUpdateAdmin` (todos os campos opcionais)
+**Request body** - `OrderUpdateAdmin` (todos os campos opcionais)
 
 | Campo | Tipo | Regras |
 |---|---|---|
-| `status` | enum | Novo status — sujeito à validação de transição |
+| `status` | enum | Novo status - sujeito à validação de transição |
 | `project_value` | decimal | ≥ 0 |
 | `estimated_cost` | decimal | ≥ 0 |
 | `due_date` | date | Não pode ser uma data nova no passado |
 | `install_date` | date | Não pode ser nova no passado, nem anterior a `due_date` |
 | `admin_notes` | string | Máx. 2000 caracteres |
-| `whatsapp` `city` `state` `address_line` `environments` `furniture_types` `observations` | — | Edição dos dados do cliente/projeto |
-| `note` | string | Máx. 500 — nota anexada à entrada de histórico, quando há mudança de status |
+| `whatsapp` `city` `state` `address_line` `environments` `furniture_types` `observations` | - | Edição dos dados do cliente/projeto |
+| `note` | string | Máx. 500 - nota anexada à entrada de histórico, quando há mudança de status |
 
-**Resposta `200 OK`** — `OrderRead` (visão de admin).
+**Resposta `200 OK`** - `OrderRead` (visão de admin).
 
 | Status | Quando |
 |---|---|
@@ -322,7 +322,7 @@ Atualiza um pedido. **Exclusivo de admin** — clientes recebem `403`.
 
 ---
 
-## Endpoints — Admin
+## Endpoints - Admin
 
 ### `GET /api/v1/admin/dashboard`
 
@@ -330,10 +330,10 @@ Métricas financeiras e operacionais. **Exclusivo de admin.**
 
 | Query param | Padrão | Descrição |
 |---|---|---|
-| `year` | mês corrente | Ano de referência (2000–2100) |
-| `month` | mês corrente | Mês de referência (1–12) |
+| `year` | mês corrente | Ano de referência (2000-2100) |
+| `month` | mês corrente | Mês de referência (1-12) |
 
-**Resposta `200 OK`** — `DashboardSummary`
+**Resposta `200 OK`** - `DashboardSummary`
 
 ```jsonc
 {
@@ -354,15 +354,15 @@ Métricas financeiras e operacionais. **Exclusivo de admin.**
 }
 ```
 
-> Faturamento, custo e lucro consideram apenas pedidos que **atingiram `CONCLUIDO`** no mês selecionado — datado pela entrada correspondente no histórico de status.
+> Faturamento, custo e lucro consideram apenas pedidos que **atingiram `CONCLUIDO`** no mês selecionado - datado pela entrada correspondente no histórico de status.
 
 ---
 
-## Endpoints — Health
+## Endpoints - Health
 
 ### `GET /health`
 
-*Health check* — não exige autenticação.
+*Health check* - não exige autenticação.
 
 ```json
 { "status": "ok" }
@@ -386,9 +386,9 @@ A resposta de leitura de pedido. Campos sensíveis são **redigidos para cliente
 | `status` | enum | ✓ |
 | `whatsapp` `cep` `city` `state` `address_line` | string | ✓ |
 | `environments` `furniture_types` `observations` | string\|null | ✓ |
-| `project_value` | decimal\|null | ✓ — somente após sair de `AGUARDANDO_ANALISE` |
+| `project_value` | decimal\|null | ✓ - somente após sair de `AGUARDANDO_ANALISE` |
 | `estimated_cost` | decimal\|null | ✗ (apenas admin) |
-| `profit` | decimal\|null | ✗ (apenas admin) — calculado: `project_value − estimated_cost` |
+| `profit` | decimal\|null | ✗ (apenas admin) - calculado: `project_value − estimated_cost` |
 | `admin_notes` | string\|null | ✗ (apenas admin) |
 | `due_date` `install_date` | date\|null | ✓ |
 | `created_at` `updated_at` | datetime | ✓ |
@@ -415,7 +415,7 @@ A resposta de leitura de pedido. Campos sensíveis são **redigidos para cliente
 | `id` | UUID |
 | `name` | string |
 | `email` | string |
-| `role` | enum — `CUSTOMER` \| `ADMIN` |
+| `role` | enum - `CUSTOMER` \| `ADMIN` |
 | `created_at` | datetime |
 
 ---
@@ -455,15 +455,15 @@ As mensagens internas/de desenvolvimento são em inglês. O **frontend** normali
 **Exemplos de respostas de erro**
 
 ```jsonc
-// 401 — credenciais erradas (mensagem genérica, sem revelar a causa)
+// 401 - credenciais erradas (mensagem genérica, sem revelar a causa)
 { "detail": "invalid credentials" }
 
-// 409 — transição de status inválida
+// 409 - transição de status inválida
 { "detail": "Invalid status transition" }
 
-// 400 — campo obrigatório ausente para o status alvo
+// 400 - campo obrigatório ausente para o status alvo
 { "detail": "Missing required fields for APROVADO: project_value, due_date" }
 
-// 403 — cliente acessando pedido de outro usuário
+// 403 - cliente acessando pedido de outro usuário
 { "detail": "Not your order" }
 ```

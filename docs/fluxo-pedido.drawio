@@ -4,7 +4,7 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="title" value="Ciclo de Vida de um Pedido — Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" parent="1" vertex="1">
+                <mxCell id="title" value="Ciclo de Vida de um Pedido - Ramos Planejados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" parent="1" vertex="1">
                     <mxGeometry x="32" y="18" width="660" height="32" as="geometry"/>
                 </mxCell>
                 <mxCell id="laneC" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f4f8ff;strokeColor=#6c8ebf;" parent="1" vertex="1">
@@ -28,10 +28,10 @@
                 <mxCell id="start" value="" style="ellipse;html=1;fillColor=#1a1a1a;strokeColor=#1a1a1a;" parent="1" vertex="1">
                     <mxGeometry x="179" y="166" width="26" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="C1" value="Cria o pedido&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;/conta/pedidos/novo — contato, endereço e projeto&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                <mxCell id="C1" value="Cria o pedido&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;/conta/pedidos/novo - contato, endereço e projeto&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
                     <mxGeometry x="32" y="222" width="320" height="62" as="geometry"/>
                 </mxCell>
-                <mxCell id="C2" value="Acompanha cada atualização&lt;br&gt;de status no portal&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;/conta/pedidos/[id] — detalhe + histórico&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                <mxCell id="C2" value="Acompanha cada atualização&lt;br&gt;de status no portal&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;/conta/pedidos/[id] - detalhe + histórico&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
                     <mxGeometry x="32" y="712" width="320" height="74" as="geometry"/>
                 </mxCell>
                 <mxCell id="C3" value="&lt;b&gt;Recebe o projeto concluído&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;status final CONCLUÍDO&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#67ab9f;strokeColor=#23605a;fontColor=#ffffff;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
@@ -52,7 +52,7 @@
                 <mxCell id="Dterm" value="Status atingiu&lt;br&gt;estado terminal?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
                     <mxGeometry x="565" y="826" width="190" height="84" as="geometry"/>
                 </mxCell>
-                <mxCell id="Sterm" value="&lt;b&gt;Pedido finalizado&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;CONCLUÍDO ou CANCELADO — sem reversão&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
+                <mxCell id="Sterm" value="&lt;b&gt;Pedido finalizado&lt;/b&gt;&lt;br&gt;&lt;span style=&#39;font-size:9px;color:#7a7a7a&#39;&gt;CONCLUÍDO ou CANCELADO - sem reversão&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
                     <mxGeometry x="480" y="1000" width="360" height="62" as="geometry"/>
                 </mxCell>
                 <mxCell id="A1" value="Vê o pedido no dashboard e&lt;br&gt;analisa os dados no painel admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" parent="1" vertex="1">
@@ -91,7 +91,7 @@
                 <mxCell id="ep_s2_dval" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" parent="1" source="S2" target="Dval" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="ep_dval_no" value="Não — erro de validação&lt;br&gt;admin corrige e reenvia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#b85450;dashed=1;fontSize=9;" parent="1" source="Dval" target="A2" edge="1">
+                <mxCell id="ep_dval_no" value="Não - erro de validação&lt;br&gt;admin corrige e reenvia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#b85450;dashed=1;fontSize=9;" parent="1" source="Dval" target="A2" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1092" y="658"/>
@@ -107,7 +107,7 @@
                 <mxCell id="ep_s3_dterm" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#333333;" parent="1" source="S3" target="Dterm" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="ep_dterm_no" value="Não — próxima etapa&lt;br&gt;(repete até CONCLUÍDO)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#9673a6;dashed=1;fontSize=9;" parent="1" source="Dterm" target="A2" edge="1">
+                <mxCell id="ep_dterm_no" value="Não - próxima etapa&lt;br&gt;(repete até CONCLUÍDO)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#9673a6;dashed=1;fontSize=9;" parent="1" source="Dterm" target="A2" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1272" y="868"/>

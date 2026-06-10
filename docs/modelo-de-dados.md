@@ -80,14 +80,14 @@ erDiagram
 
 ## Tabela `users`
 
-Contas de acesso ao sistema — clientes e administradores.
+Contas de acesso ao sistema - clientes e administradores.
 
 | Coluna | Tipo | Restrições | Descrição |
 |---|---|---|---|
 | `id` | `UUID` | PK, default `gen_random_uuid()` | Identificador |
 | `name` | `VARCHAR(255)` | NOT NULL | Nome completo |
 | `email` | `VARCHAR(255)` | NOT NULL, **UNIQUE** | E-mail de login |
-| `password_hash` | `VARCHAR(255)` | NOT NULL | Hash bcrypt — nunca exposto em respostas |
+| `password_hash` | `VARCHAR(255)` | NOT NULL | Hash bcrypt - nunca exposto em respostas |
 | `role` | `user_role` (enum) | NOT NULL, default `CUSTOMER` | Papel do usuário |
 | `email_verified` | `BOOLEAN` | NOT NULL, default `false` | Se o e-mail foi confirmado |
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, default `now()` | Data de criação |
@@ -97,16 +97,16 @@ Contas de acesso ao sistema — clientes e administradores.
 
 ## Tabela `orders`
 
-O pedido de móvel sob medida — entidade central do domínio.
+O pedido de móvel sob medida - entidade central do domínio.
 
 | Coluna | Tipo | Restrições | Descrição |
 |---|---|---|---|
 | `id` | `UUID` | PK, default `gen_random_uuid()` | Identificador |
 | `order_number` | `INTEGER` | NOT NULL, UNIQUE, `nextval` | Número sequencial legível (`#0001`) |
 | `user_id` | `UUID` | FK → `users.id`, NOT NULL | Dono do pedido |
-| `client_name` | `VARCHAR(255)` | nullable | Nome — só em pedidos de balcão |
-| `client_email` | `VARCHAR(254)` | nullable | E-mail — só em pedidos de balcão |
-| `whatsapp` | `VARCHAR(20)` | NOT NULL | Telefone normalizado (10–11 dígitos) |
+| `client_name` | `VARCHAR(255)` | nullable | Nome - só em pedidos de balcão |
+| `client_email` | `VARCHAR(254)` | nullable | E-mail - só em pedidos de balcão |
+| `whatsapp` | `VARCHAR(20)` | NOT NULL | Telefone normalizado (10-11 dígitos) |
 | `cep` | `VARCHAR(9)` | NOT NULL | CEP no formato `NNNNN-NNN` |
 | `city` | `VARCHAR(120)` | NOT NULL | Cidade |
 | `state` | `CHAR(2)` | NOT NULL | UF |
@@ -125,7 +125,7 @@ O pedido de móvel sob medida — entidade central do domínio.
 
 > **`order_number`** é alimentado por uma *sequence* dedicada (`orders_number_seq`), garantindo numeração contínua e legível independentemente do UUID interno.
 >
-> **`NUMERIC(10,2)`** é o tipo correto para dinheiro — evita os erros de arredondamento de `float`.
+> **`NUMERIC(10,2)`** é o tipo correto para dinheiro - evita os erros de arredondamento de `float`.
 
 ---
 
@@ -143,7 +143,7 @@ Trilha de auditoria **append-only** de toda mudança de status.
 | `note` | `TEXT` | nullable | Nota opcional da transição |
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, default `now()` | Momento exato da transição |
 
-Esta tabela nunca recebe `UPDATE` nem `DELETE` direto — apenas `INSERT`. É a base de auditoria e a fonte das métricas temporais do dashboard.
+Esta tabela nunca recebe `UPDATE` nem `DELETE` direto - apenas `INSERT`. É a base de auditoria e a fonte das métricas temporais do dashboard.
 
 ---
 
@@ -163,7 +163,7 @@ Esta tabela nunca recebe `UPDATE` nem `DELETE` direto — apenas `INSERT`. É a 
 
 ## Tipos enumerados
 
-O PostgreSQL armazena dois tipos `ENUM` nativos — mais íntegros e legíveis que strings livres ou códigos numéricos.
+O PostgreSQL armazena dois tipos `ENUM` nativos - mais íntegros e legíveis que strings livres ou códigos numéricos.
 
 **`user_role`**
 
@@ -204,6 +204,6 @@ docker-compose exec api alembic revision --autogenerate -m "descrição da mudan
 docker-compose exec api alembic downgrade -1
 ```
 
-> O schema **nunca** é criado via `Base.metadata.create_all`. Toda mudança passa por uma migração revisável — o estado do banco é reproduzível e auditável em qualquer ambiente.
+> O schema **nunca** é criado via `Base.metadata.create_all`. Toda mudança passa por uma migração revisável - o estado do banco é reproduzível e auditável em qualquer ambiente.
 
 Veja também: **[arquitetura.md](arquitetura.md)** · **[regras-de-negocio.md](regras-de-negocio.md)**.
