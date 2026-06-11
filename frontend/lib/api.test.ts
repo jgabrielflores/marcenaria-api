@@ -4,6 +4,8 @@ import {
   ApiError,
   changePassword,
   createOrder,
+  deleteOrderImage,
+  fetchOrderImageBlob,
   getDashboard,
   getMe,
   getOrder,
@@ -13,6 +15,7 @@ import {
   resendVerification,
   updateMe,
   updateOrderAdmin,
+  uploadOrderImages,
 } from "./api";
 
 const BASE = "http://localhost:8000";
@@ -162,5 +165,47 @@ describe("endpoint wrappers issue the expected request", () => {
     const f = stub({ counts_by_status: {} });
     await getDashboard("tok");
     expect(url(f)).toBe(`${BASE}/api/v1/admin/dashboard`);
+  });
+
+  it("uploadOrderImages → POST multipart to /orders/:id/images without a JSON Content-Type", async () => {
+    const f = stub({ id: "1", images: [] });
+    const file = new File([new Uint8Array([1, 2, 3])], "photo.jpg", { type: "image/jpeg" });
+    await uploadOrderImages("tok", "abc", [file]);
+    expect(url(f)).toBe(`${BASE}/api/v1/orders/abc/images`);
+    expect(opts(f).method).toBe("POST");
+    expect(opts(f).body).toBeInstanceOf(FormData);
+    // FormData must drive the boundary itself — the wrapper must not force JSON.
+    expect((opts(f).headers as Record<string, string>)["Content-Type"]).toBeUndefined();
+  });
+
+  it("deleteOrderImage → DELETE /orders/:id/images/:imageId", async () => {
+    const f = fetchReturning(204, {});
+    vi.stubGlobal("fetch", f);
+    await deleteOrderImage("tok", "abc", "img1");
+    expect(url(f)).toBe(`${BASE}/api/v1/orders/abc/images/img1`);
+    expect(opts(f).method).toBe("DELETE");
+  });
+});
+
+describe("fetchOrderImageBlob", () => {
+  it("GETs the image with the bearer token and returns an object URL", async () => {
+    const f = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      blob: async () => new Blob(["bytes"], { type: "image/png" }),
+    });
+    vi.stubGlobal("fetch", f);
+    vi.stubGlobal("URL", { createObjectURL: vi.fn().mockReturnValue("blob:fake-url") });
+
+    const result = await fetchOrderImageBlob("tok", "abc", "img1");
+
+    expect(result).toBe("blob:fake-url");
+    expect(f.mock.calls[0][0]).toBe(`${BASE}/api/v1/orders/abc/images/img1`);
+    expect((f.mock.calls[0][1].headers as Record<string, string>).Authorization).toBe("Bearer tok");
+  });
+
+  it("throws an ApiError when the response is not ok", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 404 }));
+    await expect(fetchOrderImageBlob("tok", "abc", "img1")).rejects.toMatchObject({ status: 404 });
   });
 });

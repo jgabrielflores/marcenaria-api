@@ -8,6 +8,16 @@ do PRD (v1.2 = MVP, v2.0 = expansão de gestão de pedidos). O deploy é contín
 (`develop` -> staging, `main` -> produção), então cada versão reflete um conjunto de recursos
 promovido para produção.
 
+## [Não lançado]
+
+### Adicionado
+
+- **Fotos do ambiente no pedido**: cliente (e admin, em pedidos de balcão) anexa até 5 imagens
+  por pedido enquanto ele está em `AGUARDANDO_ANALISE`. Os bytes são armazenados em PostgreSQL
+  (`BYTEA`), sem object storage externo. Upload, download autenticado e remoção via
+  `/api/v1/orders/{id}/images`. O backend valida o conteúdo real da imagem com Pillow
+  (JPEG/PNG/WebP, 5 MB cada), não apenas o `Content-Type` declarado.
+
 ## [2.0.0] - 2026-06-10
 
 Expansão de gestão de pedidos (PRD v2.0).

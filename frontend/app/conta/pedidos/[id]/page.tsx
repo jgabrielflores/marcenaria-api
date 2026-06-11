@@ -5,6 +5,7 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StatusTimeline } from "@/components/StatusTimeline";
 import { OrderNumber } from "@/components/OrderNumber";
+import { OrderImageGallery } from "@/components/OrderImageGallery";
 import { getOrder, type OrderRead } from "@/lib/api";
 import { getToken } from "@/lib/auth";
 import { C, labelStyle, headingStyle, formatDate, formatMoney, formatPhone } from "@/lib/theme";
@@ -137,6 +138,20 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 <Field label="Instalação agendada" value={formatDate(order.install_date)} />
               )}
             </Section>
+          )}
+
+          {(order.images.length > 0 || order.status === "AGUARDANDO_ANALISE") && (
+            <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "1.5rem" }}>
+              <span style={{ ...labelStyle, marginBottom: "1.25rem", display: "block" }}>
+                Fotos do ambiente
+              </span>
+              <OrderImageGallery
+                orderId={order.id}
+                images={order.images}
+                editable={order.status === "AGUARDANDO_ANALISE"}
+                onImagesChange={(images) => setOrder({ ...order, images })}
+              />
+            </div>
           )}
 
           <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "1.5rem" }}>

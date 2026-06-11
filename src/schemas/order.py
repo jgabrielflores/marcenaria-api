@@ -86,6 +86,19 @@ class OrderHistoryEntry(BaseModel):
     created_at: datetime
 
 
+class OrderImageRead(BaseModel):
+    """Metadata for an attached environment photo. The bytes are served by a
+    dedicated endpoint, never embedded in the order payload."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: uuid.UUID
+    filename: str
+    content_type: str
+    size: int
+    created_at: datetime
+
+
 class OrderRead(BaseModel):
     """Single read shape. Admin-only fields are redacted to None for customers
     (see src.services.order.serialize_order)."""
@@ -116,6 +129,7 @@ class OrderRead(BaseModel):
     created_at: datetime
     updated_at: datetime
     history: list[OrderHistoryEntry]
+    images: list[OrderImageRead]
 
 
 class PaginatedOrders(BaseModel):

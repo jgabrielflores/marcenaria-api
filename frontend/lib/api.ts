@@ -1,8 +1,10 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 async function request<T>(path: string, options: RequestInit = {}, token?: string): Promise<T> {
+  // Let the browser set the multipart boundary itself for FormData bodies.
+  const isFormData = options.body instanceof FormData;
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(options.headers as Record<string, string>),
   };
 
@@ -99,6 +101,14 @@ export type OrderHistoryEntry = {
   created_at: string;
 };
 
+export type OrderImageRead = {
+  id: string;
+  filename: string;
+  content_type: string;
+  size: number;
+  created_at: string;
+};
+
 export type OrderRead = {
   id: string;
   order_number: number;
@@ -125,6 +135,7 @@ export type OrderRead = {
   created_at: string;
   updated_at: string;
   history: OrderHistoryEntry[];
+  images: OrderImageRead[];
 };
 
 export type PaginatedOrders = {
@@ -192,6 +203,37 @@ export function updateOrderAdmin(
   body: OrderUpdateBody,
 ): Promise<OrderRead> {
   return request(`/api/v1/orders/${id}`, { method: "PATCH", body: JSON.stringify(body) }, token);
+}
+
+// ── Order images ──────────────────────────────────────────────────────────────
+
+export function uploadOrderImages(
+  token: string,
+  orderId: string,
+  files: File[],
+): Promise<OrderRead> {
+  const form = new FormData();
+  for (const file of files) form.append("files", file);
+  return request(`/api/v1/orders/${orderId}/images`, { method: "POST", body: form }, token);
+}
+
+export function deleteOrderImage(token: string, orderId: string, imageId: string): Promise<void> {
+  return request(`/api/v1/orders/${orderId}/images/${imageId}`, { method: "DELETE" }, token);
+}
+
+/** Fetch a protected image with the bearer token and return an object URL.
+ * A plain <img src> can't carry the Authorization header, so we fetch the bytes
+ * and hand back a `blob:` URL the caller is responsible for revoking. */
+export async function fetchOrderImageBlob(
+  token: string,
+  orderId: string,
+  imageId: string,
+): Promise<string> {
+  const res = await fetch(`${API_URL}/api/v1/orders/${orderId}/images/${imageId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new ApiError(res.status, "Erro ao carregar imagem.");
+  return URL.createObjectURL(await res.blob());
 }
 
 // ── Admin dashboard ───────────────────────────────────────────────────────────

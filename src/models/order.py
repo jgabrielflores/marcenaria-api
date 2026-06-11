@@ -25,6 +25,7 @@ from src.database import Base
 
 if TYPE_CHECKING:
     from src.models.order_history import OrderStatusHistory
+    from src.models.order_image import OrderImage
     from src.models.user import User
 
 
@@ -97,5 +98,11 @@ class Order(Base):
         back_populates="order",
         cascade="all, delete-orphan",
         order_by="OrderStatusHistory.created_at",
+    )
+    images: Mapped[list["OrderImage"]] = relationship(
+        "OrderImage",
+        back_populates="order",
+        cascade="all, delete-orphan",
+        order_by="OrderImage.created_at",
     )
     user: Mapped["User"] = relationship("User")

@@ -6,7 +6,8 @@ import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { WhatsappInput } from "@/components/WhatsappInput";
 import { CepInput, type ResolvedAddress } from "@/components/CepInput";
-import { createOrder, ApiError, type OrderRead } from "@/lib/api";
+import { ImageUploader } from "@/components/ImageUploader";
+import { createOrder, uploadOrderImages, ApiError, type OrderRead } from "@/lib/api";
 import { getToken } from "@/lib/auth";
 import { C, labelStyle, headingStyle, inkButtonStyle } from "@/lib/theme";
 
@@ -52,12 +53,14 @@ type State = { error: string };
 export default function NewOrderPage() {
   const router = useRouter();
   const [created, setCreated] = useState<OrderRead | null>(null);
+  const [imageWarning, setImageWarning] = useState("");
 
   const [whatsapp, setWhatsapp] = useState("");
   const [cep, setCep] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
   const [addressLine, setAddressLine] = useState("");
+  const [images, setImages] = useState<File[]>([]);
 
   function applyAddress(addr: ResolvedAddress) {
     setCity(addr.city);
@@ -87,6 +90,16 @@ export default function NewOrderPage() {
           furniture_types: (formData.get("furniture_types") as string) || null,
           observations: (formData.get("observations") as string) || null,
         });
+        if (images.length > 0) {
+          try {
+            await uploadOrderImages(token, order.id, images);
+          } catch {
+            // The order is already created — let the customer add photos later.
+            setImageWarning(
+              "O pedido foi criado, mas houve um erro ao enviar as fotos. Você pode adicioná-las na página do pedido.",
+            );
+          }
+        }
         setCreated(order);
         return { error: "" };
       } catch (err) {
@@ -122,6 +135,11 @@ export default function NewOrderPage() {
             Nossa equipe entrará em contato em breve para alinhar os detalhes do seu projeto.
           </p>
         </div>
+        {imageWarning && (
+          <p style={{ fontSize: "0.82rem", color: C.danger, lineHeight: 1.5 }} role="alert">
+            {imageWarning}
+          </p>
+        )}
         <div
           style={{
             border: `1px solid ${C.border}`,
@@ -269,6 +287,23 @@ export default function NewOrderPage() {
               rows={5}
               style={textareaStyle}
             />
+          </div>
+          <div>
+            <label style={fieldLabel}>
+              Fotos do ambiente{" "}
+              <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
+            </label>
+            <p
+              style={{
+                fontSize: "0.8rem",
+                color: C.textSub,
+                margin: "0 0 0.75rem",
+                lineHeight: 1.6,
+              }}
+            >
+              Envie fotos do espaço onde o móvel será instalado para agilizar a análise.
+            </p>
+            <ImageUploader files={images} onChange={setImages} />
           </div>
         </section>
 
