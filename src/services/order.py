@@ -14,6 +14,7 @@ from src.schemas.order import (
     DashboardSummary,
     OrderCreate,
     OrderHistoryEntry,
+    OrderImageRead,
     OrderRead,
     OrderUpdateAdmin,
 )
@@ -96,6 +97,7 @@ def serialize_order(order: Order, *, viewer_is_admin: bool) -> OrderRead:
         created_at=order.created_at,
         updated_at=order.updated_at,
         history=[OrderHistoryEntry.model_validate(h) for h in order.history],
+        images=[OrderImageRead.model_validate(img) for img in order.images],
     )
 
 
@@ -136,7 +138,9 @@ def list_orders(
     limit: int = 20,
     status: OrderStatus | None = None,
 ) -> tuple[list[Order], int]:
-    q = db.query(Order).options(selectinload(Order.history), selectinload(Order.user))
+    q = db.query(Order).options(
+        selectinload(Order.history), selectinload(Order.images), selectinload(Order.user)
+    )
     if not user.is_admin:
         q = q.filter(Order.user_id == user.id)
     elif status is not None:
@@ -257,7 +261,7 @@ def dashboard_summary(
 
     recent = (
         db.query(Order)
-        .options(selectinload(Order.history), selectinload(Order.user))
+        .options(selectinload(Order.history), selectinload(Order.images), selectinload(Order.user))
         .order_by(Order.created_at.desc())
         .limit(5)
         .all()

@@ -21,6 +21,10 @@ dependencies = [
   "psycopg2-binary>=2.9",
   "slowapi>=0.1.9",
   "python-json-logger>=2.0",
+  # Multipart form parsing for image uploads (FastAPI UploadFile requires it).
+  "python-multipart>=0.0.9",
+  # Validates that uploaded files are genuine JPEG/PNG/WebP images, not spoofed.
+  "Pillow>=10.4",
 ]
 
 [project.optional-dependencies]

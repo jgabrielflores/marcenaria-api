@@ -9,8 +9,8 @@ Substitui o controle informal por WhatsApp e planilhas por uma plataforma estrut
 <br>
 
 [![CI](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml/badge.svg)](https://github.com/jgabrielflores/ramos-planejados/actions/workflows/ci.yml)
-![Cobertura](https://img.shields.io/badge/cobertura-95%25-2ea44f)
-![Testes](https://img.shields.io/badge/testes-169%20passando-2ea44f)
+![Cobertura](https://img.shields.io/badge/cobertura-96%25-2ea44f)
+![Testes](https://img.shields.io/badge/testes-198%20passando-2ea44f)
 [![Deploy](https://img.shields.io/badge/deploy-online-2ea44f?logo=railway&logoColor=white)](https://ramos-planejados.up.railway.app)
 [![API](https://img.shields.io/badge/API-Swagger-009688?logo=fastapi&logoColor=white)](https://ramos-planejados-api.up.railway.app/docs)
 
@@ -124,6 +124,7 @@ As telas abaixo são rotas da aplicação no ar. A landing e as telas de autenti
 - Criação de pedido com endereço (busca automática por CEP), ambientes e tipos de móveis
 - Ciclo de vida com **7 estados** e transições validadas no servidor
 - **Histórico de status imutável** (*append-only*) - auditoria completa de cada transição
+- **Fotos do ambiente** - cliente/admin anexam até 5 imagens por pedido (JPEG/PNG/WebP, 5 MB cada) enquanto ele está em análise
 - Visão dupla por papel: campos financeiros e notas internas são redigidos para o cliente
 
 **Painel administrativo**
@@ -149,7 +150,7 @@ flowchart TD
     Browser["Navegador<br/>(cliente / admin / visitante)"]
     Frontend["frontend/ - Next.js 16<br/>site institucional · portal do cliente · painel admin"]
     API["src/ - FastAPI<br/>autenticação · regras de negócio · persistência"]
-    DB[("PostgreSQL 16<br/>users · orders · order_status_history")]
+    DB[("PostgreSQL 16<br/>users · orders · order_status_history · order_images")]
     Email["Brevo API (HTTPS)<br/>(e-mails de verificação)"]
 
     Browser -->|HTTPS| Frontend
@@ -243,7 +244,7 @@ ramos-planejados/
 │   ├── database.py             # Engine + SessionLocal + dependência get_db()
 │   ├── dependencies.py         # get_current_user() · require_admin()
 │   ├── limiter.py              # Singleton do slowapi
-│   ├── models/                 # Modelos ORM (User, Order, OrderStatusHistory)
+│   ├── models/                 # Modelos ORM (User, Order, OrderStatusHistory, OrderImage)
 │   ├── schemas/                # DTOs Pydantic (request/response)
 │   ├── routers/                # Handlers HTTP - finos, delegam aos services
 │   ├── services/               # Regras de negócio (auth, order, user, email)
@@ -384,7 +385,7 @@ A interface fica disponível em **http://localhost:3000**.
 
 ## Qualidade e testes
 
-A suíte soma **169 testes** automatizados: **136 no backend** (cobertura de **95%** sobre `src/`) e **33 no frontend** (Vitest). Os testes de backend organizam-se em três níveis:
+A suíte soma **198 testes** automatizados: **161 no backend** (cobertura de **96%** sobre `src/`) e **37 no frontend** (Vitest). Os testes de backend organizam-se em três níveis:
 
 | Tipo | Marcador | O que verifica | Banco | HTTP |
 |---|---|---|:---:|:---:|
@@ -408,7 +409,7 @@ docker-compose exec api pytest -m security -v
 - Arquitetura em camadas com fronteiras de responsabilidade explícitas
 - Constantes nomeadas no lugar de *magic strings* / *magic numbers*
 - Sem mock de banco - testes de integração rodam contra um PostgreSQL real
-- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: 95%)
+- CI bloqueia *merge* abaixo de 90% de cobertura (linha de base atual: 96%)
 - Imagem Docker roda como usuário **não-root**, com *layers* otimizadas para cache
 
 <br>
@@ -427,7 +428,7 @@ A segurança foi tratada como requisito de primeira ordem, com decisões alinhad
 | IDOR | Cliente só acessa os próprios pedidos - acesso *cross-user* retorna 403 |
 | SQL Injection | Acesso a dados exclusivamente via ORM - sem interpolação de SQL bruto |
 | Exposição de dados | Serialização redige campos financeiros e notas internas para o cliente |
-| CORS | Restrito à origem configurada; apenas métodos `GET`, `POST`, `PATCH` |
+| CORS | Restrito à origem configurada; apenas métodos `GET`, `POST`, `PATCH`, `DELETE` |
 
 Cinco classes de ataque têm testes dedicados em `tests/security/`: JWT forjado/expirado, IDOR, escalonamento de papel, SQL injection e *information disclosure*.
 
@@ -464,7 +465,7 @@ O sistema é funcional e cobre o ciclo completo de um pedido. Evoluções planej
 - [ ] Busca textual na lista de pedidos do admin
 
 **Médio prazo**
-- [ ] Upload de arquivos (fotos de referência, PDF do orçamento)
+- [ ] Exportação do orçamento em PDF
 - [ ] *Refresh tokens* com rotação
 - [ ] Dashboard com gráficos (funil de conversão, faturamento por mês)
 - [ ] Exportação de relatórios (CSV / Excel)

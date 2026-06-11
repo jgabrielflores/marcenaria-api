@@ -7,6 +7,7 @@ import { StatusTimeline } from "@/components/StatusTimeline";
 import { OrderNumber } from "@/components/OrderNumber";
 import { MoneyInput } from "@/components/MoneyInput";
 import { WhatsappInput } from "@/components/WhatsappInput";
+import { OrderImageGallery } from "@/components/OrderImageGallery";
 import { isOverdue } from "@/components/DueDate";
 import { ApiError, getOrder, updateOrderAdmin, type OrderRead, type OrderStatus } from "@/lib/api";
 import { getToken } from "@/lib/auth";
@@ -392,6 +393,19 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
           </>
         )}
       </section>
+
+      {/* Environment photos */}
+      {(order.images.length > 0 || isAguardando) && (
+        <section style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          <SectionTitle>Fotos do ambiente</SectionTitle>
+          <OrderImageGallery
+            orderId={order.id}
+            images={order.images}
+            editable={isAguardando}
+            onImagesChange={(images) => setOrder({ ...order, images })}
+          />
+        </section>
+      )}
 
       {/* Editable management form */}
       <section style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>

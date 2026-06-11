@@ -6,7 +6,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WhatsappInput } from "@/components/WhatsappInput";
 import { CepInput, type ResolvedAddress } from "@/components/CepInput";
-import { createOrder, ApiError } from "@/lib/api";
+import { ImageUploader } from "@/components/ImageUploader";
+import { createOrder, uploadOrderImages, ApiError } from "@/lib/api";
 import { getToken } from "@/lib/auth";
 import { C, labelStyle, headingStyle, inkButtonStyle } from "@/lib/theme";
 
@@ -51,6 +52,7 @@ export default function AdminNewOrderPage() {
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
   const [addressLine, setAddressLine] = useState("");
+  const [images, setImages] = useState<File[]>([]);
 
   function applyAddress(addr: ResolvedAddress) {
     setCity(addr.city);
@@ -82,6 +84,13 @@ export default function AdminNewOrderPage() {
           furniture_types: (formData.get("furniture_types") as string) || null,
           observations: (formData.get("observations") as string) || null,
         });
+        if (images.length > 0) {
+          try {
+            await uploadOrderImages(token, order.id, images);
+          } catch {
+            // The order exists — photos can still be added on the detail page.
+          }
+        }
         router.replace(`/admin/pedidos/${order.id}`);
         return { error: "" };
       } catch (err) {
@@ -250,6 +259,23 @@ export default function AdminNewOrderPage() {
               rows={4}
               style={textareaStyle}
             />
+          </div>
+          <div>
+            <label style={fieldLabel}>
+              Fotos do ambiente{" "}
+              <span style={{ textTransform: "none", letterSpacing: 0 }}>(opcional)</span>
+            </label>
+            <p
+              style={{
+                fontSize: "0.8rem",
+                color: C.textSub,
+                margin: "0 0 0.75rem",
+                lineHeight: 1.6,
+              }}
+            >
+              Fotos do espaço onde o móvel será instalado.
+            </p>
+            <ImageUploader files={images} onChange={setImages} />
           </div>
         </section>
 
